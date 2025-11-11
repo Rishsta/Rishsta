@@ -1,0 +1,142 @@
+body {
+    font-family: 'Tajawal', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f0f0; 
+    direction: rtl; 
+    text-align: center;
+}
+
+/* إطار الهاتف الذي يحوي المحتوى */
+.phone-frame {
+    width: 375px; 
+    min-height: 700px;
+    background-color: #fff;
+    border-radius: 30px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    position: relative;
+    overflow: hidden; 
+}
+
+.profile-container {
+    padding: 20px 0;
+}
+
+/* النجمة في الزاوية */
+.star-icon {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 24px;
+    color: #444;
+}
+
+/* الصورة الشخصية/الشعار */
+.profile-picture {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #000; 
+    margin: 0 auto 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #333; 
+}
+
+/* Placeholder للشعار النصي المؤقت */
+.logo-placeholder {
+    font-size: 14px;
+    color: gold;
+    font-weight: bold;
+}
+
+h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.description-text {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    padding: 0 15px; /* إضافة تباعد لليمين واليسار */
+}
+
+.description-text p {
+    margin: 5px 0;
+}
+
+.phone-number {
+    font-weight: 700;
+    color: #000;
+}
+
+/* أيقونة TikTok */
+.social-icon {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+/* تنسيق الأزرار المشترك */
+.profile-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    max-width: 300px;
+    padding: 15px 20px;
+    margin: 15px auto;
+    border-radius: 40px; 
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+/* زر TikTok */
+.tiktok-button {
+    background-color: #f2f2f2;
+    color: #333;
+    border: 1px solid #ccc;
+    position: relative;
+}
+
+.tiktok-button .dots {
+    position: absolute;
+    right: 20px; /* تم تعديله ليتناسب مع اتجاه RTL */
+    font-size: 20px;
+    line-height: 1;
+}
+
+/* زر Linktree */
+.linktree-button {
+    background-color: #ff9900; 
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(255, 153, 0, 0.4);
+}
+
+.footer-links {
+    margin-top: 50px;
+    font-size: 12px;
+    color: #999;
+}
+
+.footer-links a {
+    color: #999;
+    text-decoration: none;
+    margin: 0 5px;
+}
+
+.footer-links .dot {
+    margin: 0 5px;
+}
