@@ -10,19 +10,21 @@ body {
     text-align: center;
     
     /* --- الخلفية الجديدة --- */
-    background-image: url('background-image.jpg'); /* تأكد من اسم ملف الصورة */
-    background-size: cover; /* لتغطية الخلفية بالكامل */
-    background-position: center; /* توسيط الخلفية */
-    background-attachment: fixed; /* لتثبيت الخلفية عند التمرير */
-    background-color: #f0f0f0; /* لون احتياطي إذا لم يتم تحميل الصورة */
+    /* إذا أردت استخدام صورة خلفية، يجب رفعها على GitHub أيضاً باسم background-image.jpg */
+    /* يمكنك إزالة هذه الأسطر إذا لم يكن لديك صورة خلفية عامة */
+    background-image: url('background-image.jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-color: #f0f0f0; 
 }
 
 .phone-frame {
     width: 375px; 
     min-height: 600px;
-    background-color: rgba(255, 255, 255, 0.9); /* خلفية بيضاء شبه شفافة لإطار الهاتف */
+    background-color: rgba(255, 255, 255, 0.9);
     border-radius: 30px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2); /* ظل أوضح قليلاً */
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2); 
     padding: 20px;
     position: relative;
     overflow: hidden; 
@@ -32,21 +34,13 @@ body {
     padding: 20px 0;
 }
 
-/* تم حذف تنسيقات النجمة من هنا */
-/* .star-icon {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    font-size: 24px;
-    color: #444;
-} */
+/* تم حذف تنسيقات النجمة */
 
-/* تنسيق الصورة الشخصية - حل مشكلة الظهور */
+/* تنسيق الصورة الشخصية */
 .profile-picture {
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    /* تم إزالة background-color: #000; لأن الصورة ستملأها */
     margin: 0 auto 15px;
     display: flex;
     justify-content: center;
@@ -83,13 +77,6 @@ h1 {
     margin: 5px 0;
 }
 
-/* لا يوجد رقم هاتف ظاهر الآن في الوصف، لذا يمكن إزالة هذا التنسيق أو تركه كاحتياطي */
-/* .phone-number {
-    font-weight: 700;
-    color: #000;
-} */
-
-/* تنسيق مجموعة الأزرار (Stacked Buttons) */
 .social-buttons-group {
     display: flex;
     flex-direction: column;
@@ -154,7 +141,6 @@ h1 {
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2); 
 }
 
-
 /* ألوان التطبيقات الرسمية */
 .tiktok-btn {
     background: linear-gradient(to right, #000000, #222222);
@@ -163,7 +149,6 @@ h1 {
 .tiktok-btn:hover {
     background: linear-gradient(to right, #000000, #444444);
 }
-
 
 .snapchat-btn {
     background-color: #FFFC00; 
@@ -180,7 +165,6 @@ h1 {
 .snapchat-btn:hover i {
     color: #000;
 }
-
 
 .whatsapp-btn {
     background: linear-gradient(to right, #25D366, #128C7E);
