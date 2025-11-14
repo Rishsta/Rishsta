@@ -12,9 +12,10 @@
     <div class="phone-frame">
         <div class="profile-container">
 
-<div class="profile-picture">
-    <img src="photo_2025-11-10_16-46-23.jpg" alt="Rishsta Logo"> 
-</div>
+            <div class="profile-picture">
+                <img src="photo_2025-11-10_16-46-23.jpg" alt="Rishsta Logo"> 
+            </div>
+            
             <h1>Rishsta</h1>
 
             <div class="description-text">
@@ -30,9 +31,9 @@
                     <i class="fab fa-snapchat-ghost"></i>
                     <span>Snapchat</span>
                 </a>
-                <a href="https://wa.me/966545998016" target="_blank" class="social-button whatsapp-btn whatsapp2">
+                <a href="https://wa.me/966545998016" target="_blank" class="social-button whatsapp-btn whatsapp1">
                     <i class="fab fa-whatsapp"></i>
-                    <span>  WhatsApp </span>
+                    <span>واتساب ريشستا للحجز</span>
                 </a>
             </div>
 
@@ -80,7 +81,7 @@
                 <label for="service3">🍴 ترتيب صواني العشاء</label><br>
                 
                 <div id="additionalOptions">
-                    </div>
+                </div>
                 
                 <hr>
                 
@@ -104,17 +105,15 @@
         const totalElement = document.getElementById('totalPrice');
         const additionalOptionsDiv = document.getElementById('additionalOptions');
 
-        // تخزين الأسعار الأساسية والزيادات
         const PRICES = {
-            service2Base: 3700, // السعر الأساسي للبوفيه
-            service3Base: 1200, // السعر الأساسي للصواني
+            service2Base: 3700, 
+            service3Base: 1200, 
             
-            // أسعار الزيادات
-            extraWater: 11, // تم تحديث السعر
+            extraWater: 11, 
             extraBaklava: 150,
             extraDatesSweet: 120,
-            extraStaff: 150, // سعر الكادر الإضافي
-            extraBuffet100: 500, // سعر الـ 100 شخص إضافي للبوفيه
+            extraStaff: 150,
+            extraBuffet100: 500,
         };
 
         // **********************************
@@ -122,7 +121,7 @@
         // **********************************
         function openBookingModal() {
             bookingModal.style.display = 'block';
-            updateBookingOptions(); // تحديث الخيارات وحساب الإجمالي عند الفتح
+            updateBookingOptions();
         }
 
         function closeBookingModal() {
@@ -180,11 +179,11 @@
 
                             <label style="font-weight: bold; margin-top: 10px;">🍫 صحون بقلاوة (+${PRICES.extraBaklava} ر.س لـ 3 صحون):</label>
                             <input type="number" id="extraBaklava1" min="0" value="0" onchange="calculateTotal()" style="width: 50px; text-align: center;">
-                            <span style="font-size: 0.9em;"> (أدخل  الكمية)</span><br>
+                            <span style="font-size: 0.9em;"> (أدخل  الكمية)</span><br>
                             
                             <label style="font-weight: bold; margin-top: 10px;">🌴 حلى التمر (+${PRICES.extraDatesSweet} ر.س لـ 3 صحون):</label>
                             <input type="number" id="extraDatesSweet1" min="0" value="0" onchange="calculateTotal()" style="width: 50px; text-align: center;">
-                            <span style="font-size: 0.9em;"> (أدخل  الكمية)</span><br>
+                            <span style="font-size: 0.9em;"> (أدخل  الكمية)</span><br>
                             
                             <label style="font-weight: bold; margin-top: 10px;">👥 إضافة كوادر (+${PRICES.extraStaff} ر.س للكادر):</label>
                             <input type="number" id="extraStaff1" min="0" value="0" onchange="calculateTotal()" style="width: 50px; text-align: center;">
@@ -264,7 +263,7 @@
         }
 
         // **********************************
-        // 3. وظيفة حساب الإجمالي (تم تحديثها للحساب بالكمية)
+        // 3. وظيفة حساب الإجمالي
         // **********************************
         function calculateTotal() {
             let currentTotal = 0;
@@ -353,106 +352,115 @@
         }
 
         // **********************************
-        // 4. وظيفة إرسال الواتساب
+        // 4. وظيفة إرسال الواتساب وإنشاء الفاتورة
         // **********************************
-// **********************************
-// 4. وظيفة إرسال الواتساب وإنشاء الفاتورة
-// **********************************
-function confirmBooking() {
-    const clientName = document.getElementById('clientName').value;
-    const eventDate = document.getElementById('eventDate').value;
-    const eventType = document.getElementById('eventType').value;
-    const eventLocation = document.getElementById('eventLocation').value;
-    
-    // التحقق من البيانات الأساسية
-    if (!clientName || !eventDate || !eventType || !eventLocation) {
-        alert('الرجاء تعبئة جميع البيانات الأساسية أولاً.');
-        return;
-    }
-    
-    // التحقق من اختيار باقة الضيافة (إذا اختار الخدمة)
-    if (document.getElementById('service1').checked && !document.querySelector('input[name="pkg1"]:checked')) {
-         alert('الرجاء اختيار باقة الضيافة (العادية، المتوسطة، أو الفخمة) لاستكمال الحجز.');
-         return;
-    }
-    
-    const detailsArray = calculateTotal();
-    const finalPrice = totalElement.textContent;
-
-    // 1. بناء رسالة الواتساب (لإرسالها إليك)
-    let whatsappMessage = `*🌟 طلب حجز جديد من موقع ريشستا 🌟*\n\n`;
-    whatsappMessage += `*البيانات الأساسية:*\n`;
-    whatsappMessage += `> العميل: ${clientName}\n`;
-    whatsappMessage += `> نوع المناسبة: ${eventType}\n`;
-    whatsappMessage += `> الموقع: ${eventLocation}\n`;
-    whatsappMessage += `> التاريخ المطلوب: ${eventDate}\n\n`;
-    whatsappMessage += `*📝 ملخص الخدمات المختارة:*\n`;
-    if (detailsArray.length === 0) {
-        whatsappMessage += `> لم يتم اختيار أي خدمة رئيسية.\n`;
-    } else {
-        whatsappMessage += detailsArray.join('\n');
-    }
-    whatsappMessage += `\n*💰 الإجمالي التقديري: ${finalPrice} ر.س*\n\n`;
-    whatsappMessage += `*ملاحظة: العميل قام بحفظ الفاتورة كـ PDF، يرجى طلبها منه.*\n`;
-
-    // 2. بناء محتوى الفاتورة المنظمة (للطباعة)
-    let invoiceContent = `
-        <html>
-        <head>
-            <title>فاتورة حجز ريشستا</title>
-            <style>
-                body { font-family: 'Tajawal', sans-serif; direction: rtl; margin: 30px; font-size: 14px; }
-                h1 { text-align: center; color: #ff9900; border-bottom: 2px solid #ff9900; padding-bottom: 10px; }
-                h2 { color: #333; margin-top: 20px; border-bottom: 1px dashed #ccc; padding-bottom: 5px; }
-                .details { margin-bottom: 20px; line-height: 1.6; }
-                .item { margin-bottom: 5px; padding-right: 15px; }
-                .total { margin-top: 30px; border-top: 2px solid #333; padding-top: 10px; font-size: 1.2em; font-weight: bold; text-align: left; }
-                @media print { .no-print { display: none; } }
-            </style>
-        </head>
-        <body>
-            <h1>فاتورة حجز خدمات ريشستا - طلب تقديري</h1>
-            <h2>بيانات العميل</h2>
-            <div class="details">
-                <p><strong>الاسم:</strong> ${clientName}</p>
-                <p><strong>نوع المناسبة:</strong> ${eventType}</p>
-                <p><strong>موقع المناسبة:</strong> ${eventLocation}</p>
-                <p><strong>التاريخ المطلوب:</strong> ${eventDate}</p>
-            </div>
+        function confirmBooking() {
+            const clientName = document.getElementById('clientName').value;
+            const eventDate = document.getElementById('eventDate').value;
+            const eventType = document.getElementById('eventType').value;
+            const eventLocation = document.getElementById('eventLocation').value;
             
-            <h2>تفاصيل الخدمات المختارة</h2>
-            <div class="details">
-                ${detailsArray.map(item => `<p class="item">${item.replace(/\*/g, '•')}</p>`).join('')}
-            </div>
+            if (!clientName || !eventDate || !eventType || !eventLocation) {
+                alert('الرجاء تعبئة جميع البيانات الأساسية أولاً.');
+                return;
+            }
+            
+            if (document.getElementById('service1').checked && !document.querySelector('input[name="pkg1"]:checked')) {
+                 alert('الرجاء اختيار باقة الضيافة (العادية، المتوسطة، أو الفخمة) لاستكمال الحجز.');
+                 return;
+            }
+            
+            const detailsArray = calculateTotal();
+            const finalPrice = totalElement.textContent;
 
-            <p class="total">الإجمالي التقديري: ${finalPrice} ر.س</p>
-            <p class="no-print" style="text-align: center; margin-top: 50px; color: red;">الرجاء حفظ هذه الصفحة كـ PDF وإرسالها إلى فريق ريشستا عبر الواتساب.</p>
-        </body>
-        </html>
-    `;
+            let whatsappMessage = `*🌟 طلب حجز جديد من موقع ريشستا 🌟*\n\n`;
+            whatsappMessage += `*البيانات الأساسية:*\n`;
+            whatsappMessage += `> العميل: ${clientName}\n`;
+            whatsappMessage += `> نوع المناسبة: ${eventType}\n`;
+            whatsappMessage += `> الموقع: ${eventLocation}\n`;
+            whatsappMessage += `> التاريخ المطلوب: ${eventDate}\n\n`;
+            whatsappMessage += `*📝 ملخص الخدمات المختارة:*\n`;
+            if (detailsArray.length === 0) {
+                whatsappMessage += `> لم يتم اختيار أي خدمة رئيسية.\n`;
+            } else {
+                whatsappMessage += detailsArray.join('\n');
+            }
+            whatsappMessage += `\n*💰 الإجمالي التقديري: ${finalPrice} ر.س*\n\n`;
+            whatsappMessage += `*ملاحظة: العميل قام بحفظ الفاتورة كـ PDF، يرجى طلبها منه.*\n`;
 
-    // 3. فتح نافذة الطباعة (للحفظ كـ PDF)
-    const printWindow = window.open('', '', 'height=600,width=800');
-    printWindow.document.write(invoiceContent);
-    printWindow.document.close();
-    printWindow.focus();
-    printWindow.print(); // تفتح نافذة الطباعة مباشرة
+            // 2. بناء محتوى الفاتورة المنظمة (للطباعة)
+            let invoiceContent = `
+                <html>
+                <head>
+                    <title>فاتورة حجز ريشستا</title>
+                    <style>
+                        body { font-family: 'Tajawal', sans-serif; direction: rtl; margin: 30px; font-size: 14px; }
+                        h1 { text-align: center; color: #ff9900; border-bottom: 2px solid #ff9900; padding-bottom: 10px; }
+                        h2 { color: #333; margin-top: 20px; border-bottom: 1px dashed #ccc; padding-bottom: 5px; }
+                        .details { margin-bottom: 20px; line-height: 1.6; }
+                        .item { margin-bottom: 5px; padding-right: 15px; }
+                        .total { margin-top: 30px; border-top: 2px solid #333; padding-top: 10px; font-size: 1.2em; font-weight: bold; text-align: left; }
+                        @media print { .no-print { display: none; } }
+                    </style>
+                </head>
+                <body>
+                    <h1>فاتورة حجز خدمات ريشستا - طلب تقديري</h1>
+                    <h2>بيانات العميل</h2>
+                    <div class="details">
+                        <p><strong>الاسم:</strong> ${clientName}</p>
+                        <p><strong>نوع المناسبة:</strong> ${eventType}</p>
+                        <p><strong>موقع المناسبة:</strong> ${eventLocation}</p>
+                        <p><strong>التاريخ المطلوب:</strong> ${eventDate}</p>
+                    </div>
+                    
+                    <h2>تفاصيل الخدمات المختارة</h2>
+                    <div class="details">
+                        ${detailsArray.map(item => `<p class="item">${item.replace(/\*/g, '•')}</p>`).join('')}
+                    </div>
 
-    // 4. التوجيه إلى الواتساب
-    const whatsappNumber = '966544512811'; // رقم علي أبوعامر
-    const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
-    
-    alert(`الإجمالي التقديري: ${finalPrice} ر.س.\n\nسيتم فتح نافذة الطباعة/الحفظ الآن. يرجى حفظ الفاتورة كـ PDF ثم إرسالها إلينا عبر الواتساب.`);
-    window.open(whatsappURL, '_blank');
-    closeBookingModal();
-}
-            updateBookingOptions(); 
+                    <p class="total">الإجمالي التقديري: ${finalPrice} ر.س</p>
+                    <p class="no-print" style="text-align: center; margin-top: 50px; color: red;">الرجاء حفظ هذه الصفحة كـ PDF وإرسالها إلى فريق ريشستا عبر الواتساب.</p>
+                </body>
+                </html>
+            `;
+
+            // 3. فتح نافذة الطباعة (للحفظ كـ PDF)
+            const printWindow = window.open('', '', 'height=600,width=800');
+            printWindow.document.write(invoiceContent);
+            printWindow.document.close();
+            printWindow.focus();
+            printWindow.print();
+
+            // 4. التوجيه إلى الواتساب
+            const whatsappNumber = '966544512811';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
+            
+            alert(`الإجمالي التقديري: ${finalPrice} ر.س.\n\nسيتم فتح نافذة الطباعة/الحفظ الآن. يرجى حفظ الفاتورة كـ PDF ثم إرسالها إلينا عبر الواتساب.`);
+            window.open(whatsappURL, '_blank');
+            closeBookingModal();
+        }
+
+        function checkDateAvailability() {
+            const dateInput = document.getElementById('eventDate').value;
+            const statusElement = document.getElementById('availabilityStatus');
+            
+            if (!dateInput) {
+                statusElement.textContent = "الرجاء اختيار تاريخ أولاً.";
+                statusElement.style.color = 'red';
+                return;
+            }
+            statusElement.textContent = "✅ تم التحقق المبدئي! نؤكد التوافر النهائي بعد استلام الطلب.";
+            statusElement.style.color = 'green';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const formElements = document.getElementById('bookingForm').elements;
+            for (let i = 0; i < formElements.length; i++) {
+                formElements[i].addEventListener('change', updateBookingOptions);
+                formElements[i].addEventListener('input', updateBookingOptions);
+            }
+            updateBookingOptions();
         });
     </script>
 </body>
 </html>
-
-
-
-
-
