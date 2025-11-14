@@ -20,7 +20,7 @@ body {
 .phone-frame {
     width: 375px; 
     min-height: 600px;
-    background-color: rgba(255, 255, 255, 0.9); /* خلفية بيضاء شبه شفافة */
+    background-color: rgba(255, 255, 255, 0.9);
     border-radius: 30px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2); 
     padding: 20px;
@@ -284,4 +284,18 @@ hr {
 @keyframes fadeIn {
     from {opacity: 0;}
     to {opacity: 1;}
+}
+
+/* تنسيق حقول الإضافات (لجعلها أصغر) */
+fieldset input[type="number"] {
+    display: inline-block !important;
+    width: 70px !important;
+    text-align: center;
+    margin-left: 10px;
+}
+fieldset label {
+    display: inline-block;
+    width: calc(100% - 100px); /* ليحتوي على باقي النص */
+    font-weight: normal !important;
+    vertical-align: top;
 }
