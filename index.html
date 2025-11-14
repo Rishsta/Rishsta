@@ -65,8 +65,8 @@
                 <label for="eventLocation">موقع إقامة المناسبة:</label>
                 <input type="text" id="eventLocation" required>
 
-                <label for="eventDate">التاريخ المطلوب:</label>
-                <input type="date" id="eventDate" required>
+                <label for="eventDate">التاريخ المطلوب (السنة / الشهر / اليوم):</label>
+                <input type="text" id="eventDate" placeholder="2025 / 11 / 30" required>
                 <button type="button" onclick="checkDateAvailability()">تحقق من التوافر</button>
                 <p id="availabilityStatus" style="font-weight: bold; margin-top: 10px;"></p>
 
@@ -162,7 +162,7 @@
                             <input type="radio" id="p2" name="pkg1" value="الباقة المتوسطة" data-price="1000" data-staff="4" onchange="calculateTotal()" required>
                             <label for="p2" style="font-weight: bold;">الباقة المتوسطة (1000 ر.س)</label>
                             <ul style="margin-top: 5px; font-size: 0.9em; color: #555; margin-bottom: 10px;">
-                                <li>☕ شاي فاخر، قهوة، ليمون أسود، كركديه (حار/بارد)</li>
+                                <li>☕ شاي فاخر، قهوة، ليمون أسود، كركديه </li>
                                 <li>🌴 تمر عادي، تمر بالسمسم، طحينية | 👥 4 كوادر | 🔥 الفحم والعود علينا</li>
                             </ul>
                             
@@ -182,13 +182,13 @@
                             <input type="number" id="extraWater1" min="0" value="0" onchange="calculateTotal()" style="width: 50px; text-align: center;">
                             <span style="font-size: 0.9em;"> (أدخل الكمية)</span><br>
 
-                            <label style="font-weight: bold; margin-top: 10px;">🍫 صحون حلا/بقلاوة (+${PRICES.extraBaklava} ر.س لـ 3 صحون):</label>
+                            <label style="font-weight: bold; margin-top: 10px;">🍫 صحون بقلاوة (+${PRICES.extraBaklava} ر.س لـ 3 صحون):</label>
                             <input type="number" id="extraBaklava1" min="0" value="0" onchange="calculateTotal()" style="width: 50px; text-align: center;">
-                            <span style="font-size: 0.9em;"> (أدخل عدد المجموعات)</span><br>
+                            <span style="font-size: 0.9em;"> (أدخل  الكمية)</span><br>
                             
                             <label style="font-weight: bold; margin-top: 10px;">🌴 حلى التمر (+${PRICES.extraDatesSweet} ر.س لـ 3 صحون):</label>
                             <input type="number" id="extraDatesSweet1" min="0" value="0" onchange="calculateTotal()" style="width: 50px; text-align: center;">
-                            <span style="font-size: 0.9em;"> (أدخل عدد المجموعات)</span><br>
+                            <span style="font-size: 0.9em;"> (أدخل  الكمية)</span><br>
                             
                             <label style="font-weight: bold; margin-top: 10px;">👥 إضافة كوادر (+${PRICES.extraStaff} ر.س للكادر):</label>
                             <input type="number" id="extraStaff1" min="0" value="0" onchange="calculateTotal()" style="width: 50px; text-align: center;">
@@ -203,7 +203,7 @@
                     <fieldset style="border: 1px solid #25D366; padding: 10px; margin-top: 15px;">
                         <legend>🍽️ بوفيه ريشستا (السعر الأساسي ${PRICES.service2Base} ر.س لـ 300 شخص)</legend>
                         <ul style="font-size: 0.9em; color: #555; text-align: right; margin-top: 5px;">
-                            <li>تشمل الخدمة: 3 أصناف رئيسية، معجنات، كُبّة، سمبوسة، كيك، كنافة، بقلاوة، مكسرات، ورق عنب، ذرة، بليلة، موهيتو، عصير مانجو.</li>
+                            <li>تشمل الخدمة: 3 أصناف رئيسية، معجنات، كُبّة، سمبوسة، كيك، كنافة، بقلاوة، مكسرات، ورق عنب، ذرة، بليلة، موهيتو، عصير مانجو او برتقال.</li>
                             <li>👥 الطاقم: 3 كوادر سعوديين بزي موحد.</li>
                         </ul>
                         
@@ -236,23 +236,23 @@
                         </ul>
                         
                         <div style="border-top: 1px dashed #ccc; padding-top: 10px;">
-                            <label style="font-weight: bold;">كم دفعة (عدد المرات) تريد؟</label>
+                            <label style="font-weight: bold;">كم دفعة (عدد المرات)؟</label>
                             <input type="number" id="numTrays3" min="1" value="1" onchange="calculateTotal()"><br>
                             
-                            <label style="font-weight: bold; margin-top: 10px;">كم صينية لديك (تقريباً)؟</label>
+                            <label style="font-weight: bold; margin-top: 10px;">كم صينية لديك؟</label>
                             <input type="number" id="numPlates3" min="1" value="1" onchange="calculateTotal()"><br>
 
                             <label style="font-weight: bold; margin-top: 10px;">متى تريدنا أن نبدأ (وقت الفتح)؟</label>
                             <input type="time" id="startTime3" onchange="calculateTotal()"><br>
                             
-                            <label style="font-weight: bold; margin-top: 10px;">كم المدة بين كل دفعة (بالدقائق)؟</label>
+                            <label style="font-weight: bold; margin-top: 10px;">كم المدة بين كل دفعة؟</label>
                             <input type="number" id="duration3" min="10" value="30" onchange="calculateTotal()">
                         </div>
 
                         <legend>➕ خيارات إضافية:</legend>
                         <div style="margin-top: 10px;">
                             <input type="checkbox" id="genderSplit3" onchange="calculateTotal()">
-                            <label for="genderSplit3">يوجد قسم رجال ونساء منفصل</label><br>
+                            <label for="genderSplit3">يوجد قسم رجال ونساء ؟</label><br>
                             
                             <label style="font-weight: bold; margin-top: 10px;">كم عدد الكراسي (لتنظيم القاعة)؟</label>
                             <input type="number" id="numChairs3" min="0" value="0" onchange="calculateTotal()" style="width: 50px; text-align: center;"><br>
@@ -428,4 +428,5 @@
     </script>
 </body>
 </html>
+
 
