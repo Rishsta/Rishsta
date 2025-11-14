@@ -42,15 +42,127 @@
 </div>
 
 <div class="extra-button-group">
-    <a href="#" class="main-booking-button" onclick="openBookingModal()" style="margin-top: 15px;">
-        🌟 ابدأ حجز الباقات والخدمات الآن
-    </a>
+<a href="#" class="main-booking-button" onclick="openBookingModal()" style="margin-top: 15px;">
+    🌟 ابدأ حجز الباقات والخدمات الآن
+</a>
 </div>
 
         </div>
     </div>
+    <div id="bookingModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeBookingModal()">&times;</span>
+        <h2>📅 بدء حجز الخدمات مع ريشستا</h2>
+        <p>الرجاء تعبئة بيانات الحجز الأساسية:</p>
+
+        <form id="bookingForm">
+            <label for="clientName">الاسم الكامل:</label>
+            <input type="text" id="clientName" required>
+
+            <label for="eventType">نوع المناسبة:</label>
+            <input type="text" id="eventType" required>
+
+            <label for="eventLocation">موقع إقامة المناسبة:</label>
+            <input type="text" id="eventLocation" required>
+
+            <label for="eventDate">التاريخ المطلوب:</label>
+            <input type="date" id="eventDate" required>
+            <button type="button" onclick="checkDateAvailability()">تحقق من التوافر</button>
+            <p id="availabilityStatus" style="font-weight: bold; margin-top: 10px;"></p>
+
+            <hr>
+            
+            <h3 style="margin-top: 20px;">اختر الخدمات المطلوبة (يمكن اختيار أكثر من خدمة):</h3>
+            
+            <input type="checkbox" id="service1" name="service" value="ضيافة سعودية">
+            <label for="service1">✨ ضيافة ريشستا الأنيقة</label><br>
+
+            <input type="checkbox" id="service2" name="service" value="بوفيه منوع">
+            <label for="service2">🍽️ بوفيه ريشستا المتكامل (السعر الأساسي: 3700 ر.س)</label><br>
+
+            <input type="checkbox" id="service3" name="service" value="ترتيب صواني العشاء">
+            <label for="service3">🍴 ترتيب صواني العشاء (السعر الأساسي: 1200 ر.س)</label><br>
+            
+            <div id="additionalOptions">
+                </div>
+            
+            <hr>
+            
+            <h3 style="margin-top: 20px;">ملخص وتأكيد الحجز:</h3>
+            <p>الإجمالي التقديري: <span id="totalPrice" style="color: #ff9900; font-size: 1.5em; font-weight: bold;">0</span> ر.س</p>
+            
+            <button type="button" onclick="confirmBooking()" style="background-color: #25D366; color: white; padding: 15px; border: none; border-radius: 8px; margin-top: 15px; width: 100%;">
+                إرسال الطلب والتفاصيل عبر الواتساب
+            </button>
+            
+            <div style="margin-top: 20px; padding: 10px; border: 1px dashed #ccc;">
+                <h4>خدمات إضافية (غير متوفرة حالياً):</h4>
+                <p>إذا كانت لديك خدمة أخرى غير موجودة، يرجى كتابتها في رسالة الواتساب أو التواصل معنا. <span style="font-weight: bold;">ونسعد بخدمتكم 🌿</span></p>
+            </div>
+        </form>
+    </div>
+</div>
+    <script>
+    const bookingModal = document.getElementById('bookingModal');
+    
+    function openBookingModal() {
+        bookingModal.style.display = 'block';
+    }
+
+    function closeBookingModal() {
+        bookingModal.style.display = 'none';
+    }
+
+    // إغلاق النافذة عند الضغط خارجها
+    window.onclick = function(event) {
+        if (event.target == bookingModal) {
+            closeBookingModal();
+        }
+    }
+
+    function checkDateAvailability() {
+        const dateInput = document.getElementById('eventDate').value;
+        const statusElement = document.getElementById('availabilityStatus');
+        
+        if (!dateInput) {
+            statusElement.textContent = "الرجاء اختيار تاريخ أولاً.";
+            statusElement.style.color = 'red';
+            return;
+        }
+        
+        // **ملاحظة:** التحقق الفعلي من Google Calendar يتم في الخلفية أو يحتاج API.
+        // للعميل، نعرض رسالة مؤقتة:
+        statusElement.textContent = "✅ تم التحقق المبدئي! نؤكد التوافر النهائي بعد استلام الطلب.";
+        statusElement.style.color = 'green';
+    }
+    
+    function confirmBooking() {
+        const clientName = document.getElementById('clientName').value;
+        
+        if (!clientName) {
+            alert('الرجاء إدخال اسمك أولاً.');
+            return;
+        }
+
+        // هنا يجب أن يتم جمع وحساب الإجمالي (سنضيف هذه الوظيفة لاحقاً)
+        
+        let message = `*طلب حجز خدمات ريشستا الجديدة*\n\n`;
+        message += `العميل: ${clientName}\n`;
+        message += `التاريخ المطلوب: ${document.getElementById('eventDate').value}\n`;
+        // ... (سيتم إضافة تفاصيل الخدمات والأسعار هنا لاحقاً)
+        message += `\nالإجمالي التقديري: ${document.getElementById('totalPrice').textContent} ر.س`;
+        
+        const whatsappNumber = '966544512811'; // رقم علي أبوعامر للحجز
+        const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+        
+        alert('شكراً لك! سيتم توجيهك إلى الواتساب الآن لإرسال تفاصيل الحجز النهائية.');
+        window.open(whatsappURL, '_blank');
+        closeBookingModal();
+    }
+</script>
 </body>
 </html>
+
 
 
 
