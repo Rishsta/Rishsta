@@ -1,3 +1,6 @@
+/* ------------------------------------- */
+/* تنسيق الجسم العام وشريط التمرير */
+/* ------------------------------------- */
 body {
     font-family: 'Tajawal', sans-serif;
     margin: 0;
@@ -15,12 +18,38 @@ body {
     background-position: center;
     background-attachment: fixed;
     background-color: #f0f0f0; 
+    
+    /* تنسيق شريط التمرير في المتصفحات الحديثة */
+    scrollbar-color: #ff9900 #f0f0f0; 
+    scrollbar-width: thin;
 }
 
+/* تنسيق شريط التمرير Webkit (Chrome/Edge) */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+    background: #ff9900;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #e68a00;
+}
+
+
+/* ------------------------------------- */
+/* إطار الهاتف (Phone Frame) */
+/* ------------------------------------- */
 .phone-frame {
     width: 375px; 
     min-height: 600px;
-    background-color: rgba(255, 255, 255, 0.9);
+    /* زيادة طفيفة في الشفافية لإظهار الخلفية أكثر */
+    background-color: rgba(255, 255, 255, 0.95);
     border-radius: 30px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2); 
     padding: 20px;
@@ -83,6 +112,7 @@ h1 {
     margin-bottom: 30px;
 }
 
+/* تنسيق الأزرار الأساسية (شامل تنسيق الموشن جرافيك) */
 .social-button {
     display: flex;
     align-items: center;
@@ -101,9 +131,12 @@ h1 {
     overflow: hidden;
 }
 
+/* ضبط موضع الأيقونة (للتناسق مع الأرقام العربية) */
 .social-button i {
     font-size: 22px;
-    margin-left: 10px; 
+    /* تم تغيير المسافة إلى اليمين لتناسق أفضل */
+    margin-right: 8px; 
+    margin-left: 0; 
     position: relative;
     z-index: 2;
 }
@@ -175,7 +208,8 @@ h1 {
 .main-booking-button {
     display: block;
     text-align: center;
-    padding: 15px 20px;
+    /* زيادة المسافة الداخلية */
+    padding: 18px 20px; 
     margin: 15px auto 10px auto;
     width: 90%;
     max-width: 350px;
