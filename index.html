@@ -96,15 +96,9 @@
                 <h3 style="margin-top: 20px;">ملخص وتأكيد الحجز:</h3>
                 <p>الإجمالي التقديري: <span id="totalPrice" style="color: #ff9900; font-size: 1.5em; font-weight: bold;">0</span> ر.س</p>
                 
-                <div style="margin-top: 15px; display: flex; flex-direction: column; gap: 10px;">
-                    <button type="button" onclick="confirmBooking()" style="background-color: #25D366; color: white; padding: 15px; border: none; border-radius: 8px; width: 100%;">
-                        إرسال الطلب والتفاصيل عبر الواتساب
-                    </button>
-                    
-                    <button type="button" onclick="promptApplePay()" style="background-color: #333; color: white; padding: 15px; border: none; border-radius: 8px; border: 1px solid #ff9900; width: 100%;">
-                         الدفع السريع (Apple Pay / Mada) - متاح بعد مراجعة الطلب
-                    </button>
-                </div>
+                <button type="button" onclick="confirmBooking()" style="background-color: #25D366; color: white; padding: 15px; border: none; border-radius: 8px; margin-top: 15px; width: 100%;">
+                    إرسال الطلب والتفاصيل عبر الواتساب
+                </button>
                 
                 <div style="margin-top: 20px; padding: 10px; border: 1px dashed #ccc;">
                     <h4>خدمات إضافية (غير متوفرة حالياً):</h4>
@@ -131,7 +125,7 @@
         };
 
         // **********************************
-        // 1. وظائف فتح وإغلاق النافذة والدفع التوضيحي
+        // 1. وظائف فتح وإغلاق النافذة
         // **********************************
         function openBookingModal() {
             bookingModal.style.display = 'block';
@@ -146,11 +140,6 @@
             if (event.target == bookingModal) {
                 closeBookingModal();
             }
-        }
-        
-        function promptApplePay() {
-            const finalPrice = totalElement.textContent;
-            alert(`💰 الإجمالي التقديري هو: ${finalPrice} ر.س.\n\nلدفع المبلغ عبر Apple Pay أو Mada:\n\n1. الرجاء إرسال الطلب أولاً عبر الواتساب (بالزر الأخضر).\n2. سنقوم بمراجعة الطلب وتأكيد التوافر ثم نرسل لك رابط الفاتورة الآمن للدفع.`);
         }
 
         // **********************************
