@@ -96,9 +96,15 @@
                 <h3 style="margin-top: 20px;">ملخص وتأكيد الحجز:</h3>
                 <p>الإجمالي التقديري: <span id="totalPrice" style="color: #ff9900; font-size: 1.5em; font-weight: bold;">0</span> ر.س</p>
                 
-                <button type="button" onclick="confirmBooking()" style="background-color: #25D366; color: white; padding: 15px; border: none; border-radius: 8px; margin-top: 15px; width: 100%;">
-                    إرسال الطلب والتفاصيل عبر الواتساب
-                </button>
+                <div style="margin-top: 15px; display: flex; flex-direction: column; gap: 10px;">
+                    <button type="button" onclick="confirmBooking()" style="background-color: #25D366; color: white; padding: 15px; border: none; border-radius: 8px; width: 100%;">
+                        إرسال الطلب والتفاصيل عبر الواتساب
+                    </button>
+                    
+                    <button type="button" onclick="promptApplePay()" style="background-color: #333; color: white; padding: 15px; border: none; border-radius: 8px; border: 1px solid #ff9900; width: 100%;">
+                         الدفع السريع (Apple Pay / Mada) - متاح بعد مراجعة الطلب
+                    </button>
+                </div>
                 
                 <div style="margin-top: 20px; padding: 10px; border: 1px dashed #ccc;">
                     <h4>خدمات إضافية (غير متوفرة حالياً):</h4>
@@ -125,7 +131,7 @@
         };
 
         // **********************************
-        // 1. وظائف فتح وإغلاق النافذة
+        // 1. وظائف فتح وإغلاق النافذة والدفع التوضيحي
         // **********************************
         function openBookingModal() {
             bookingModal.style.display = 'block';
@@ -140,6 +146,11 @@
             if (event.target == bookingModal) {
                 closeBookingModal();
             }
+        }
+        
+        function promptApplePay() {
+            const finalPrice = totalElement.textContent;
+            alert(`💰 الإجمالي التقديري هو: ${finalPrice} ر.س.\n\nلدفع المبلغ عبر Apple Pay أو Mada:\n\n1. الرجاء إرسال الطلب أولاً عبر الواتساب (بالزر الأخضر).\n2. سنقوم بمراجعة الطلب وتأكيد التوافر ثم نرسل لك رابط الفاتورة الآمن للدفع.`);
         }
 
         // **********************************
@@ -359,77 +370,91 @@
             return details;
         }
 
-   // **********************************
-// 4. وظيفة إرسال الواتساب ومنطق التسويق المتقاطع
-// **********************************
-function confirmBooking() {
-    const clientName = document.getElementById('clientName').value;
-    const eventDate = document.getElementById('eventDate').value;
-    const eventType = document.getElementById('eventType').value;
-    const eventLocation = document.getElementById('eventLocation').value;
-    
-    // 1. التحقق من البيانات الأساسية
-    if (!clientName || !eventDate || !eventType || !eventLocation) {
-        alert('الرجاء تعبئة جميع البيانات الأساسية أولاً.');
-        return;
-    }
-    
-    // 2. التحقق من باقة الضيافة
-    const isService1Checked = document.getElementById('service1').checked;
-    if (isService1Checked && !document.querySelector('input[name="pkg1"]:checked')) {
-         alert('الرجاء اختيار باقة الضيافة (العادية، المتوسطة، أو الفخمة) لاستكمال الحجز.');
-         return;
-    }
-
-    // 3. --- المنطق التسويقي (Cross-selling) ---
-    if (isService1Checked) {
-        const baklavaQty = parseInt(document.getElementById('extraBaklava1')?.value || 0);
-        const datesQty = parseInt(document.getElementById('extraDatesSweet1')?.value || 0);
-        
-        // إذا اختار الضيافة ولم يختر أي كمية من البقلاوة أو حلى التمر
-        if (baklavaQty === 0 && datesQty === 0) {
-            const confirmUpsell = confirm(
-                "✨ متأكد ما تبي تتجمل مع معازيمك أكثر وتجيب لهم حلى فاخر؟\n\n" +
-                "الحلى يزيد من فخامة ضيافتك ويترك انطباعاً مميزاً!\n\n" +
-                "اضغط 'إلغاء' للرجوع وإضافة الحلى، أو 'موافق' للمتابعة بدون حلى."
-            );
+        // **********************************
+        // 4. وظيفة إرسال الواتساب ومنطق التسويق المتقاطع
+        // **********************************
+        function confirmBooking() {
+            const clientName = document.getElementById('clientName').value;
+            const eventDate = document.getElementById('eventDate').value;
+            const eventType = document.getElementById('eventType').value;
+            const eventLocation = document.getElementById('eventLocation').value;
             
-            // إذا ضغط العميل على إلغاء (Cancel)، نوقف عملية الإرسال ونتركه يختار
-            if (!confirmUpsell) {
-                return; 
+            if (!clientName || !eventDate || !eventType || !eventLocation) {
+                alert('الرجاء تعبئة جميع البيانات الأساسية أولاً.');
+                return;
             }
-        }
-    }
-    
-    // 4. استكمال عملية الإرسال (إذا مر من جميع الشروط)
-    const detailsArray = calculateTotal();
-    const finalPrice = totalElement.textContent;
+            
+            const isService1Checked = document.getElementById('service1').checked;
+            if (isService1Checked && !document.querySelector('input[name="pkg1"]:checked')) {
+                 alert('الرجاء اختيار باقة الضيافة (العادية، المتوسطة، أو الفخمة) لاستكمال الحجز.');
+                 return;
+            }
 
-    let whatsappMessage = `*🌟 طلب حجز جديد من موقع ريشستا 🌟*\n\n`;
-    whatsappMessage += `*البيانات الأساسية:*\n`;
-    whatsappMessage += `> العميل: ${clientName}\n`;
-    whatsappMessage += `> نوع المناسبة: ${eventType}\n`;
-    whatsappMessage += `> الموقع: ${eventLocation}\n`;
-    whatsappMessage += `> التاريخ المطلوب: ${eventDate}\n\n`;
-    whatsappMessage += `*📝 ملخص الخدمات المختارة:*\n`;
-    if (detailsArray.length === 0) {
-        whatsappMessage += `> لم يتم اختيار أي خدمة رئيسية.\n`;
-    } else {
-        whatsappMessage += detailsArray.join('\n');
-    }
-    whatsappMessage += `\n*💰 الإجمالي التقديري: ${finalPrice} ر.س*\n\n`;
-    
-    // التوجيه إلى الواتساب
-    const whatsappNumber = '966544512811'; // رقم علي أبوعامر للحجز
-    const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
-    
-    alert(`الإجمالي التقديري: ${finalPrice} ر.س.\n\nسيتم إرسال تفاصيل طلبك الآن عبر الواتساب للمتابعة.`);
-    window.open(whatsappURL, '_blank');
-    closeBookingModal();
-}
+            // --- المنطق التسويقي (Cross-selling) ---
+            if (isService1Checked) {
+                const baklavaQty = parseInt(document.getElementById('extraBaklava1')?.value || 0);
+                const datesQty = parseInt(document.getElementById('extraDatesSweet1')?.value || 0);
+                
+                if (baklavaQty === 0 && datesQty === 0) {
+                    const confirmUpsell = confirm(
+                        "✨ متأكد ما تبي تتجمل مع معازيمك أكثر وتجيب لهم حلى فاخر؟\n\n" +
+                        "الحلى يزيد من فخامة ضيافتك ويترك انطباعاً مميزاً!\n\n" +
+                        "اضغط 'إلغاء' للرجوع وإضافة الحلى، أو 'موافق' للمتابعة بدون حلى."
+                    );
+                    
+                    if (!confirmUpsell) {
+                        return; 
+                    }
+                }
+            }
+            
+            const detailsArray = calculateTotal();
+            const finalPrice = totalElement.textContent;
+
+            let whatsappMessage = `*🌟 طلب حجز جديد من موقع ريشستا 🌟*\n\n`;
+            whatsappMessage += `*البيانات الأساسية:*\n`;
+            whatsappMessage += `> العميل: ${clientName}\n`;
+            whatsappMessage += `> نوع المناسبة: ${eventType}\n`;
+            whatsappMessage += `> الموقع: ${eventLocation}\n`;
+            whatsappMessage += `> التاريخ المطلوب: ${eventDate}\n\n`;
+            whatsappMessage += `*📝 ملخص الخدمات المختارة:*\n`;
+            if (detailsArray.length === 0) {
+                whatsappMessage += `> لم يتم اختيار أي خدمة رئيسية.\n`;
+            } else {
+                whatsappMessage += detailsArray.join('\n');
+            }
+            whatsappMessage += `\n*💰 الإجمالي التقديري: ${finalPrice} ر.س*\n\n`;
+            
+            // التوجيه إلى الواتساب
+            const whatsappNumber = '966544512811';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
+            
+            alert(`الإجمالي التقديري: ${finalPrice} ر.س.\n\nسيتم إرسال تفاصيل طلبك الآن عبر الواتساب للمتابعة.`);
+            window.open(whatsappURL, '_blank');
+            closeBookingModal();
+        }
+
+        function checkDateAvailability() {
+            const dateInput = document.getElementById('eventDate').value;
+            const statusElement = document.getElementById('availabilityStatus');
+            
+            if (!dateInput) {
+                statusElement.textContent = "الرجاء اختيار تاريخ أولاً.";
+                statusElement.style.color = 'red';
+                return;
+            }
+            statusElement.textContent = "✅ تم التحقق المبدئي! نؤكد التوافر النهائي بعد استلام الطلب.";
+            statusElement.style.color = 'green';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const formElements = document.getElementById('bookingForm').elements;
+            for (let i = 0; i < formElements.length; i++) {
+                formElements[i].addEventListener('change', updateBookingOptions);
+                formElements[i].addEventListener('input', updateBookingOptions);
+            }
+            updateBookingOptions();
+        });
     </script>
 </body>
 </html>
-
-
-
