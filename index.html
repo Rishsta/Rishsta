@@ -86,7 +86,7 @@
                 <label for="service2">🍽️ بوفيه ريشستا المتكامل</label><br>
 
                 <input type="checkbox" id="service3" name="service" value="ترتيب صواني العشاء" onchange="updateBookingOptions()">
-                <label for="for="service3"">🍴 ترتيب صواني العشاء</label><br>
+                <label for="service3">🍴 ترتيب صواني العشاء</label><br>
                 
                 <div id="additionalOptions">
                 </div>
@@ -101,7 +101,7 @@
                 </button>
                 
                 <div style="margin-top: 20px; padding: 10px; border: 1px dashed #ccc;">
-                    <h4>خدمات إضافية (غير متوفرة حالياً):</h4>
+                    <h4>خدمات إضافية:</h4>
                     <p>إذا كانت لديك خدمة أخرى غير موجودة، يرجى كتابتها في رسالة الواتساب أو التواصل معنا. <span style="font-weight: bold;">ونسعد بخدمتكم 🌿</span></p>
                 </div>
             </form>
@@ -122,6 +122,7 @@
             extraDatesSweet: 120,
             extraStaff: 150,
             extraBuffet100: 500,
+            extraFruit: 200, // السعر الجديد للفواكه
         };
 
         // **********************************
@@ -221,7 +222,10 @@
                             <label style="font-weight: bold;">💧 كراتين ماء (+${PRICES.extraWater} ر.س للكرتون):</label>
                             <input type="number" id="extraWater2" min="0" value="0" onchange="calculateTotal()" style="width: 50px; text-align: center;">
                             <span style="font-size: 0.9em;"> (أدخل الكمية)</span><br>
-                            
+
+                            <label style="font-weight: bold; margin-top: 10px;">🍇 سلة فواكه طازجة (+${PRICES.extraFruit} ر.س):</label>
+                            <input type="number" id="extraFruit2" min="0" value="0" onchange="calculateTotal()" style="width: 50px; text-align: center;">
+                            <span style="font-size: 0.9em;"> (أدخل  الكمية المطلوبة)</span><br>
                             <label style="font-weight: bold; margin-top: 10px;">👥 إضافة كوادر (+${PRICES.extraStaff} ر.س للكادر):</label>
                             <input type="number" id="extraStaff2" min="0" value="0" onchange="calculateTotal()" style="width: 50px; text-align: center;">
                             <span style="font-size: 0.9em;"> (أدخل عدد الكوادر)</span>
@@ -330,6 +334,15 @@
                     currentTotal += waterQty * PRICES.extraWater;
                     details.push(`+ ${waterQty} كرتون ماء إضافي (+${waterQty * PRICES.extraWater} ر.س)`);
                 }
+                
+                // *** حساب الفواكه ***
+                const fruitQty = parseInt(document.getElementById('extraFruit2')?.value || 0);
+                if (fruitQty > 0) {
+                    currentTotal += fruitQty * PRICES.extraFruit;
+                    details.push(`+ ${fruitQty} سلة فواكه طازجة (+${fruitQty * PRICES.extraFruit} ر.س)`);
+                }
+                // *******************
+
                 const extraStaffQty = parseInt(document.getElementById('extraStaff2')?.value || 0);
                 if (extraStaffQty > 0) {
                     currentTotal += extraStaffQty * PRICES.extraStaff;
