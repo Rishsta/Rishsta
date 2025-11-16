@@ -86,7 +86,7 @@
                 <label for="service2">🍽️ بوفيه ريشستا المتكامل</label><br>
 
                 <input type="checkbox" id="service3" name="service" value="ترتيب صواني العشاء" onchange="updateBookingOptions()">
-                <label for="service3">🍴 ترتيب صواني العشاء</label><br>
+                <label for="for="service3"">🍴 ترتيب صواني العشاء</label><br>
                 
                 <div id="additionalOptions">
                 </div>
@@ -327,3 +327,124 @@
                 }
                 const waterQty = parseInt(document.getElementById('extraWater2')?.value || 0);
                 if (waterQty > 0) {
+                    currentTotal += waterQty * PRICES.extraWater;
+                    details.push(`+ ${waterQty} كرتون ماء إضافي (+${waterQty * PRICES.extraWater} ر.س)`);
+                }
+                const extraStaffQty = parseInt(document.getElementById('extraStaff2')?.value || 0);
+                if (extraStaffQty > 0) {
+                    currentTotal += extraStaffQty * PRICES.extraStaff;
+                    details.push(`+ ${extraStaffQty} كادر بوفيه إضافي (+${extraStaffQty * PRICES.extraStaff} ر.س)`);
+                }
+            }
+            
+            // --- حساب ترتيب صواني العشاء ---
+            if (document.getElementById('service3').checked) {
+                currentTotal += PRICES.service3Base;
+                details.push(`ترتيب الصواني: السعر الأساسي (7 كوادر) ${PRICES.service3Base} ر.س`);
+                
+                const extraStaffQty = parseInt(document.getElementById('extraStaff3')?.value || 0);
+                if (extraStaffQty > 0) {
+                    currentTotal += extraStaffQty * PRICES.extraStaff;
+                    details.push(`+ ${extraStaffQty} كادر صواني إضافي (+${extraStaffQty * PRICES.extraStaff} ر.س)`);
+                }
+                
+                details.push(`*دفعة الصواني:* ${document.getElementById('numTrays3')?.value || 'غير محدد'}`);
+                details.push(`*عدد الصواني:* ${document.getElementById('numPlates3')?.value || 'غير محدد'}`);
+                details.push(`*بداية الخدمة:* ${document.getElementById('startTime3')?.value || 'غير محدد'}`);
+                details.push(`*المدة بين الدفعات:* ${document.getElementById('duration3')?.value || 'غير محدد'} دقيقة`);
+                details.push(`*انفصال رجال/نساء:* ${document.getElementById('genderSplit3')?.checked ? 'نعم' : 'لا'}`);
+                details.push(`*عدد الكراسي:* ${document.getElementById('numChairs3')?.value || 'غير محدد'}`);
+            }
+
+            totalElement.textContent = currentTotal.toLocaleString();
+            return details;
+        }
+
+        // **********************************
+        // 4. وظيفة إرسال الواتساب ومنطق التسويق المتقاطع
+        // **********************************
+        function confirmBooking() {
+            const clientName = document.getElementById('clientName').value;
+            const eventDate = document.getElementById('eventDate').value;
+            const eventType = document.getElementById('eventType').value;
+            const eventLocation = document.getElementById('eventLocation').value;
+            
+            if (!clientName || !eventDate || !eventType || !eventLocation) {
+                alert('الرجاء تعبئة جميع البيانات الأساسية أولاً.');
+                return;
+            }
+            
+            const isService1Checked = document.getElementById('service1').checked;
+            if (isService1Checked && !document.querySelector('input[name="pkg1"]:checked')) {
+                 alert('الرجاء اختيار باقة الضيافة (العادية، المتوسطة، أو الفخمة) لاستكمال الحجز.');
+                 return;
+            }
+
+            // --- المنطق التسويقي (Cross-selling) ---
+            if (isService1Checked) {
+                const baklavaQty = parseInt(document.getElementById('extraBaklava1')?.value || 0);
+                const datesQty = parseInt(document.getElementById('extraDatesSweet1')?.value || 0);
+                
+                if (baklavaQty === 0 && datesQty === 0) {
+                    const confirmUpsell = confirm(
+                        "✨ متأكد ما تبي تتجمل مع معازيمك أكثر وتجيب لهم حلى فاخر؟\n\n" +
+                        "الحلى يزيد من فخامة ضيافتك ويترك انطباعاً مميزاً!\n\n" +
+                        "اضغط 'إلغاء' للرجوع وإضافة الحلى، أو 'موافق' للمتابعة بدون حلى."
+                    );
+                    
+                    if (!confirmUpsell) {
+                        return; 
+                    }
+                }
+            }
+            
+            const detailsArray = calculateTotal();
+            const finalPrice = totalElement.textContent;
+
+            let whatsappMessage = `*🌟 طلب حجز جديد من موقع ريشستا 🌟*\n\n`;
+            whatsappMessage += `*البيانات الأساسية:*\n`;
+            whatsappMessage += `> العميل: ${clientName}\n`;
+            whatsappMessage += `> نوع المناسبة: ${eventType}\n`;
+            whatsappMessage += `> الموقع: ${eventLocation}\n`;
+            whatsappMessage += `> التاريخ المطلوب: ${eventDate}\n\n`;
+            whatsappMessage += `*📝 ملخص الخدمات المختارة:*\n`;
+            if (detailsArray.length === 0) {
+                whatsappMessage += `> لم يتم اختيار أي خدمة رئيسية.\n`;
+            } else {
+                whatsappMessage += detailsArray.join('\n');
+            }
+            whatsappMessage += `\n*💰 الإجمالي التقديري: ${finalPrice} ر.س*\n\n`;
+            
+            // التوجيه إلى الواتساب
+            const whatsappNumber = '966544512811';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
+            
+            alert(`الإجمالي التقديري: ${finalPrice} ر.س.\n\nسيتم إرسال تفاصيل طلبك الآن عبر الواتساب للمتابعة.`);
+            window.open(whatsappURL, '_blank');
+            closeBookingModal();
+        }
+
+        function checkDateAvailability() {
+            const dateInput = document.getElementById('eventDate').value;
+            const statusElement = document.getElementById('availabilityStatus');
+            
+            if (!dateInput) {
+                statusElement.textContent = "الرجاء اختيار تاريخ أولاً.";
+                statusElement.style.color = 'red';
+                return;
+            }
+            statusElement.textContent = "✅ تم التحقق المبدئي! نؤكد التوافر النهائي بعد استلام الطلب.";
+            statusElement.style.color = 'green';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const formElements = document.getElementById('bookingForm').elements;
+            for (let i = 0; i < formElements.length; i++) {
+                formElements[i].addEventListener('change', updateBookingOptions);
+                formElements[i].addEventListener('input', updateBookingOptions);
+            }
+            updateBookingOptions();
+        });
+    </script>
+</body>
+</html>
