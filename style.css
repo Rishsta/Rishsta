@@ -94,23 +94,24 @@ h1 {
     padding: 0 15px; 
 }
 
+/* ------------------------------------- */
 /* تنسيق مجموعة الأزرار المكدسة (سوشيال ميديا) */
+/* ------------------------------------- */
 .social-buttons-group {
     display: flex;
     flex-direction: column;
-    /* محاذاة المجموعة إلى اليمين (اليسار البصري في RTL) */
-    align-items: flex-end; 
+    /* الحفاظ على توسيط الكتلة الخارجية */
+    align-items: center; 
     gap: 15px;
     margin-top: 30px;
     margin-bottom: 30px;
-    padding-left: 20px; 
 }
 
 /* تنسيق الأزرار الأساسية (لحل مشكلة محاذاة الأيقونة) */
 .social-button {
     display: flex;
     align-items: center;
-    /* توسيط المحتوى بالكامل */
+    /* التعديل: توسيط المحتوى بالكامل */
     justify-content: center; 
     position: relative; 
     width: 90%;
@@ -129,15 +130,18 @@ h1 {
 /* ضبط موضع الأيقونة (لتكون بجوار النص على اليسار البصري) */
 .social-button i {
     font-size: 22px;
-    margin-right: 8px; 
-    margin-left: 0; 
+    /* التعديل: إبعاد الأيقونة عن النص باستخدام الهامش السلبي لتبدو ملتصقة بالاسم */
+    margin-right: -10px; /* لتقليل المسافة بين الاسم والأيقونة */
+    margin-left: 10px; 
     position: relative;
     z-index: 2;
+    order: 1; /* الأيقونة تأتي بعد النص في الفلو لتبدو على اليسار البصري */
 }
 
 .social-button span {
     position: relative;
     z-index: 2;
+    order: 2; /* النص يأتي أولاً لغرض التوسيط */
 }
 
 /* تأثير الموشن جرافيك (Hover Effect) */
@@ -273,21 +277,27 @@ h1 {
 /* ------------------------------------- */
 /* تصحيح محاذاة المربعات (الخيارات داخل النموذج) */
 /* ------------------------------------- */
+
+/* لإجبار المربع على البقاء بجوار النص على نفس السطر */
 .modal-content input[type="checkbox"],
 .modal-content input[type="radio"] {
-    display: inline-block;
-    width: auto;
-    margin-left: 10px;
-    /* التعديل: المحاذاة العمودية */
+    /* التعديل: جعل المربع يطفو لأقصى اليمين */
+    float: right; 
+    margin-right: 0;
+    margin-left: 10px; /* مسافة عن النص */
     vertical-align: middle; 
     position: relative;
-    top: 0px; /* لتقليل المسافة الرأسية */
+    top: 2px; /* لخفض المربع قليلاً لمحاذاة النص */
 }
 
 .modal-content label {
-    vertical-align: middle; 
-    display: inline-block !important; 
+    /* التعديل: إزالة الـ display: block لتمكين float */
+    display: block !important; 
     width: auto;
+    margin-top: 5px;
+    vertical-align: middle; 
+    /* الهامش الأيسر يمنع النص من الالتفاف حول المربع */
+    margin-left: 15px; 
 }
 
 /* لضمان أن كل خيار رئيسي يبدأ في سطر جديد */
@@ -297,27 +307,6 @@ h1 {
     margin-bottom: 10px; 
 }
 
-/* --- تنسيق قوائم المميزات داخل الباقات (لجعلها تتدفق) --- */
-.modal-content fieldset ul {
-    margin-top: 5px; 
-    padding: 0;
-    list-style: none; /* إزالة النقطة التلقائية */
-    text-align: right;
-}
-.modal-content fieldset ul li {
-    /* جعل العناصر تتدفق أفقياً */
-    display: inline-block; 
-    margin-left: 10px;
-    padding: 2px 0;
-    font-size: 0.9em;
-    color: #555;
-    /* خط فاصل خفيف بين العناصر */
-    border-right: 1px solid #ddd;
-    padding-right: 10px;
-}
-.modal-content fieldset ul li:last-child {
-    border-right: none; /* إزالة الفاصل من آخر عنصر */
-}
 /* ------------------------------------- */
 
 .modal-content input[type="text"],
@@ -374,4 +363,24 @@ fieldset label {
     width: calc(100% - 100px); 
     font-weight: normal !important;
     vertical-align: top;
+}
+
+/* تنسيق قوائم المميزات (لتتدفق أفقياً) */
+.modal-content fieldset ul {
+    margin-top: 5px; 
+    padding: 0;
+    list-style: none;
+    text-align: right;
+}
+.modal-content fieldset ul li {
+    display: inline-block; 
+    margin-left: 10px;
+    padding: 2px 0;
+    font-size: 0.9em;
+    color: #555;
+    border-right: 1px solid #ddd;
+    padding-right: 10px;
+}
+.modal-content fieldset ul li:last-child {
+    border-right: none;
 }
