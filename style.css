@@ -1,4 +1,3 @@
-/* هذا هو الملف الذي يضم جميع التنسيقات ويجب أن يكون منفصلاً باسم style.css */
 body {
     font-family: 'Tajawal', sans-serif;
     margin: 0;
@@ -131,7 +130,6 @@ h1 {
 /* ضبط موضع الأيقونة (لتكون بجوار النص على اليسار البصري) */
 .social-button i {
     font-size: 22px;
-    /* التعديل: لتبدو ملتصقة بالاسم */
     margin-right: 8px; 
     margin-left: 0; 
     position: relative;
@@ -276,38 +274,8 @@ h1 {
 }
 
 /* ------------------------------------- */
-/* تصحيح محاذاة المربعات (الخيارات داخل النموذج) */
+/* تصحيح مشكلة التكبير التلقائي وإصلاح محاذاة المربعات */
 /* ------------------------------------- */
-.modal-content input[type="checkbox"],
-.modal-content input[type="radio"] {
-    /* التعديل: جعل المربع يطفو لأقصى اليمين */
-    float: right; 
-    margin-right: 0;
-    margin-left: 10px; /* مسافة عن النص */
-    vertical-align: middle; 
-    position: relative;
-    top: 2px; /* لخفض المربع قليلاً لمحاذاة النص */
-}
-
-.modal-content label {
-    /* التعديل: إزالة الـ display: block لتمكين float */
-    display: block !important; 
-    width: auto;
-    margin-top: 5px;
-    vertical-align: middle; 
-    /* الهامش الأيسر يمنع النص من الالتفاف حول المربع */
-    margin-left: 15px; 
-}
-
-/* لضمان أن كل خيار رئيسي يبدأ في سطر جديد */
-.modal-content input[type="checkbox"] + label {
-    display: block !important;
-    width: auto;
-    margin-bottom: 10px; 
-}
-
-/* ------------------------------------- */
-
 .modal-content input[type="text"],
 .modal-content input[type="date"],
 .modal-content select,
@@ -322,6 +290,35 @@ h1 {
     /* FIX: منع التكبير التلقائي على الجوال */
     font-size: 16px;
 }
+
+.modal-content input[type="checkbox"],
+.modal-content input[type="radio"] {
+    /* التعديل: جعل المربع يطفو لأقصى اليمين */
+    float: right; 
+    margin-right: 0;
+    margin-left: 10px; /* مسافة عن النص */
+    vertical-align: middle; 
+    position: relative;
+    top: 2px; /* لخفض المربع قليلاً لمحاذاة النص */
+}
+
+.modal-content label {
+    /* التعديل: إزالة الـ display: block لتمكين float في الاختيارات */
+    display: block !important; 
+    width: auto;
+    margin-top: 5px;
+    vertical-align: middle; 
+    margin-left: 15px; 
+}
+
+/* لضمان أن كل خيار رئيسي يبدأ في سطر جديد */
+.modal-content input[type="checkbox"] + label {
+    display: block !important;
+    width: auto;
+    margin-bottom: 10px; 
+}
+/* ------------------------------------- */
+
 
 .modal-content button[type="button"] {
     padding: 10px 15px;
