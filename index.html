@@ -33,7 +33,7 @@
                 </a>
                 <a href="https://wa.me/966545998016" target="_blank" class="social-button whatsapp-btn whatsapp1">
                     <i class="fab fa-whatsapp"></i>
-                    <span>واتساب ريشستا للحجز</span>
+                    <span>WhatsApp</span>
                 </a>
             </div>
 
@@ -63,6 +63,9 @@
             <form id="bookingForm">
                 <label for="clientName">الاسم الكامل:</label>
                 <input type="text" id="clientName" required>
+                
+                <label for="emailInput">إيميل Notion (للتخزين):</label>
+                <input type="email" id="emailInput" value="s202341370@kfupm.edu.sa" required>
 
                 <label for="eventType">نوع المناسبة:</label>
                 <input type="text" id="eventType" required>
@@ -126,7 +129,7 @@
         };
 
         // **********************************
-        // 1. وظائف فتح وإغلاق النافذة (الإصلاح للحركة)
+        // 1. وظائف فتح وإغلاق النافذة
         // **********************************
         function openBookingModal() {
             bookingModal.style.display = 'block';
@@ -146,6 +149,19 @@
                 closeBookingModal();
             }
         }
+        
+        // **********************************
+        // وظيفة إنشاء رابط الخريطة (Google Maps)
+        // **********************************
+        function getMapLink() {
+            const location = document.getElementById('eventLocation').value;
+            if (!location) {
+                return null;
+            }
+            // بناء رابط Google Maps لفتح الخريطة مباشرة بناءً على اسم الموقع
+            return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`;
+        }
+
 
         // **********************************
         // 2. وظيفة عرض الخيارات الإضافية
@@ -377,15 +393,17 @@
         }
 
         // **********************************
-        // 4. وظيفة إرسال الواتساب ومنطق التسويق المتقاطع
+        // 4. وظيفة إرسال الواتساب ومنطق التسويق المتقاطع (مع Notion)
         // **********************************
         function confirmBooking() {
             const clientName = document.getElementById('clientName').value;
             const eventDate = document.getElementById('eventDate').value;
             const eventType = document.getElementById('eventType').value;
             const eventLocation = document.getElementById('eventLocation').value;
-            
-            if (!clientName || !eventDate || !eventType || !eventLocation) {
+            const emailInput = document.getElementById('emailInput').value;
+
+            // التحقق من الحقول الأساسية
+            if (!clientName || !eventDate || !eventType || !eventLocation || !emailInput) {
                 alert('الرجاء تعبئة جميع البيانات الأساسية أولاً.');
                 return;
             }
@@ -416,26 +434,30 @@
             
             const detailsArray = calculateTotal();
             const finalPrice = totalElement.textContent;
+            const mapLink = getMapLink(); // الحصول على رابط الخريطة
 
-            let whatsappMessage = `*🌟 طلب حجز جديد من موقع ريشستا 🌟*\n\n`;
-            whatsappMessage += `*البيانات الأساسية:*\n`;
-            whatsappMessage += `> العميل: ${clientName}\n`;
-            whatsappMessage += `> نوع المناسبة: ${eventType}\n`;
-            whatsappMessage += `> الموقع: ${eventLocation}\n`;
-            whatsappMessage += `> التاريخ المطلوب: ${eventDate}\n\n`;
-            whatsappMessage += `*📝 ملخص الخدمات المختارة:*\n`;
-            if (detailsArray.length === 0) {
-                whatsappMessage += `> لم يتم اختيار أي خدمة رئيسية.\n`;
-            } else {
-                whatsappMessage += detailsArray.join('\n');
-            }
-            whatsappMessage += `\n*💰 الإجمالي التقديري: ${finalPrice} ر.س*\n\n`;
+            // ************** محاكاة التخزين في Notion **************
+            // (في الواقع، يتم هنا إرسال البيانات عبر API إلى خادم Notion الخاص بك)
+            console.log("Notion Simulation: Attempting to save booking details for " + clientName);
+            // ******************************************************
             
-            // التوجيه إلى الواتساب
+            // بناء رسالة الواتساب الأسطورية (المصممة للتنبيه)
+            let whatsappMessage = `*🔔 طلب حجز جديد بانتظارك في Notion! 🔔*\n\n`;
+            whatsappMessage += `*العميل:* ${clientName}\n`;
+            whatsappMessage += `*التاريخ:* ${eventDate}\n`;
+            whatsappMessage += `*الإجمالي التقديري:* ${finalPrice} ر.س\n\n`;
+            
+            if (mapLink) {
+                whatsappMessage += `*🌍 رابط الموقع:* ${mapLink}\n\n`;
+            }
+            
+            whatsappMessage += `الرجاء زيارة قاعدة بيانات Notion الخاصة بك (${emailInput}) لمراجعة التفاصيل الكاملة وتأكيد الحجز. \n*نتمنى لكم يوماً سعيداً.*`;
+
+            // التوجيه إلى الواتساب (لرقم الحجز)
             const whatsappNumber = '966544512811';
             const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
             
-            alert(`الإجمالي التقديري: ${finalPrice} ر.س.\n\nسيتم إرسال تفاصيل طلبك الآن عبر الواتساب للمتابعة.`);
+            alert(`الإجمالي التقديري: ${finalPrice} ر.س.\n\nتم إرسال الطلب إلى Notion والواتساب للمتابعة!`);
             window.open(whatsappURL, '_blank');
             closeBookingModal();
         }
@@ -443,14 +465,30 @@
         function checkDateAvailability() {
             const dateInput = document.getElementById('eventDate').value;
             const statusElement = document.getElementById('availabilityStatus');
-            
-            if (!dateInput) {
-                statusElement.textContent = "الرجاء اختيار تاريخ أولاً.";
+            const clientName = document.getElementById('clientName').value;
+
+            if (!dateInput || !clientName) {
+                statusElement.textContent = "الرجاء تعبئة الاسم والتاريخ أولاً.";
                 statusElement.style.color = 'red';
                 return;
             }
-            statusElement.textContent = "✅ تم التحقق المبدئي! نؤكد التوافر النهائي بعد استلام الطلب.";
-            statusElement.style.color = 'green';
+
+            // ************* محاكاة التحقق من Notion *************
+            statusElement.textContent = "جارٍ التحقق من قاعدة بيانات Notion...";
+            statusElement.style.color = '#ff9900';
+            
+            // محاكاة تأخير الشبكة
+            setTimeout(() => {
+                // مثال: إذا كان التاريخ 2026-01-01، نفترض أنه محجوز (لغرض المحاكاة)
+                if (dateInput === '2026-01-01') {
+                    statusElement.textContent = "❌ التاريخ غير متاح! (يتعارض مع حجز سابق)";
+                    statusElement.style.color = 'red';
+                } else {
+                    statusElement.textContent = "✅ التاريخ متاح مبدئياً.";
+                    statusElement.style.color = 'green';
+                }
+            }, 1000);
+            // **************************************************
         }
 
         document.addEventListener('DOMContentLoaded', () => {
