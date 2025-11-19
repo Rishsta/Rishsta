@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Rishsta | ريشستا</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
@@ -70,8 +70,8 @@
                 <label for="eventLocation">موقع إقامة المناسبة:</label>
                 <input type="text" id="eventLocation" required>
 
-                <label for="eventDate">التاريخ المطلوب (السنة / الشهر / اليوم):</label>
-                <input type="text" id="eventDate" placeholder="2025 / 11 / 30" required>
+                <label for="eventDate">التاريخ المطلوب:</label>
+                <input type="date" id="eventDate" required>
                 <button type="button" onclick="checkDateAvailability()">تحقق من التوافر</button>
                 <p id="availabilityStatus" style="font-weight: bold; margin-top: 10px;"></p>
 
@@ -101,7 +101,7 @@
                 </button>
                 
                 <div style="margin-top: 20px; padding: 10px; border: 1px dashed #ccc;">
-                    <h4>خدمات إضافية (غير متوفرة حالياً):</h4>
+                    <h4>خدمات إضافية:</h4>
                     <p>إذا كانت لديك خدمة أخرى غير موجودة، يرجى كتابتها في رسالة الواتساب أو التواصل معنا. <span style="font-weight: bold;">ونسعد بخدمتكم 🌿</span></p>
                 </div>
             </form>
@@ -399,7 +399,7 @@
                 
                 if (baklavaQty === 0 && datesQty === 0) {
                     const confirmUpsell = confirm(
-                        "✨ متأكد ما تبي تتجمل مع معازيمك أكثر وتجيب لهم حلى فاخر؟\n\n" +
+                        "✨ متأكد ما تبي تتجمل مع معازيمك أكثر وتجيب لهم حلى ؟\n\n" +
                         "الحلى يزيد من فخامة ضيافتك ويترك انطباعاً مميزاً!\n\n" +
                         "اضغط 'إلغاء' للرجوع وإضافة الحلى، أو 'موافق' للمتابعة بدون حلى."
                     );
@@ -460,4 +460,3 @@
     </script>
 </body>
 </html>
-
