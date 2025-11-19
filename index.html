@@ -33,7 +33,7 @@
                 </a>
                 <a href="https://wa.me/966545998016" target="_blank" class="social-button whatsapp-btn whatsapp1">
                     <i class="fab fa-whatsapp"></i>
-                    <span>WhatsApp</span>
+                    <span>واتساب ريشستا للحجز</span>
                 </a>
             </div>
 
@@ -126,15 +126,19 @@
         };
 
         // **********************************
-        // 1. وظائف فتح وإغلاق النافذة
+        // 1. وظائف فتح وإغلاق النافذة (الإصلاح للحركة)
         // **********************************
         function openBookingModal() {
             bookingModal.style.display = 'block';
+            // الإصلاح: منع حركة الخلفية عند فتح النافذة
+            document.body.style.overflow = 'hidden'; 
             updateBookingOptions();
         }
 
         function closeBookingModal() {
             bookingModal.style.display = 'none';
+            // الإصلاح: السماح بحركة الخلفية عند إغلاق النافذة
+            document.body.style.overflow = 'auto'; 
         }
 
         window.onclick = function(event) {
