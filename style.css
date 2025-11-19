@@ -132,15 +132,15 @@ h1 {
     overflow: hidden;
 }
 
-/* ضبط موضع الأيقونة (الحل: استخدام position: absolute لوضع الأيقونة في أقصى اليسار) */
+/* ضبط موضع الأيقونة (لحل مشكلة المحاذاة) */
 .social-button i {
     font-size: 22px;
-    /* إزالة المسافة القديمة */
     margin-right: 0; 
     margin-left: 0; 
-    /* تحديد موضع الأيقونة لتبقى على اليسار البصري */
+    /* التعديل: وضع الأيقونة في أقصى اليسار البصري */
     position: absolute;
     left: 15px; 
+    right: auto;
     z-index: 2;
 }
 
@@ -281,32 +281,30 @@ h1 {
 }
 
 /* ------------------------------------- */
-/* تصحيح محاذاة المربعات (الطلبات الجديدة) */
+/* تصحيح محاذاة المربعات (الخيارات داخل النموذج) */
 /* ------------------------------------- */
 .modal-content input[type="checkbox"],
 .modal-content input[type="radio"] {
     display: inline-block;
     width: auto;
     margin-left: 10px;
-    /* تصحيح المحاذاة العمودية */
+    /* التعديل: المحاذاة العمودية */
     vertical-align: middle; 
 }
 
 .modal-content label {
-    /* تصحيح المحاذاة العمودية للنص */
+    /* التعديل: المحاذاة العمودية للنص */
     vertical-align: middle; 
-    /* إزالة الـ display: block الموروثة من فوق لتجنب كسر السطر */
     display: inline-block !important; 
     width: auto;
 }
 
-/* لضمان أن كل مجموعة خيار/نص تبدأ في سطر جديد (الخيارات الرئيسية) */
+/* لضمان أن كل خيار رئيسي يبدأ في سطر جديد */
 .modal-content input[type="checkbox"] + label {
     display: block !important;
     width: auto;
     margin-bottom: 10px; 
 }
-
 /* ------------------------------------- */
 
 .modal-content input[type="text"],
