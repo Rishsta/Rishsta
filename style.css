@@ -1,3 +1,4 @@
+/* هذا هو الملف الذي يضم جميع التنسيقات ويجب أن يكون منفصلاً باسم style.css */
 body {
     font-family: 'Tajawal', sans-serif;
     margin: 0;
@@ -98,20 +99,26 @@ h1 {
     margin: 5px 0;
 }
 
-/* تنسيق مجموعة الأزرار المكدسة */
+/* ------------------------------------- */
+/* تنسيق مجموعة الأزرار المكدسة (سوشيال ميديا) */
+/* ------------------------------------- */
 .social-buttons-group {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    /* محاذاة المجموعة إلى اليمين (اليسار البصري في RTL) */
+    align-items: flex-end; 
     gap: 15px;
     margin-top: 30px;
     margin-bottom: 30px;
+    padding-left: 20px; 
 }
 
+/* تنسيق الأزرار الأساسية (شامل تنسيق الموشن جرافيك) */
 .social-button {
     display: flex;
     align-items: center;
-    justify-content: center;
+    /* محاذاة المحتوى داخل الزر إلى اليمين */
+    justify-content: flex-end; 
     width: 90%;
     max-width: 300px;
     padding: 12px 20px;
@@ -270,6 +277,30 @@ h1 {
     font-weight: 600;
     color: #333;
 }
+
+/* تنسيق الاختيارات الرئيسية لربط الزر بالنص (تم تعديل هذا الجزء) */
+.modal-content input[type="checkbox"],
+.modal-content input[type="radio"] {
+    display: inline-block;
+    width: auto;
+    margin-left: 10px;
+    vertical-align: top;
+}
+
+/* لضمان أن كل مجموعة خيار/نص تبدأ في سطر جديد (الخيارات الرئيسية) */
+.modal-content input[type="checkbox"] + label {
+    display: block;
+    width: auto;
+    margin-bottom: 10px; 
+}
+
+/* لضمان أن كل مجموعة خيار/نص تبدأ في سطر جديد (خيارات الباقات) */
+.modal-content input[type="radio"] + label {
+    display: inline-block;
+    width: auto;
+    margin-bottom: 10px; 
+}
+
 
 .modal-content input[type="text"],
 .modal-content input[type="date"],
