@@ -70,9 +70,10 @@
                 <label for="eventLocation">موقع إقامة المناسبة:</label>
                 <input type="text" id="eventLocation" required>
 
-                <label for="eventDate">التاريخ المطلوب (السنة / الشهر / اليوم):</label>
-                <input type="text" id="eventDate" placeholder="2025 / 11 / 30" required>
-                <button type="button" onclick="checkDateAvailability()">تحقق من التوافر</button>
+<label for="eventDate">التاريخ المطلوب:</label>
+<input type="date" id="eventDate" required> 
+
+<button type="button" onclick="checkDateAvailability()">تحقق من التوافر</button>
                 <p id="availabilityStatus" style="font-weight: bold; margin-top: 10px;"></p>
 
                 <hr>
@@ -460,3 +461,4 @@
     </script>
 </body>
 </html>
+
