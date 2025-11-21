@@ -51,6 +51,9 @@
                 <label for="clientName">الاسم الكامل:</label>
                 <input type="text" id="clientName" required>
 
+                <label for="clientPhone">رقم الجوال:</label>
+                <input type="tel" id="clientPhone" placeholder="05xxxxxxxx" required>
+
                 <label for="eventType">نوع المناسبة:</label>
                 <input type="text" id="eventType" required>
 
@@ -131,6 +134,7 @@
 
         function updateBookingOptions() {
             let optionsHtml = '';
+            // --- ضيافة ريشستا الأنيقة ---
             if (document.getElementById('service1').checked) {
                 optionsHtml += `
                     <fieldset style="border: 1px solid #ff9900; padding: 10px; margin-top: 15px;">
@@ -160,6 +164,7 @@
                         </div>
                     </fieldset>`;
             }
+            // --- بوفيه ريشستا المتكامل ---
             if (document.getElementById('service2').checked) {
                 optionsHtml += `
                     <fieldset style="border: 1px solid #25D366; padding: 10px; margin-top: 15px;">
@@ -180,6 +185,7 @@
                         </div>
                     </fieldset>`;
             }
+            // --- ترتيب صواني العشاء ---
             if (document.getElementById('service3').checked) {
                 optionsHtml += `
                     <fieldset style="border: 1px solid #555; padding: 10px; margin-top: 15px;">
@@ -214,40 +220,51 @@
             let currentTotal = 0;
             let details = [];
 
+            // حساب الضيافة
             if (document.getElementById('service1').checked) {
                 const selectedPackage = document.querySelector('input[name="pkg1"]:checked');
                 let pkgPrice = 0;
                 if (selectedPackage) {
                     pkgPrice = parseFloat(selectedPackage.dataset.price);
                     currentTotal += pkgPrice;
-                    details.push(`الضيافة: ${selectedPackage.value} - ${pkgPrice} ر.س`);
+                    details.push(`ضيافة: ${selectedPackage.value} - ${pkgPrice} ر.س`);
                 }
                 const waterQty = parseInt(document.getElementById('extraWater1')?.value || 0);
-                currentTotal += waterQty * PRICES.extraWater;
+                if(waterQty > 0) { currentTotal += waterQty * PRICES.extraWater; details.push(`+ ${waterQty} ماء (ضيافة)`); }
                 const baklavaQty = parseInt(document.getElementById('extraBaklava1')?.value || 0);
-                currentTotal += baklavaQty * PRICES.extraBaklava;
+                if(baklavaQty > 0) { currentTotal += baklavaQty * PRICES.extraBaklava; details.push(`+ ${baklavaQty} بقلاوة`); }
                 const datesQty = parseInt(document.getElementById('extraDatesSweet1')?.value || 0);
-                currentTotal += datesQty * PRICES.extraDatesSweet;
+                if(datesQty > 0) { currentTotal += datesQty * PRICES.extraDatesSweet; details.push(`+ ${datesQty} حلى تمر`); }
                 const extraStaffQty = parseInt(document.getElementById('extraStaff1')?.value || 0);
-                currentTotal += extraStaffQty * PRICES.extraStaff;
+                if(extraStaffQty > 0) { currentTotal += extraStaffQty * PRICES.extraStaff; details.push(`+ ${extraStaffQty} كادر (ضيافة)`); }
             }
             
+            // حساب البوفيه
             if (document.getElementById('service2').checked) {
                 currentTotal += PRICES.service2Base;
+                details.push(`بوفيه: السعر الأساسي (300 شخص) - ${PRICES.service2Base} ر.س`);
+
                 const extraGuestsQty = parseInt(document.getElementById('extraGuests2')?.value || 0);
-                currentTotal += extraGuestsQty * PRICES.extraBuffet100;
+                if(extraGuestsQty > 0) { 
+                    currentTotal += extraGuestsQty * PRICES.extraBuffet100;
+                    details.push(`+ ${extraGuestsQty * 100} شخص إضافي`); 
+                }
                 const waterQty = parseInt(document.getElementById('extraWater2')?.value || 0);
-                currentTotal += waterQty * PRICES.extraWater;
+                if(waterQty > 0) { currentTotal += waterQty * PRICES.extraWater; details.push(`+ ${waterQty} ماء (بوفيه)`); }
                 const fruitQty = parseInt(document.getElementById('extraFruit2')?.value || 0);
-                currentTotal += fruitQty * PRICES.extraFruit;
+                if(fruitQty > 0) { currentTotal += fruitQty * PRICES.extraFruit; details.push(`+ ${fruitQty} فواكه`); }
                 const extraStaffQty = parseInt(document.getElementById('extraStaff2')?.value || 0);
-                currentTotal += extraStaffQty * PRICES.extraStaff;
+                if(extraStaffQty > 0) { currentTotal += extraStaffQty * PRICES.extraStaff; details.push(`+ ${extraStaffQty} كادر (بوفيه)`); }
             }
             
+            // حساب الصواني
             if (document.getElementById('service3').checked) {
                 currentTotal += PRICES.service3Base;
+                details.push(`ترتيب الصواني: (7 كوادر) - ${PRICES.service3Base} ر.س`);
+                details.push(`(دفعات: ${document.getElementById('numTrays3')?.value || '-'}, صواني: ${document.getElementById('numPlates3')?.value || '-'})`);
+
                 const extraStaffQty = parseInt(document.getElementById('extraStaff3')?.value || 0);
-                currentTotal += extraStaffQty * PRICES.extraStaff;
+                if(extraStaffQty > 0) { currentTotal += extraStaffQty * PRICES.extraStaff; details.push(`+ ${extraStaffQty} كادر (صواني)`); }
             }
 
             totalElement.textContent = currentTotal.toLocaleString();
@@ -263,6 +280,7 @@
 
             return {
                 clientName: document.getElementById('clientName').value,
+                clientPhone: document.getElementById('clientPhone').value, // إضافة الرقم للبيانات
                 adminEmail: HIDDEN_ADMIN_EMAIL, 
                 eventDate: document.getElementById('eventDate').value,
                 eventType: document.getElementById('eventType').value,
@@ -287,12 +305,13 @@
 
         async function confirmBooking() {
             const clientName = document.getElementById('clientName').value;
+            const clientPhone = document.getElementById('clientPhone').value;
             const eventDate = document.getElementById('eventDate').value;
             const eventType = document.getElementById('eventType').value;
             const eventLocation = document.getElementById('eventLocation').value;
 
-            if (!clientName || !eventDate || !eventType || !eventLocation) {
-                alert('الرجاء تعبئة جميع البيانات الأساسية أولاً.');
+            if (!clientName || !clientPhone || !eventDate || !eventType || !eventLocation) {
+                alert('الرجاء تعبئة جميع البيانات الأساسية (الاسم، الجوال، التاريخ، المناسبة، الموقع).');
                 return;
             }
             
@@ -313,24 +332,15 @@
             
             const bookingData = collectDataForWebhook();
             
-            // إرسال البيانات إلى Notion في الخلفية (صامت)
+            // إرسال البيانات إلى Notion
             sendToNotion(bookingData); 
             
-            // بناء رسالة الواتساب (بدون ذكر Notion)
+            // بناء رسالة الواتساب
             let whatsappMessage = `*🌟 طلب حجز جديد - ريشستا 🌟*\n\n`;
-            whatsappMessage += `*العميل:* ${bookingData.clientName}\n`;
-            whatsappMessage += `*التاريخ:* ${bookingData.eventDate}\n`;
-            whatsappMessage += `*المناسبة:* ${bookingData.eventType}\n`;
-            whatsappMessage += `*الموقع:* ${bookingData.eventLocation}\n`;
-            
-            // تفاصيل الموقع
-            if (bookingData.mapLink) {
-                whatsappMessage += `*📍 رابط الموقع (Google Maps):*\n${bookingData.mapLink}\n\n`;
-            }
-
-            whatsappMessage += `*📝 الخدمات المختارة:*\n${bookingData.detailedBreakdown}\n\n`;
-            whatsappMessage += `*💰 الإجمالي التقديري:* ${bookingData.finalPriceText}\n\n`;
-            whatsappMessage += `يرجى تأكيد الحجز.`;
+            whatsappMessage += `*العميل:* ${bookingData.clientName}\n*الجوال:* ${bookingData.clientPhone}\n*التاريخ:* ${bookingData.eventDate}\n*المناسبة:* ${bookingData.eventType}\n`;
+            if (bookingData.mapLink) whatsappMessage += `*الموقع:* ${bookingData.mapLink}\n\n`;
+            whatsappMessage += `*📝 الخدمات المختارة:*\n- ${bookingData.detailedBreakdown}\n\n`;
+            whatsappMessage += `*💰 الإجمالي التقديري:* ${bookingData.finalPriceText}`;
 
             const whatsappNumber = '966544512811';
             const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
@@ -348,7 +358,7 @@
                 statusElement.style.color = 'red';
                 return;
             }
-            statusElement.textContent = "✅ التاريخ متاح مبدئياً (يتم التأكيد النهائي بعد إرسال الطلب).";
+            statusElement.textContent = "✅ التاريخ متاح مبدئياً.";
             statusElement.style.color = 'green';
         }
 
