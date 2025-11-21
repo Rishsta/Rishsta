@@ -1,12 +1,122 @@
-<script>
-        // **********************************
-        // 1. المتغيرات والأسعار الأساسية
-        // **********************************
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Rishsta | ريشستا</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="phone-frame">
+        <div class="profile-container">
+
+            <div class="profile-picture">
+                <img src="photo_2025-11-10_16-46-23.jpg" alt="Rishsta Logo"> 
+            </div>
+            
+            <h1>Rishsta</h1>
+
+            <div class="description-text">
+                <p>أفراحكم تبدأ مع ريشستا</p>
+            </div>
+            
+            <div class="social-buttons-group">
+                <a href="https://www.tiktok.com/@rishsta" target="_blank" class="social-button tiktok-btn">
+                    <i class="fab fa-tiktok"></i>
+                    <span>TikTok</span>
+                </a>
+                <a href="https://www.snapchat.com/add/RISHSTA-1" target="_blank" class="social-button snapchat-btn">
+                    <i class="fab fa-snapchat-ghost"></i>
+                    <span>Snapchat</span>
+                </a>
+                <a href="https://wa.me/966545998016" target="_blank" class="social-button whatsapp-btn whatsapp1">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>WhatsApp</span>
+                </a>
+            </div>
+
+            <div class="extra-button-group">
+                <a href="#" class="main-booking-button" onclick="openBookingModal()" style="margin-top: 15px;">
+                    🌟 ابدأ حجز الباقات والخدمات الآن
+                </a>
+            </div>
+
+        </div>
+    </div>
+    
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeBookingModal()">×</span>
+            <h2>📅 بدء حجز الخدمات مع ريشستا</h2>
+            
+            <p style="color: red; font-weight: bold; margin-bottom: 15px;">
+                *ملاحظة: هذه الأسعار خاصة بحفلات الأعراس والمناسبات الكبرى.*
+            </p>
+            <p style="font-size: 0.9em; margin-bottom: 20px; padding: 10px; border: 1px dashed #ff9900;">
+                مدة تواجد الكوادر هي **6 ساعات**، مثال: يبدأ التواجد 5:30 مساءً وينتهي 11:30 مساءً.
+            </p>
+            
+            <p>الرجاء تعبئة بيانات الحجز الأساسية:</p>
+
+            <form id="bookingForm">
+                <label for="clientName">الاسم الكامل:</label>
+                <input type="text" id="clientName" required>
+                
+                <label for="emailInput">إيميل Notion (للتخزين):</label>
+                <input type="email" id="emailInput" value="s202341370@kfupm.edu.sa" required>
+
+                <label for="eventType">نوع المناسبة:</label>
+                <input type="text" id="eventType" required>
+
+                <label for="eventLocation">موقع إقامة المناسبة:</label>
+                <input type="text" id="eventLocation" required>
+
+                <label for="eventDate">التاريخ المطلوب:</label>
+                <input type="date" id="eventDate" required>
+                <button type="button" onclick="checkDateAvailability()">تحقق من التوافر</button>
+                <p id="availabilityStatus" style="font-weight: bold; margin-top: 10px;"></p>
+
+                <hr>
+                
+                <h3 style="margin-top: 20px;">اختر الخدمات المطلوبة (يمكن اختيار أكثر من خدمة):</h3>
+                
+                <input type="checkbox" id="service1" name="service" value="ضيافة ريشستا" onchange="updateBookingOptions()">
+                <label for="service1">✨ ضيافة ريشستا </label>
+
+                <input type="checkbox" id="service2" name="service" value="بوفيه منوع" onchange="updateBookingOptions()">
+                <label for="service2">🍽️ بوفيه ريشستا المتكامل</label>
+
+                <input type="checkbox" id="service3" name="service" value="ترتيب صواني العشاء" onchange="updateBookingOptions()">
+                <label for="service3">🍴 ترتيب صواني العشاء</label>
+                
+                <div id="additionalOptions">
+                </div>
+                
+                <hr>
+                
+                <h3 style="margin-top: 20px;">ملخص وتأكيد الحجز:</h3>
+                <p>الإجمالي التقديري: <span id="totalPrice" style="color: #ff9900; font-size: 1.5em; font-weight: bold;">0</span> ر.س</p>
+                
+                <button type="button" onclick="confirmBooking()" style="background-color: #25D366; color: white; padding: 15px; border: none; border-radius: 8px; margin-top: 15px; width: 100%;">
+                    إرسال الطلب والتفاصيل عبر الواتساب
+                </button>
+                
+                <div style="margin-top: 20px; padding: 10px; border: 1px dashed #ccc;">
+                    <h4>خدمات إضافية:</h4>
+                    <p>إذا كانت لديك خدمة أخرى غير موجودة، يرجى كتابتها في رسالة الواتساب أو التواصل معنا. <span style="font-weight: bold;">ونسعد بخدمتكم 🌿</span></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
         const bookingModal = document.getElementById('bookingModal');
         const totalElement = document.getElementById('totalPrice');
         const additionalOptionsDiv = document.getElementById('additionalOptions');
         
-        // رابط Make.com الخاص بك
+        // رابط Webhook الخاص بـ Make.com
         const WEBHOOK_URL = 'https://hook.us2.make.com/2sbytwqqg9mqm0dy1jjdltumrer3t5ki';
 
         const PRICES = {
@@ -21,17 +131,16 @@
             extraFruit: 200, 
         };
 
-        // **********************************
-        // 2. وظائف فتح وإغلاق النافذة
-        // **********************************
         function openBookingModal() {
             bookingModal.style.display = 'block';
+            // منع التمرير في الخلفية
             document.body.style.overflow = 'hidden'; 
             updateBookingOptions();
         }
 
         function closeBookingModal() {
             bookingModal.style.display = 'none';
+            // إعادة التمرير في الخلفية
             document.body.style.overflow = 'auto'; 
         }
 
@@ -41,26 +150,18 @@
             }
         }
         
-        // **********************************
-        // 3. وظيفة إنشاء رابط الخريطة (Google Maps)
-        // **********************************
         function getMapLink() {
             const location = document.getElementById('eventLocation').value;
             if (!location) {
                 return null;
             }
-            // بناء رابط Google Maps لفتح الخريطة مباشرة بناءً على اسم الموقع
             return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`;
         }
 
-
-        // **********************************
-        // 4. وظيفة عرض الخيارات الإضافية
-        // **********************************
         function updateBookingOptions() {
             let optionsHtml = '';
 
-            // --- ضيافة ريشستا الأنيقة ---
+            // خيارات الضيافة
             if (document.getElementById('service1').checked) {
                 optionsHtml += `
                     <fieldset style="border: 1px solid #ff9900; padding: 10px; margin-top: 15px;">
@@ -112,7 +213,7 @@
                     </fieldset>`;
             }
 
-            // --- بوفيه ريشستا المتكامل ---
+            // خيارات البوفيه
             if (document.getElementById('service2').checked) {
                 optionsHtml += `
                     <fieldset style="border: 1px solid #25D366; padding: 10px; margin-top: 15px;">
@@ -145,7 +246,7 @@
                     </fieldset>`;
             }
 
-            // --- ترتيب صواني العشاء ---
+            // خيارات الصواني
             if (document.getElementById('service3').checked) {
                 optionsHtml += `
                     <fieldset style="border: 1px solid #555; padding: 10px; margin-top: 15px;">
@@ -187,163 +288,79 @@
             calculateTotal();
         }
 
-        // **********************************
-        // 5. وظيفة حساب الإجمالي
-        // **********************************
+        // وظيفة الحسابات
         function calculateTotal() {
             let currentTotal = 0;
             let details = [];
 
-            // --- حساب ضيافة ريشستا ---
             if (document.getElementById('service1').checked) {
                 const selectedPackage = document.querySelector('input[name="pkg1"]:checked');
                 let pkgPrice = 0;
-                let pkgStaff = 0;
-
                 if (selectedPackage) {
                     pkgPrice = parseFloat(selectedPackage.dataset.price);
-                    pkgStaff = parseInt(selectedPackage.dataset.staff);
                     currentTotal += pkgPrice;
-                    details.push(`الضيافة: ${selectedPackage.value} (+${pkgStaff} كوادر) - السعر الأساسي: ${pkgPrice} ر.س`);
-                } else {
-                    details.push("الضيافة: لم يتم اختيار الباقة الأساسية. (يجب اختيار باقة)");
+                    details.push(`الضيافة: ${selectedPackage.value} - ${pkgPrice} ر.س`);
                 }
-
                 const waterQty = parseInt(document.getElementById('extraWater1')?.value || 0);
-                if (waterQty > 0) {
-                    currentTotal += waterQty * PRICES.extraWater;
-                    details.push(`+ ${waterQty} كرتون ماء إضافي (+${waterQty * PRICES.extraWater} ر.س)`);
-                }
+                currentTotal += waterQty * PRICES.extraWater;
                 const baklavaQty = parseInt(document.getElementById('extraBaklava1')?.value || 0);
-                if (baklavaQty > 0) {
-                    currentTotal += baklavaQty * PRICES.extraBaklava;
-                    details.push(`+ ${baklavaQty} مجموعة حلا/بقلاوة (+${baklavaQty * PRICES.extraBaklava} ر.س)`);
-                }
+                currentTotal += baklavaQty * PRICES.extraBaklava;
                 const datesQty = parseInt(document.getElementById('extraDatesSweet1')?.value || 0);
-                if (datesQty > 0) {
-                    currentTotal += datesQty * PRICES.extraDatesSweet;
-                    details.push(`+ ${datesQty} مجموعة حلى التمر (+${datesQty * PRICES.extraDatesSweet} ر.س)`);
-                }
+                currentTotal += datesQty * PRICES.extraDatesSweet;
                 const extraStaffQty = parseInt(document.getElementById('extraStaff1')?.value || 0);
-                if (extraStaffQty > 0) {
-                    currentTotal += extraStaffQty * PRICES.extraStaff;
-                    details.push(`+ ${extraStaffQty} كادر ضيافة إضافي (+${extraStaffQty * PRICES.extraStaff} ر.س)`);
-                }
+                currentTotal += extraStaffQty * PRICES.extraStaff;
             }
             
-            // --- حساب بوفيه ريشستا ---
             if (document.getElementById('service2').checked) {
                 currentTotal += PRICES.service2Base;
-                details.push(`البوفيه: السعر الأساسي (300 شخص) ${PRICES.service2Base} ر.س`);
-
                 const extraGuestsQty = parseInt(document.getElementById('extraGuests2')?.value || 0);
-                if (extraGuestsQty > 0) {
-                    currentTotal += extraGuestsQty * PRICES.extraBuffet100;
-                    details.push(`+ ${extraGuestsQty * 100} شخص إضافي (مضاعف 100) (+${extraGuestsQty * PRICES.extraBuffet100} ر.س)`);
-                }
+                currentTotal += extraGuestsQty * PRICES.extraBuffet100;
                 const waterQty = parseInt(document.getElementById('extraWater2')?.value || 0);
-                if (waterQty > 0) {
-                    currentTotal += waterQty * PRICES.extraWater;
-                    details.push(`+ ${waterQty} كرتون ماء إضافي (+${waterQty * PRICES.extraWater} ر.س)`);
-                }
-                
+                currentTotal += waterQty * PRICES.extraWater;
                 const fruitQty = parseInt(document.getElementById('extraFruit2')?.value || 0);
-                if (fruitQty > 0) {
-                    currentTotal += fruitQty * PRICES.extraFruit;
-                    details.push(`+ ${fruitQty} سلة فواكه طازجة (+${fruitQty * PRICES.extraFruit} ر.س)`);
-                }
-
+                currentTotal += fruitQty * PRICES.extraFruit;
                 const extraStaffQty = parseInt(document.getElementById('extraStaff2')?.value || 0);
-                if (extraStaffQty > 0) {
-                    currentTotal += extraStaffQty * PRICES.extraStaff;
-                    details.push(`+ ${extraStaffQty} كادر بوفيه إضافي (+${extraStaffQty * PRICES.extraStaff} ر.س)`);
-                }
+                currentTotal += extraStaffQty * PRICES.extraStaff;
             }
             
-            // --- حساب ترتيب صواني العشاء ---
             if (document.getElementById('service3').checked) {
                 currentTotal += PRICES.service3Base;
-                details.push(`ترتيب الصواني: السعر الأساسي (7 كوادر) ${PRICES.service3Base} ر.س`);
-                
                 const extraStaffQty = parseInt(document.getElementById('extraStaff3')?.value || 0);
-                if (extraStaffQty > 0) {
-                    currentTotal += extraStaffQty * PRICES.extraStaff;
-                    details.push(`+ ${extraStaffQty} كادر صواني إضافي (+${extraStaffQty * PRICES.extraStaff} ر.س)`);
-                }
-                
-                details.push(`*دفعة الصواني:* ${document.getElementById('numTrays3')?.value || 'غير محدد'}`);
-                details.push(`*عدد الصواني:* ${document.getElementById('numPlates3')?.value || 'غير محدد'}`);
-                details.push(`*بداية الخدمة:* ${document.getElementById('startTime3')?.value || 'غير محدد'}`);
-                details.push(`*المدة بين الدفعات:* ${document.getElementById('duration3')?.value || 'غير محدد'} دقيقة`);
-                details.push(`*انفصال رجال/نساء:* ${document.getElementById('genderSplit3')?.checked ? 'نعم' : 'لا'}`);
-                details.push(`*عدد الكراسي:* ${document.getElementById('numChairs3')?.value || 'غير محدد'}`);
+                currentTotal += extraStaffQty * PRICES.extraStaff;
             }
 
             totalElement.textContent = currentTotal.toLocaleString();
             return { total: currentTotal, details: details };
         }
 
-        // **********************************
-        // 6. وظيفة تجهيز البيانات للـ Webhook
-        // **********************************
         function collectDataForWebhook() {
             const calculatedData = calculateTotal();
-            const selectedServices = [];
-            if (document.getElementById('service1').checked) selectedServices.push(document.getElementById('service1').value);
-            if (document.getElementById('service2').checked) selectedServices.push(document.getElementById('service2').value);
-            if (document.getElementById('service3').checked) selectedServices.push(document.getElementById('service3').value);
-            
-            const selectedPackageElement = document.querySelector('input[name="pkg1"]:checked');
-            const selectedPackageName = selectedPackageElement ? selectedPackageElement.value : 'لم يتم الاختيار';
-
             return {
-                // الحقول الأساسية
                 clientName: document.getElementById('clientName').value,
                 adminEmail: document.getElementById('emailInput').value,
                 eventDate: document.getElementById('eventDate').value,
                 eventType: document.getElementById('eventType').value,
                 eventLocation: document.getElementById('eventLocation').value,
-                
-                // تفاصيل الحساب والإجمالي
                 totalPrice: calculatedData.total,
                 finalPriceText: totalElement.textContent + ' ر.س',
                 mapLink: getMapLink(),
-                selectedServices: selectedServices.join(', '),
-                
-                // تفاصيل الخدمات الإضافية في سطر واحد لتخزينها في حقل نصي كبير في Notion
                 detailedBreakdown: calculatedData.details.join('\n- ')
             };
         }
 
-        // **********************************
-        // 7. وظيفة إرسال البيانات إلى Make.com (Notion) - صامتة
-        // **********************************
         async function sendToNotion(data) {
             try {
                 const response = await fetch(WEBHOOK_URL, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify(data)
                 });
-
-                if (!response.ok) {
-                    console.error('Webhook failed to execute. Status:', response.status);
-                    // في حالة فشل الإرسال، يمكنك إرسال تنبيه لك (وليس للعميل)
-                } else {
-                    console.log('Data successfully sent to Notion via Make.com webhook.');
-                }
+                if (!response.ok) console.error('Webhook failed:', response.status);
             } catch (error) {
-                console.error('Error sending data to Webhook:', error);
-                // التعامل مع أخطاء الشبكة
+                console.error('Error sending data:', error);
             }
         }
 
-
-        // **********************************
-        // 8. وظيفة إرسال الواتساب ومنطق التسويق المتقاطع (النهائية)
-        // **********************************
         async function confirmBooking() {
             const clientName = document.getElementById('clientName').value;
             const eventDate = document.getElementById('eventDate').value;
@@ -351,7 +368,6 @@
             const eventLocation = document.getElementById('eventLocation').value;
             const emailInput = document.getElementById('emailInput').value;
 
-            // التحقق من الحقول الأساسية
             if (!clientName || !eventDate || !eventType || !eventLocation || !emailInput) {
                 alert('الرجاء تعبئة جميع البيانات الأساسية أولاً.');
                 return;
@@ -363,35 +379,34 @@
                  return;
             }
 
-            // --- المنطق التسويقي (Cross-selling) ---
-            // (نفس منطق الحلى السابق، يبقى كما هو)
-            // ... (بقية كود التسويق المتقاطع) ...
-
-            const bookingData = collectDataForWebhook();
+            if (isService1Checked) {
+                const baklavaQty = parseInt(document.getElementById('extraBaklava1')?.value || 0);
+                const datesQty = parseInt(document.getElementById('extraDatesSweet1')?.value || 0);
+                
+                if (baklavaQty === 0 && datesQty === 0) {
+                    const confirmUpsell = confirm(
+                        "✨ متأكد ما تبي تتجمل مع معازيمك أكثر وتجيب لهم حلى ؟\n\n" +
+                        "الحلى يزيد من فخامة ضيافتك ويترك انطباعاً مميزاً!\n\n" +
+                        "اضغط 'إلغاء' للرجوع وإضافة الحلى، أو 'موافق' للمتابعة بدون حلى."
+                    );
+                    if (!confirmUpsell) return; 
+                }
+            }
             
-            // 🛑 الخطوة الأسطورية: إرسال البيانات إلى Notion بصمت
+            const bookingData = collectDataForWebhook();
             await sendToNotion(bookingData); 
             
-            // ----------------------------------------------------
-
-            // بناء رسالة الواتساب الأسطورية (المصممة للتنبيه لك فقط)
             let whatsappMessage = `*🔔 طلب حجز جديد بانتظارك في Notion! 🔔*\n\n`;
             whatsappMessage += `*العميل:* ${bookingData.clientName}\n`;
             whatsappMessage += `*التاريخ:* ${bookingData.eventDate}\n`;
             whatsappMessage += `*الإجمالي التقديري:* ${bookingData.finalPriceText}\n\n`;
-            
-            if (bookingData.mapLink) {
-                whatsappMessage += `*🌍 رابط الموقع:* ${bookingData.mapLink}\n\n`;
-            }
-            
-            whatsappMessage += `تم تسجيل الطلب في قاعدة بياناتك. الرجاء مراجعة Notion للموافقة على الحجز أو رفضه.\n\n*نتمنى لكم يوماً سعيداً.*`;
+            if (bookingData.mapLink) whatsappMessage += `*🌍 رابط الموقع:* ${bookingData.mapLink}\n\n`;
+            whatsappMessage += `تم تسجيل الطلب في قاعدة بياناتك. الرجاء مراجعة Notion للموافقة على الحجز.\n\n*نتمنى لكم يوماً سعيداً.*`;
 
-            // التوجيه إلى الواتساب (لرقم الحجز)
             const whatsappNumber = '966544512811';
             const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
             
-            // رسالة التنبيه النهائية للعميل (أصبح الأمر أكثر رسمية)
-            alert(`شكراً لك يا ${clientName}!\n\nتم استلام طلبك (الإجمالي التقديري: ${bookingData.finalPriceText}).\n\nسيتم تحويلك إلى الواتساب الآن لإتمام المراجعة النهائية والتأكيد من قبل فريقنا.`);
+            alert(`شكراً لك يا ${clientName}!\n\nتم استلام طلبك (الإجمالي التقديري: ${bookingData.finalPriceText}).\n\nسيتم تحويلك إلى الواتساب الآن لإتمام المراجعة النهائية.`);
             window.open(whatsappURL, '_blank');
             closeBookingModal();
         }
@@ -406,23 +421,18 @@
                 statusElement.style.color = 'red';
                 return;
             }
-
-            // ************* محاكاة التحقق من التوافر *************
-            statusElement.textContent = "جارٍ التحقق من توافر التاريخ في تحديث النظام الداخلي...";
+            statusElement.textContent = "جارٍ التحقق من توافر التاريخ...";
             statusElement.style.color = '#ff9900';
             
-            // محاكاة تأخير الشبكة
             setTimeout(() => {
-                // مثال: إذا كان التاريخ 2026-01-01، نفترض أنه محجوز (لغرض المحاكاة)
                 if (dateInput === '2026-01-01') {
-                    statusElement.textContent = "❌ التاريخ غير متاح! (الرجاء اختيار تاريخ آخر)";
+                    statusElement.textContent = "❌ التاريخ غير متاح!";
                     statusElement.style.color = 'red';
                 } else {
                     statusElement.textContent = "✅ التاريخ متاح مبدئياً.";
                     statusElement.style.color = 'green';
                 }
             }, 1000);
-            // **************************************************
         }
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -434,3 +444,5 @@
             updateBookingOptions();
         });
     </script>
+</body>
+</html>
