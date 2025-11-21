@@ -14,7 +14,6 @@
             <div class="profile-picture">
                 <img src="photo_2025-11-10_16-46-23.jpg" alt="Rishsta Logo"> 
             </div>
-            
             <h1>Rishsta</h1>
             <div class="description-text"><p>أفراحكم تبدأ مع ريشستا</p></div>
             
@@ -60,8 +59,16 @@
                 <label for="eventType">نوع المناسبة:</label>
                 <input type="text" id="eventType" required>
 
-                <label for="eventLocation">موقع إقامة المناسبة:</label>
-                <input type="text" id="eventLocation" required>
+                <label>موقع إقامة المناسبة:</label>
+                <div class="location-box">
+                    <button type="button" class="map-btn" onclick="openGoogleMapApp()">
+                        📍 اضغط لفتح الخريطة ونسخ الرابط
+                    </button>
+                    <p style="font-size: 0.8em; color: #666; margin: 5px 0;">(بعد فتح الخريطة، حدد موقعك، اضغط مشاركة، انسخ الرابط، ثم الصقه بالأسفل)</p>
+                    
+                    <input type="text" id="eventLocationName" placeholder="اسم القاعة / الاستراحة" required style="margin-top: 5px;">
+                    <input type="url" id="eventLocationLink" placeholder="لصق رابط الموقع هنا (Google Map Link)" required>
+                </div>
 
                 <label for="eventDate">التاريخ المطلوب:</label>
                 <input type="date" id="eventDate" required>
@@ -135,10 +142,15 @@
             if (event.target == bookingModal) closeBookingModal();
         }
         
+        // وظيفة جديدة لفتح تطبيق الخرائط
+        function openGoogleMapApp() {
+            // يحاول فتح التطبيق على الموقع الحالي للمستخدم أو يفتح صفحة جوجل ماب العامة
+            window.open("https://www.google.com/maps", "_blank");
+        }
+
+        // تم تحديث هذه الدالة لتقرأ الرابط الذي وضعه العميل
         function getMapLink() {
-            const location = document.getElementById('eventLocation').value;
-            if (!location) return null;
-            return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`;
+            return document.getElementById('eventLocationLink').value;
         }
 
         function updateBookingOptions() {
@@ -205,7 +217,7 @@
                             <label style="font-weight: bold; margin-top: 10px;">متى تريدنا أن نبدأ (وقت الفتح)؟</label>
                             <input type="time" id="startTime3" onchange="calculateTotal()"><br>
                             <label style="font-weight: bold; margin-top: 10px;">كم المدة بين كل دفعة؟</label>
-                            <input type="number" id="duration3" min="10" value="30" onchange="calculateTotal()"><br>
+                            <input type="number" id="duration3" min="10" value="30" onchange="calculateTotal()">
                         </div>
                         <legend>➕ خيارات إضافية:</legend>
                         <div style="margin-top: 10px;">
@@ -235,34 +247,43 @@
                     details.push(`ضيافة: ${selectedPackage.value} - ${pkgPrice} ر.س`);
                 }
                 const waterQty = parseInt(document.getElementById('extraWater1')?.value || 0);
-                currentTotal += waterQty * PRICES.extraWater;
+                if(waterQty > 0) { currentTotal += waterQty * PRICES.extraWater; details.push(`+ ${waterQty} ماء (ضيافة)`); }
+                
                 const baklavaQty = parseInt(document.getElementById('extraBaklava1')?.value || 0);
-                currentTotal += baklavaQty * PRICES.extraBaklava;
+                if(baklavaQty > 0) { currentTotal += baklavaQty * PRICES.extraBaklava; details.push(`+ ${baklavaQty} بقلاوة`); }
+                
                 const datesQty = parseInt(document.getElementById('extraDatesSweet1')?.value || 0);
-                currentTotal += datesQty * PRICES.extraDatesSweet;
+                if(datesQty > 0) { currentTotal += datesQty * PRICES.extraDatesSweet; details.push(`+ ${datesQty} حلى تمر`); }
+                
                 const extraStaffQty = parseInt(document.getElementById('extraStaff1')?.value || 0);
-                currentTotal += extraStaffQty * PRICES.extraStaff;
+                if(extraStaffQty > 0) { currentTotal += extraStaffQty * PRICES.extraStaff; details.push(`+ ${extraStaffQty} كادر (ضيافة)`); }
             }
             
             if (document.getElementById('service2').checked) {
                 currentTotal += PRICES.service2Base;
                 details.push(`بوفيه: السعر الأساسي (300 شخص) - ${PRICES.service2Base} ر.س`);
                 const extraGuestsQty = parseInt(document.getElementById('extraGuests2')?.value || 0);
-                currentTotal += extraGuestsQty * PRICES.extraBuffet100;
+                if(extraGuestsQty > 0) { 
+                    currentTotal += extraGuestsQty * PRICES.extraBuffet100;
+                    details.push(`+ ${extraGuestsQty * 100} شخص إضافي`); 
+                }
                 const waterQty = parseInt(document.getElementById('extraWater2')?.value || 0);
-                currentTotal += waterQty * PRICES.extraWater;
+                if(waterQty > 0) { currentTotal += waterQty * PRICES.extraWater; details.push(`+ ${waterQty} ماء (بوفيه)`); }
+                
                 const fruitQty = parseInt(document.getElementById('extraFruit2')?.value || 0);
-                currentTotal += fruitQty * PRICES.extraFruit;
+                if(fruitQty > 0) { currentTotal += fruitQty * PRICES.extraFruit; details.push(`+ ${fruitQty} فواكه`); }
+
                 const extraStaffQty = parseInt(document.getElementById('extraStaff2')?.value || 0);
-                currentTotal += extraStaffQty * PRICES.extraStaff;
+                if(extraStaffQty > 0) { currentTotal += extraStaffQty * PRICES.extraStaff; details.push(`+ ${extraStaffQty} كادر (بوفيه)`); }
             }
             
             if (document.getElementById('service3').checked) {
                 currentTotal += PRICES.service3Base;
                 details.push(`ترتيب الصواني: (7 كوادر) - ${PRICES.service3Base} ر.س`);
                 details.push(`(دفعات: ${document.getElementById('numTrays3')?.value || '-'}, صواني: ${document.getElementById('numPlates3')?.value || '-'})`);
+
                 const extraStaffQty = parseInt(document.getElementById('extraStaff3')?.value || 0);
-                currentTotal += extraStaffQty * PRICES.extraStaff;
+                if(extraStaffQty > 0) { currentTotal += extraStaffQty * PRICES.extraStaff; details.push(`+ ${extraStaffQty} كادر (صواني)`); }
             }
 
             totalElement.textContent = currentTotal.toLocaleString();
@@ -282,10 +303,10 @@
                 adminEmail: HIDDEN_ADMIN_EMAIL, 
                 eventDate: document.getElementById('eventDate').value,
                 eventType: document.getElementById('eventType').value,
-                eventLocation: document.getElementById('eventLocation').value,
+                eventLocation: document.getElementById('eventLocationName').value, // الاسم فقط
                 totalPrice: calculatedData.total,
                 finalPriceText: totalElement.textContent + ' ر.س',
-                mapLink: getMapLink(),
+                mapLink: document.getElementById('eventLocationLink').value, // الرابط فقط
                 selectedServices: selectedServices.join(', '),
                 detailedBreakdown: calculatedData.details.join('\n- ')
             };
@@ -306,10 +327,11 @@
             const clientPhone = document.getElementById('clientPhone').value;
             const eventDate = document.getElementById('eventDate').value;
             const eventType = document.getElementById('eventType').value;
-            const eventLocation = document.getElementById('eventLocation').value;
+            const eventLocationName = document.getElementById('eventLocationName').value;
+            const eventLocationLink = document.getElementById('eventLocationLink').value;
 
-            if (!clientName || !clientPhone || !eventDate || !eventType || !eventLocation) {
-                alert('الرجاء تعبئة جميع البيانات الأساسية (الاسم، الجوال، التاريخ، المناسبة، الموقع).');
+            if (!clientName || !clientPhone || !eventDate || !eventType || !eventLocationName || !eventLocationLink) {
+                alert('الرجاء تعبئة جميع البيانات الأساسية ورابط الموقع.');
                 return;
             }
             
@@ -333,7 +355,8 @@
             
             let whatsappMessage = `*🌟 طلب حجز جديد - ريشستا 🌟*\n\n`;
             whatsappMessage += `*العميل:* ${bookingData.clientName}\n*الجوال:* ${bookingData.clientPhone}\n*التاريخ:* ${bookingData.eventDate}\n*المناسبة:* ${bookingData.eventType}\n`;
-            if (bookingData.mapLink) whatsappMessage += `*الموقع:* ${bookingData.mapLink}\n\n`;
+            whatsappMessage += `*الموقع:* ${bookingData.eventLocation}\n`;
+            if (bookingData.mapLink) whatsappMessage += `*رابط الخريطة:* ${bookingData.mapLink}\n\n`;
             whatsappMessage += `*📝 الخدمات المختارة:*\n- ${bookingData.detailedBreakdown}\n\n`;
             whatsappMessage += `*💰 الإجمالي التقديري:* ${bookingData.finalPriceText}`;
 
