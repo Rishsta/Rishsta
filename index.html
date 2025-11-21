@@ -11,29 +11,21 @@
 <body>
     <div class="phone-frame">
         <div class="profile-container">
-
             <div class="profile-picture">
                 <img src="photo_2025-11-10_16-46-23.jpg" alt="Rishsta Logo"> 
             </div>
-            
             <h1>Rishsta</h1>
-
-            <div class="description-text">
-                <p>أفراحكم تبدأ مع ريشستا</p>
-            </div>
+            <div class="description-text"><p>أفراحكم تبدأ مع ريشستا</p></div>
             
             <div class="social-buttons-group">
                 <a href="https://www.tiktok.com/@rishsta" target="_blank" class="social-button tiktok-btn">
-                    <i class="fab fa-tiktok"></i>
-                    <span>TikTok</span>
+                    <i class="fab fa-tiktok"></i><span>TikTok</span>
                 </a>
                 <a href="https://www.snapchat.com/add/RISHSTA-1" target="_blank" class="social-button snapchat-btn">
-                    <i class="fab fa-snapchat-ghost"></i>
-                    <span>Snapchat</span>
+                    <i class="fab fa-snapchat-ghost"></i><span>Snapchat</span>
                 </a>
                 <a href="https://wa.me/966545998016" target="_blank" class="social-button whatsapp-btn whatsapp1">
-                    <i class="fab fa-whatsapp"></i>
-                    <span>WhatsApp</span>
+                    <i class="fab fa-whatsapp"></i><span>WhatsApp</span>
                 </a>
             </div>
 
@@ -42,7 +34,6 @@
                     🌟 ابدأ حجز الباقات والخدمات الآن
                 </a>
             </div>
-
         </div>
     </div>
     
@@ -51,21 +42,14 @@
             <span class="close" onclick="closeBookingModal()">×</span>
             <h2>📅 بدء حجز الخدمات مع ريشستا</h2>
             
-            <p style="color: red; font-weight: bold; margin-bottom: 15px;">
-                *ملاحظة: هذه الأسعار خاصة بحفلات الأعراس والمناسبات الكبرى.*
-            </p>
-            <p style="font-size: 0.9em; margin-bottom: 20px; padding: 10px; border: 1px dashed #ff9900;">
-                مدة تواجد الكوادر هي **6 ساعات**، مثال: يبدأ التواجد 5:30 مساءً وينتهي 11:30 مساءً.
-            </p>
+            <p style="color: red; font-weight: bold; margin-bottom: 15px;">*ملاحظة: هذه الأسعار خاصة بحفلات الأعراس والمناسبات الكبرى.*</p>
+            <p style="font-size: 0.9em; margin-bottom: 20px; padding: 10px; border: 1px dashed #ff9900;">مدة تواجد الكوادر هي **6 ساعات**، مثال: يبدأ التواجد 5:30 مساءً وينتهي 11:30 مساءً.</p>
             
             <p>الرجاء تعبئة بيانات الحجز الأساسية:</p>
 
             <form id="bookingForm">
                 <label for="clientName">الاسم الكامل:</label>
                 <input type="text" id="clientName" required>
-                
-                <label for="emailInput">إيميل Notion (للتخزين):</label>
-                <input type="email" id="emailInput" value="s202341370@kfupm.edu.sa" required>
 
                 <label for="eventType">نوع المناسبة:</label>
                 <input type="text" id="eventType" required>
@@ -73,8 +57,8 @@
                 <label for="eventLocation">موقع إقامة المناسبة:</label>
                 <input type="text" id="eventLocation" required>
 
-                <label for="eventDate">التاريخ المطلوب:</label>
-                <input type="date" id="eventDate" required>
+                <label for="eventDate">التاريخ المطلوب (السنة / الشهر / اليوم):</label>
+                <input type="text" id="eventDate" placeholder="2025 / 11 / 30" required>
                 <button type="button" onclick="checkDateAvailability()">تحقق من التوافر</button>
                 <p id="availabilityStatus" style="font-weight: bold; margin-top: 10px;"></p>
 
@@ -91,8 +75,7 @@
                 <input type="checkbox" id="service3" name="service" value="ترتيب صواني العشاء" onchange="updateBookingOptions()">
                 <label for="service3">🍴 ترتيب صواني العشاء</label>
                 
-                <div id="additionalOptions">
-                </div>
+                <div id="additionalOptions"></div>
                 
                 <hr>
                 
@@ -116,179 +99,123 @@
         const totalElement = document.getElementById('totalPrice');
         const additionalOptionsDiv = document.getElementById('additionalOptions');
         
-        // رابط Webhook الخاص بـ Make.com
+        // رابط Webhook الخاص بك
         const WEBHOOK_URL = 'https://hook.us2.make.com/2sbytwqqg9mqm0dy1jjdltumrer3t5ki';
+        
+        // الإيميل المخفي (لن يراه العميل)
+        const HIDDEN_ADMIN_EMAIL = 's202341370@kfupm.edu.sa';
 
         const PRICES = {
-            service2Base: 3700, 
-            service3Base: 1200, 
-            
-            extraWater: 11, 
-            extraBaklava: 150,
-            extraDatesSweet: 120,
-            extraStaff: 150,
-            extraBuffet100: 500,
-            extraFruit: 200, 
+            service2Base: 3700, service3Base: 1200, 
+            extraWater: 11, extraBaklava: 150, extraDatesSweet: 120,
+            extraStaff: 150, extraBuffet100: 500, extraFruit: 200, 
         };
 
         function openBookingModal() {
             bookingModal.style.display = 'block';
-            // منع التمرير في الخلفية
             document.body.style.overflow = 'hidden'; 
             updateBookingOptions();
         }
 
         function closeBookingModal() {
             bookingModal.style.display = 'none';
-            // إعادة التمرير في الخلفية
             document.body.style.overflow = 'auto'; 
         }
 
         window.onclick = function(event) {
-            if (event.target == bookingModal) {
-                closeBookingModal();
-            }
+            if (event.target == bookingModal) closeBookingModal();
         }
         
         function getMapLink() {
             const location = document.getElementById('eventLocation').value;
-            if (!location) {
-                return null;
-            }
+            if (!location) return null;
             return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`;
         }
 
         function updateBookingOptions() {
             let optionsHtml = '';
-
-            // خيارات الضيافة
+            // --- ضيافة ريشستا الأنيقة ---
             if (document.getElementById('service1').checked) {
                 optionsHtml += `
                     <fieldset style="border: 1px solid #ff9900; padding: 10px; margin-top: 15px;">
                         <legend>✨ ضيافة ريشستا (اختيار إجباري للباقة)</legend>
                         <div style="text-align: right; margin-bottom: 20px;">
-                            
                             <input type="radio" id="p1" name="pkg1" value="الباقة العادية" data-price="800" data-staff="3" onchange="calculateTotal()" required>
                             <label for="p1" style="font-weight: bold;">الباقة العادية (800 ر.س)</label>
-                            <ul style="margin-top: 5px; font-size: 0.9em; color: #555; margin-bottom: 10px;">
-                                <li>☕ قهوة عربية، شاي، نعناع | 🌴 تمر + طحينية</li>
-                                <li>👥 3 كوادر | 🔥 الفحم علينا والعود عليك</li>
-                            </ul>
-
+                            <ul style="margin-top: 5px; font-size: 0.9em; color: #555; margin-bottom: 10px;"><li>☕ قهوة عربية، شاي، نعناع | 🌴 تمر + طحينية</li><li>👥 3 كوادر | 🔥 الفحم علينا والعود عليك</li></ul>
                             <input type="radio" id="p2" name="pkg1" value="الباقة المتوسطة" data-price="1000" data-staff="4" onchange="calculateTotal()" required>
                             <label for="p2" style="font-weight: bold;">الباقة المتوسطة (1000 ر.س)</label>
-                            <ul style="margin-top: 5px; font-size: 0.9em; color: #555; margin-bottom: 10px;">
-                                <li>☕ شاي فاخر، قهوة، ليمون أسود، كركديه </li>
-                                <li>🌴 تمر عادي، تمر بالسمسم، طحينية | 👥 4 كوادر | 🔥 الفحم والعود علينا</li>
-                            </ul>
-                            
+                            <ul style="margin-top: 5px; font-size: 0.9em; color: #555; margin-bottom: 10px;"><li>☕ شاي فاخر، قهوة، ليمون أسود، كركديه </li><li>🌴 تمر عادي، تمر بالسمسم، طحينية | 👥 4 كوادر | 🔥 الفحم والعود علينا</li></ul>
                             <input type="radio" id="p3" name="pkg1" value="الباقة الفخمة" data-price="1200" data-staff="5" onchange="calculateTotal()" required>
                             <label for="p3" style="font-weight: bold;">الباقة الفخمة (1200 ر.س)</label>
-                            <ul style="margin-top: 5px; font-size: 0.9em; color: #555; margin-bottom: 10px;">
-                                <li>☕ جميع ما سبق + هوت شوكليت وكاستر</li>
-                                <li>🌴 تمر محشو، تمر بالسمسم والحلوة، طحينية | 👥 5 كوادر | 🔥 الفحم والعود علينا</li>
-                            </ul>
+                            <ul style="margin-top: 5px; font-size: 0.9em; color: #555; margin-bottom: 10px;"><li>☕ جميع ما سبق + هوت شوكليت وكاستر</li><li>🌴 تمر محشو، تمر بالسمسم والحلوة، طحينية | 👥 5 كوادر | 🔥 الفحم والعود علينا</li></ul>
                         </div>
-
                         <hr>
-                        
                         <legend>➕ خدمات إضافية (اختياري):</legend>
                         <div style="margin-top: 10px;">
                             <label style="font-weight: bold;">💧 كراتين ماء (+${PRICES.extraWater} ر.س للكرتون):</label>
-                            <input type="number" id="extraWater1" min="0" value="0" onchange="calculateTotal()" style="width: 50px; text-align: center;">
-                            <span style="font-size: 0.9em;"> (أدخل الكمية)</span><br>
-
+                            <input type="number" id="extraWater1" min="0" value="0" onchange="calculateTotal()" style="width: 50px; text-align: center;"><span style="font-size: 0.9em;"> (أدخل الكمية)</span><br>
                             <label style="font-weight: bold; margin-top: 10px;">🍫 صحون بقلاوة (+${PRICES.extraBaklava} ر.س لـ 3 صحون):</label>
-                            <input type="number" id="extraBaklava1" min="0" value="0" onchange="calculateTotal()" style="width: 50px; text-align: center;">
-                            <span style="font-size: 0.9em;"> (أدخل  الكمية)</span><br>
-                            
+                            <input type="number" id="extraBaklava1" min="0" value="0" onchange="calculateTotal()" style="width: 50px; text-align: center;"><span style="font-size: 0.9em;"> (أدخل  الكمية)</span><br>
                             <label style="font-weight: bold; margin-top: 10px;">🌴 حلى التمر (+${PRICES.extraDatesSweet} ر.س لـ 3 صحون):</label>
-                            <input type="number" id="extraDatesSweet1" min="0" value="0" onchange="calculateTotal()" style="width: 50px; text-align: center;">
-                            <span style="font-size: 0.9em;"> (أدخل  الكمية)</span><br>
-                            
+                            <input type="number" id="extraDatesSweet1" min="0" value="0" onchange="calculateTotal()" style="width: 50px; text-align: center;"><span style="font-size: 0.9em;"> (أدخل  الكمية)</span><br>
                             <label style="font-weight: bold; margin-top: 10px;">👥 إضافة كوادر (+${PRICES.extraStaff} ر.س للكادر):</label>
-                            <input type="number" id="extraStaff1" min="0" value="0" onchange="calculateTotal()" style="width: 50px; text-align: center;">
-                            <span style="font-size: 0.9em;"> (أدخل عدد الكوادر الإضافية)</span>
+                            <input type="number" id="extraStaff1" min="0" value="0" onchange="calculateTotal()" style="width: 50px; text-align: center;"><span style="font-size: 0.9em;"> (أدخل عدد الكوادر الإضافية)</span>
                         </div>
                     </fieldset>`;
             }
-
-            // خيارات البوفيه
+            // --- بوفيه ريشستا المتكامل ---
             if (document.getElementById('service2').checked) {
                 optionsHtml += `
                     <fieldset style="border: 1px solid #25D366; padding: 10px; margin-top: 15px;">
                         <legend>🍽️ بوفيه ريشستا (السعر الأساسي ${PRICES.service2Base} ر.س لـ 300 شخص)</legend>
-                        <ul style="font-size: 0.9em; color: #555; text-align: right; margin-top: 5px;">
-                            <li>تشمل الخدمة: 3 أصناف رئيسية، معجنات، كُبّة، سمبوسة، كيك، كنافة، بقلاوة، مكسرات، ورق عنب، ذرة، بليلة، موهيتو، عصير مانجو او برتقال.</li>
-                            <li>👥 الطاقم: 3 كوادر سعوديين بزي موحد.</li>
-                        </ul>
-                        
+                        <ul style="font-size: 0.9em; color: #555; text-align: right; margin-top: 5px;"><li>تشمل الخدمة: 3 أصناف رئيسية، معجنات، كُبّة، سمبوسة، كيك، كنافة، بقلاوة، مكسرات، ورق عنب، ذرة، بليلة، موهيتو، عصير مانجو او برتقال.</li><li>👥 الطاقم: 3 كوادر سعوديين بزي موحد.</li></ul>
                         <div style="text-align: right; margin-bottom: 10px; border-top: 1px dashed #ccc; padding-top: 10px;">
                             <label style="font-weight: bold;">👥 زيادة عدد الأشخاص (كل 100 شخص إضافي):</label>
-                            <input type="number" id="extraGuests2" min="0" value="0" onchange="calculateTotal()" style="width: 50px; text-align: center;">
-                            <span style="font-size: 0.9em;"> (تكلفة كل 100 شخص هي +${PRICES.extraBuffet100} ر.س)</span>
+                            <input type="number" id="extraGuests2" min="0" value="0" onchange="calculateTotal()" style="width: 50px; text-align: center;"><span style="font-size: 0.9em;"> (تكلفة كل 100 شخص هي +${PRICES.extraBuffet100} ر.س)</span>
                         </div>
-                        
                         <legend>➕ خدمات البوفيه الإضافية (اختياري):</legend>
                         <div style="margin-top: 10px;">
                             <label style="font-weight: bold;">💧 كراتين ماء (+${PRICES.extraWater} ر.س للكرتون):</label>
-                            <input type="number" id="extraWater2" min="0" value="0" onchange="calculateTotal()" style="width: 50px; text-align: center;">
-                            <span style="font-size: 0.9em;"> (أدخل الكمية)</span><br>
-
+                            <input type="number" id="extraWater2" min="0" value="0" onchange="calculateTotal()" style="width: 50px; text-align: center;"><span style="font-size: 0.9em;"> (أدخل الكمية)</span><br>
                             <label style="font-weight: bold; margin-top: 10px;">🍇 سلة فواكه طازجة (+${PRICES.extraFruit} ر.س):</label>
-                            <input type="number" id="extraFruit2" min="0" value="0" onchange="calculateTotal()" style="width: 50px; text-align: center;">
-                            <span style="font-size: 0.9em;"> (أدخل  الكمية المطلوبة)</span><br>
-                            
+                            <input type="number" id="extraFruit2" min="0" value="0" onchange="calculateTotal()" style="width: 50px; text-align: center;"><span style="font-size: 0.9em;"> (أدخل  الكمية المطلوبة)</span><br>
                             <label style="font-weight: bold; margin-top: 10px;">👥 إضافة كوادر (+${PRICES.extraStaff} ر.س للكادر):</label>
-                            <input type="number" id="extraStaff2" min="0" value="0" onchange="calculateTotal()" style="width: 50px; text-align: center;">
-                            <span style="font-size: 0.9em;"> (أدخل عدد الكوادر)</span>
+                            <input type="number" id="extraStaff2" min="0" value="0" onchange="calculateTotal()" style="width: 50px; text-align: center;"><span style="font-size: 0.9em;"> (أدخل عدد الكوادر)</span>
                         </div>
                     </fieldset>`;
             }
-
-            // خيارات الصواني
+            // --- ترتيب صواني العشاء ---
             if (document.getElementById('service3').checked) {
                 optionsHtml += `
                     <fieldset style="border: 1px solid #555; padding: 10px; margin-top: 15px;">
                         <legend>🍴 ترتيب صواني العشاء (السعر الأساسي ${PRICES.service3Base} ر.س لـ 7 كوادر)</legend>
-                        <ul style="font-size: 0.9em; color: #555; text-align: right; margin-top: 5px;">
-                            <li>تشمل الخدمة: 7 كوادر لترتيب وتقديم الصواني حسب الدفعات المطلوبة.</li>
-                        </ul>
-                        
+                        <ul style="font-size: 0.9em; color: #555; text-align: right; margin-top: 5px;"><li>تشمل الخدمة: 7 كوادر لترتيب وتقديم الصواني حسب الدفعات المطلوبة.</li></ul>
                         <div style="border-top: 1px dashed #ccc; padding-top: 10px;">
                             <label style="font-weight: bold;">كم دفعة (عدد المرات)؟</label>
                             <input type="number" id="numTrays3" min="1" value="1" onchange="calculateTotal()"><br>
-                            
                             <label style="font-weight: bold; margin-top: 10px;">كم صينية لديك؟</label>
                             <input type="number" id="numPlates3" min="1" value="1" onchange="calculateTotal()"><br>
-
                             <label style="font-weight: bold; margin-top: 10px;">متى تريدنا أن نبدأ (وقت الفتح)؟</label>
                             <input type="time" id="startTime3" onchange="calculateTotal()"><br>
-                            
                             <label style="font-weight: bold; margin-top: 10px;">كم المدة بين كل دفعة؟</label>
                             <input type="number" id="duration3" min="10" value="30" onchange="calculateTotal()">
                         </div>
-
                         <legend>➕ خيارات إضافية:</legend>
                         <div style="margin-top: 10px;">
                             <input type="checkbox" id="genderSplit3" onchange="calculateTotal()">
                             <label for="genderSplit3">يوجد قسم رجال ونساء ؟</label><br>
-                            
                             <label style="font-weight: bold; margin-top: 10px;">كم عدد الكراسي لكل صينية؟</label>
-                            <input type="number" id="numChairs3" min="0" value="0" onchange="calculateTotal()" style="width: 50px; text-align: center;">
-                            <span style="font-size: 0.9em;"> (لتنظيم القاعة)</span><br>
-                            
+                            <input type="number" id="numChairs3" min="0" value="0" onchange="calculateTotal()" style="width: 50px; text-align: center;"><span style="font-size: 0.9em;"> (لتنظيم القاعة)</span><br>
                             <label style="font-weight: bold; margin-top: 10px;">👥 إضافة كوادر (+${PRICES.extraStaff} ر.س للكادر):</label>
                             <input type="number" id="extraStaff3" min="0" value="0" onchange="calculateTotal()" style="width: 50px; text-align: center;">
                         </div>
                     </fieldset>`;
             }
-
             additionalOptionsDiv.innerHTML = optionsHtml;
             calculateTotal();
         }
 
-        // وظيفة الحسابات
         function calculateTotal() {
             let currentTotal = 0;
             let details = [];
@@ -335,15 +262,21 @@
 
         function collectDataForWebhook() {
             const calculatedData = calculateTotal();
+            const selectedServices = [];
+            if (document.getElementById('service1').checked) selectedServices.push(document.getElementById('service1').value);
+            if (document.getElementById('service2').checked) selectedServices.push(document.getElementById('service2').value);
+            if (document.getElementById('service3').checked) selectedServices.push(document.getElementById('service3').value);
+
             return {
                 clientName: document.getElementById('clientName').value,
-                adminEmail: document.getElementById('emailInput').value,
+                adminEmail: HIDDEN_ADMIN_EMAIL, // استخدام الإيميل المخفي هنا
                 eventDate: document.getElementById('eventDate').value,
                 eventType: document.getElementById('eventType').value,
                 eventLocation: document.getElementById('eventLocation').value,
                 totalPrice: calculatedData.total,
                 finalPriceText: totalElement.textContent + ' ر.س',
                 mapLink: getMapLink(),
+                selectedServices: selectedServices.join(', '),
                 detailedBreakdown: calculatedData.details.join('\n- ')
             };
         }
@@ -355,10 +288,7 @@
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify(data)
                 });
-                if (!response.ok) console.error('Webhook failed:', response.status);
-            } catch (error) {
-                console.error('Error sending data:', error);
-            }
+            } catch (error) { console.error('Error sending data:', error); }
         }
 
         async function confirmBooking() {
@@ -366,9 +296,8 @@
             const eventDate = document.getElementById('eventDate').value;
             const eventType = document.getElementById('eventType').value;
             const eventLocation = document.getElementById('eventLocation').value;
-            const emailInput = document.getElementById('emailInput').value;
 
-            if (!clientName || !eventDate || !eventType || !eventLocation || !emailInput) {
+            if (!clientName || !eventDate || !eventType || !eventLocation) {
                 alert('الرجاء تعبئة جميع البيانات الأساسية أولاً.');
                 return;
             }
@@ -382,31 +311,24 @@
             if (isService1Checked) {
                 const baklavaQty = parseInt(document.getElementById('extraBaklava1')?.value || 0);
                 const datesQty = parseInt(document.getElementById('extraDatesSweet1')?.value || 0);
-                
                 if (baklavaQty === 0 && datesQty === 0) {
-                    const confirmUpsell = confirm(
-                        "✨ متأكد ما تبي تتجمل مع معازيمك أكثر وتجيب لهم حلى ؟\n\n" +
-                        "الحلى يزيد من فخامة ضيافتك ويترك انطباعاً مميزاً!\n\n" +
-                        "اضغط 'إلغاء' للرجوع وإضافة الحلى، أو 'موافق' للمتابعة بدون حلى."
-                    );
+                    const confirmUpsell = confirm("✨ متأكد ما تبي تتجمل مع معازيمك أكثر وتجيب لهم حلى؟\nاضغط 'إلغاء' لإضافة الحلى.");
                     if (!confirmUpsell) return; 
                 }
             }
             
             const bookingData = collectDataForWebhook();
-            await sendToNotion(bookingData); 
+            await sendToNotion(bookingData); // إرسال صامت
             
             let whatsappMessage = `*🔔 طلب حجز جديد بانتظارك في Notion! 🔔*\n\n`;
-            whatsappMessage += `*العميل:* ${bookingData.clientName}\n`;
-            whatsappMessage += `*التاريخ:* ${bookingData.eventDate}\n`;
-            whatsappMessage += `*الإجمالي التقديري:* ${bookingData.finalPriceText}\n\n`;
+            whatsappMessage += `*العميل:* ${bookingData.clientName}\n*التاريخ:* ${bookingData.eventDate}\n*الإجمالي التقديري:* ${bookingData.finalPriceText}\n\n`;
             if (bookingData.mapLink) whatsappMessage += `*🌍 رابط الموقع:* ${bookingData.mapLink}\n\n`;
             whatsappMessage += `تم تسجيل الطلب في قاعدة بياناتك. الرجاء مراجعة Notion للموافقة على الحجز.\n\n*نتمنى لكم يوماً سعيداً.*`;
 
             const whatsappNumber = '966544512811';
             const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
             
-            alert(`شكراً لك يا ${clientName}!\n\nتم استلام طلبك (الإجمالي التقديري: ${bookingData.finalPriceText}).\n\nسيتم تحويلك إلى الواتساب الآن لإتمام المراجعة النهائية.`);
+            alert(`شكراً لك يا ${clientName}!\n\nتم استلام طلبك (الإجمالي: ${bookingData.finalPriceText}).\n\nسيتم تحويلك إلى الواتساب الآن لإتمام المراجعة.`);
             window.open(whatsappURL, '_blank');
             closeBookingModal();
         }
@@ -414,25 +336,13 @@
         function checkDateAvailability() {
             const dateInput = document.getElementById('eventDate').value;
             const statusElement = document.getElementById('availabilityStatus');
-            const clientName = document.getElementById('clientName').value;
-
-            if (!dateInput || !clientName) {
-                statusElement.textContent = "الرجاء تعبئة الاسم والتاريخ أولاً.";
+            if (!dateInput) {
+                statusElement.textContent = "الرجاء اختيار تاريخ أولاً.";
                 statusElement.style.color = 'red';
                 return;
             }
-            statusElement.textContent = "جارٍ التحقق من توافر التاريخ...";
-            statusElement.style.color = '#ff9900';
-            
-            setTimeout(() => {
-                if (dateInput === '2026-01-01') {
-                    statusElement.textContent = "❌ التاريخ غير متاح!";
-                    statusElement.style.color = 'red';
-                } else {
-                    statusElement.textContent = "✅ التاريخ متاح مبدئياً.";
-                    statusElement.style.color = 'green';
-                }
-            }, 1000);
+            statusElement.textContent = "✅ تم التحقق المبدئي! نؤكد التوافر النهائي بعد استلام الطلب.";
+            statusElement.style.color = 'green';
         }
 
         document.addEventListener('DOMContentLoaded', () => {
