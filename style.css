@@ -1,3 +1,4 @@
+/* الملف الكامل والمصحح لـ style.css */
 body {
     font-family: 'Tajawal', sans-serif;
     margin: 0;
@@ -8,40 +9,20 @@ body {
     min-height: 100vh;
     direction: rtl; 
     text-align: center;
-    
-    /* خلفية الموقع */
     background-image: url('background-image.jpg'); 
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
     background-color: #f0f0f0; 
-    
-    /* تنسيق شريط التمرير */
     scrollbar-color: #ff9900 #f0f0f0; 
     scrollbar-width: thin;
 }
 
-/* تنسيق شريط التمرير Webkit (Chrome/Edge) */
-::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-}
-::-webkit-scrollbar-track {
-    background: #f0f0f0;
-    border-radius: 10px;
-}
-::-webkit-scrollbar-thumb {
-    background: #ff9900;
-    border-radius: 10px;
-}
-::-webkit-scrollbar-thumb:hover {
-    background: #e68a00;
-}
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: #f0f0f0; border-radius: 10px; }
+::-webkit-scrollbar-thumb { background: #ff9900; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #e68a00; }
 
-
-/* ------------------------------------- */
-/* إطار الهاتف (Phone Frame) */
-/* ------------------------------------- */
 .phone-frame {
     width: 375px; 
     min-height: 600px;
@@ -53,332 +34,141 @@ body {
     overflow: hidden; 
 }
 
-.profile-container {
-    padding: 20px 0;
-}
+.profile-container { padding: 20px 0; }
 
-/* تنسيق الصورة الشخصية */
 .profile-picture {
-    width: 100px;
-    height: 100px;
+    width: 100px; height: 100px;
     border-radius: 50%;
     margin: 0 auto 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: flex; justify-content: center; align-items: center;
     overflow: hidden; 
     border: 2px solid #ddd; 
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
 }
 
-.profile-picture img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 50%; 
-    display: block;
-}
+.profile-picture img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block; }
 
-h1 {
-    font-size: 28px;
-    font-weight: 700;
-    color: #333;
-    margin-bottom: 10px;
-}
+h1 { font-size: 28px; font-weight: 700; color: #333; margin-bottom: 10px; }
+.description-text { font-size: 14px; color: #555; line-height: 1.6; margin-bottom: 20px; padding: 0 15px; }
+.description-text p { margin: 5px 0; }
 
-.description-text {
-    font-size: 14px;
-    color: #555;
-    line-height: 1.6;
-    margin-bottom: 20px;
-    padding: 0 15px; 
-}
-
-/* ------------------------------------- */
-/* تنسيق مجموعة الأزرار المكدسة (سوشيال ميديا) */
-/* ------------------------------------- */
+/* تنسيق الأزرار المكدسة (Social Buttons) */
 .social-buttons-group {
-    display: flex;
-    flex-direction: column;
-    /* الحفاظ على توسيط الكتلة الخارجية */
-    align-items: center; 
-    gap: 15px;
-    margin-top: 30px;
-    margin-bottom: 30px;
+    display: flex; flex-direction: column;
+    align-items: center; /* المحاذاة في المنتصف */
+    gap: 15px; margin-top: 30px; margin-bottom: 30px;
 }
 
-/* تنسيق الأزرار الأساسية (لحل مشكلة محاذاة الأيقونة) */
 .social-button {
-    display: flex;
-    align-items: center;
-    /* التعديل: توسيط المحتوى بالكامل */
-    justify-content: center; 
+    display: flex; align-items: center; justify-content: center;
     position: relative; 
-    width: 90%;
-    max-width: 300px;
-    padding: 12px 20px;
-    border-radius: 12px;
-    text-decoration: none;
-    font-size: 16px;
-    font-weight: 600;
-    color: #fff; 
+    width: 90%; max-width: 300px; padding: 12px 20px;
+    border-radius: 12px; text-decoration: none;
+    font-size: 16px; font-weight: 600; color: #fff; 
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); 
     transition: all 0.3s ease; 
     overflow: hidden;
 }
 
-/* ضبط موضع الأيقونة (لتكون بجوار النص على اليسار البصري) */
+/* أيقونة السوشيال ميديا (يسار النص، يمين بصري في RTL) */
 .social-button i {
     font-size: 22px;
-    margin-right: 8px; 
-    margin-left: 0; 
-    position: relative;
+    margin-left: 10px; /* مسافة بين الأيقونة والنص */
+    margin-right: 0;
+    position: absolute; /* تثبيت الأيقونة في الطرف */
+    left: 15px; /* المسافة من الحافة اليسرى */
     z-index: 2;
-    order: 1; /* الأيقونة تأتي بعد النص في الفلو لتبدو على اليسار البصري */
 }
 
-.social-button span {
-    position: relative;
-    z-index: 2;
-    order: 2; /* النص يأتي أولاً لغرض التوسيط */
-}
+.social-button span { position: relative; z-index: 2; }
 
-/* تأثير الموشن جرافيك (Hover Effect) */
 .social-button::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    transition: width 0.4s ease, height 0.4s ease;
+    content: ''; position: absolute; top: 50%; left: 50%; width: 0; height: 0;
+    background: rgba(255, 255, 255, 0.2); border-radius: 50%;
+    transform: translate(-50%, -50%); transition: width 0.4s ease, height 0.4s ease;
     z-index: 1;
 }
+.social-button:hover::before { width: 200%; height: 200%; }
+.social-button:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2); }
 
-.social-button:hover::before {
-    width: 200%;
-    height: 200%;
-}
+/* ألوان الأزرار */
+.tiktok-btn { background: linear-gradient(to right, #000000, #222222); color: #fff; }
+.tiktok-btn:hover { background: linear-gradient(to right, #000000, #444444); }
+.snapchat-btn { background-color: #FFFC00; color: #333; box-shadow: 0 4px 15px rgba(255, 252, 0, 0.3); }
+.snapchat-btn:hover { background-color: #FFE500; color: #000; }
+.snapchat-btn i { color: #333; }
+.whatsapp-btn { background: linear-gradient(to right, #25D366, #128C7E); color: #fff; }
+.whatsapp-btn:hover { background: linear-gradient(to right, #1DA852, #0E786B); }
 
-.social-button:hover {
-    transform: translateY(-3px); 
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2); 
-}
-
-/* ألوان التطبيقات الرسمية */
-.tiktok-btn {
-    background: linear-gradient(to right, #000000, #222222);
-    color: #fff;
-}
-.tiktok-btn:hover {
-    background: linear-gradient(to right, #000000, #444444);
-}
-
-.snapchat-btn {
-    background-color: #FFFC00; 
-    color: #333;
-}
-.snapchat-btn:hover {
-    background-color: #FFE500;
-    color: #000;
-}
-.snapchat-btn i {
-    color: #333;
-}
-.snapchat-btn:hover i {
-    color: #000;
-}
-
-.whatsapp-btn {
-    background: linear-gradient(to right, #25D366, #128C7E);
-    color: #fff;
-}
-.whatsapp-btn:hover {
-    background: linear-gradient(to right, #1DA852, #0E786B);
-}
-
-/* تنسيق زر الحجز الجديد المميز */
+/* زر الحجز المميز */
 .main-booking-button {
-    display: block;
-    text-align: center;
-    padding: 18px 20px;
-    margin: 15px auto 10px auto;
-    width: 90%;
-    max-width: 350px;
-    border-radius: 10px;
-    font-size: 1.1em;
-    font-weight: bold;
-    color: white; 
-    background-color: #ff5722; 
-    text-decoration: none;
+    display: block; text-align: center; padding: 18px 20px;
+    margin: 15px auto 10px auto; width: 90%; max-width: 350px;
+    border-radius: 10px; font-size: 1.1em; font-weight: bold; color: white; 
+    background-color: #ff5722; text-decoration: none;
     box-shadow: 0 4px 10px rgba(255, 87, 34, 0.4);
     transition: background-color 0.3s;
 }
-
-.main-booking-button:hover {
-    background-color: #e64a19;
-}
-
+.main-booking-button:hover { background-color: #e64a19; }
 
 /* تنسيق النافذة المنبثقة (Modal) */
 .modal {
-    display: none; 
-    position: fixed; 
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%; 
-    height: 100%; 
-    overflow: auto; 
-    background-color: rgba(0,0,0,0.6);
+    display: none; position: fixed; z-index: 1000;
+    left: 0; top: 0; width: 100%; height: 100%; 
+    overflow: auto; background-color: rgba(0,0,0,0.6);
 }
-
 .modal-content {
-    background-color: #fefefe;
-    margin: 5% auto;
-    padding: 30px;
-    border-radius: 15px;
-    width: 90%; 
-    max-width: 500px;
+    background-color: #fefefe; margin: 5% auto; padding: 30px;
+    border-radius: 15px; width: 90%; max-width: 500px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    animation: fadeIn 0.5s;
-    direction: rtl;
-    text-align: right;
+    animation: fadeIn 0.5s; direction: rtl; text-align: right;
 }
+.close { color: #aaa; float: left; font-size: 28px; font-weight: bold; }
+.close:hover, .close:focus { color: #000; text-decoration: none; cursor: pointer; }
 
-/* زر الإغلاق */
-.close {
-    color: #aaa;
-    float: left;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-/* تنسيق عناصر النموذج */
+/* عناصر النموذج والمحاذاة */
 .modal-content label {
-    display: block;
-    margin-top: 15px;
-    margin-bottom: 5px;
-    font-weight: 600;
-    color: #333;
+    display: inline-block; width: auto; margin-top: 10px; margin-bottom: 5px;
+    font-weight: 600; color: #333; vertical-align: middle;
 }
 
-/* ------------------------------------- */
-/* تصحيح مشكلة التكبير التلقائي وإصلاح محاذاة المربعات */
-/* ------------------------------------- */
 .modal-content input[type="text"],
 .modal-content input[type="date"],
 .modal-content select,
 .modal-content input[type="number"],
-.modal-content input[type="time"] {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    box-sizing: border-box;
-    /* FIX: منع التكبير التلقائي على الجوال */
-    font-size: 16px;
+.modal-content input[type="time"],
+.modal-content input[type="email"] {
+    width: 100%; padding: 10px; margin-bottom: 10px;
+    border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box;
+    font-size: 16px; /* Fix Zoom */
 }
 
+/* تنسيق محاذاة المربعات (Checkboxes/Radios) */
 .modal-content input[type="checkbox"],
 .modal-content input[type="radio"] {
-    /* التعديل: جعل المربع يطفو لأقصى اليمين */
-    float: right; 
-    margin-right: 0;
-    margin-left: 10px; /* مسافة عن النص */
-    vertical-align: middle; 
-    position: relative;
-    top: 2px; /* لخفض المربع قليلاً لمحاذاة النص */
+    display: inline-block; width: auto; margin-left: 10px;
+    vertical-align: middle; float: right; position: relative; top: 2px;
 }
 
-.modal-content label {
-    /* التعديل: إزالة الـ display: block لتمكين float في الاختيارات */
-    display: block !important; 
-    width: auto;
-    margin-top: 5px;
-    vertical-align: middle; 
-    margin-left: 15px; 
-}
-
-/* لضمان أن كل خيار رئيسي يبدأ في سطر جديد */
+/* محاذاة العناوين الرئيسية للخدمات */
 .modal-content input[type="checkbox"] + label {
-    display: block !important;
-    width: auto;
-    margin-bottom: 10px; 
-}
-/* ------------------------------------- */
-
-
-.modal-content button[type="button"] {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    background-color: #ff9900;
-    color: white;
-    font-weight: 600;
-    transition: background-color 0.3s;
+    display: inline-block; width: calc(100% - 40px); margin-right: 10px; vertical-align: middle;
 }
 
-.modal-content button[type="button"]:hover {
-    background-color: #e68a00;
-}
-
-/* خط فاصل أنيق */
-hr {
-    border: 0;
-    height: 1px;
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
-    margin: 20px 0;
-}
-
-/* تأثير الظهور */
-@keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity: 1;}
-}
-
-/* تنسيق حقول الإضافات (لجعلها أصغر) */
-fieldset input[type="number"] {
-    display: inline-block !important;
-    width: 70px !important;
-    text-align: center;
-    margin-left: 10px;
-}
-fieldset label {
-    display: inline-block;
-    width: calc(100% - 100px); 
-    font-weight: normal !important;
-    vertical-align: top;
-}
-
-/* تنسيق قوائم المميزات (لتتدفق أفقياً) */
-.modal-content fieldset ul {
-    margin-top: 5px; 
-    padding: 0;
-    list-style: none;
-    text-align: right;
-}
+/* تنسيق قوائم المميزات */
+.modal-content fieldset ul { margin-top: 5px; padding: 0; list-style: none; text-align: right; }
 .modal-content fieldset ul li {
-    display: inline-block; 
-    margin-left: 10px;
-    padding: 2px 0;
-    font-size: 0.9em;
-    color: #555;
-    border-right: 1px solid #ddd;
-    padding-right: 10px;
+    display: inline-block; margin-left: 10px; padding: 2px 0;
+    font-size: 0.9em; color: #555; border-right: 1px solid #ddd; padding-right: 10px;
 }
-.modal-content fieldset ul li:last-child {
-    border-right: none;
+.modal-content fieldset ul li:last-child { border-right: none; }
+
+/* زر الإرسال */
+.modal-content button[type="button"] {
+    padding: 10px 15px; border: none; border-radius: 6px; cursor: pointer;
+    background-color: #ff9900; color: white; font-weight: 600; transition: background-color 0.3s;
 }
+.modal-content button[type="button"]:hover { background-color: #e68a00; }
+
+hr { border: 0; height: 1px; background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0)); margin: 20px 0; }
+@keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
