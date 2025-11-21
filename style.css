@@ -96,21 +96,27 @@ h1 { font-size: 28px; font-weight: 700; color: #333; margin-bottom: 10px; }
 /* ========================================== */
 /* تنسيق الحقول (تم الفصل للتنظيم) */
 /* ========================================== */
-
-/* 1. العناوين والحقول الأساسية (كل واحد في سطر مستقل) */
 .modal-content form > label {
     display: block; width: 100%; margin-top: 15px; margin-bottom: 8px;
     font-weight: 600; color: #333;
 }
 .modal-content form > input[type="text"],
 .modal-content form > input[type="tel"],
-.modal-content form > input[type="date"] {
+.modal-content form > input[type="date"],
+.modal-content form > input[type="url"] {
     display: block; width: 100%; padding: 12px; margin-bottom: 10px;
     border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box;
     font-size: 16px; background-color: #f9f9f9;
 }
 
-/* 2. أزرار الإرسال والتحقق */
+/* زر الخريطة الجديد */
+.map-btn {
+    width: 100%; padding: 10px; background-color: #4285F4; color: white;
+    border: none; border-radius: 6px; cursor: pointer; margin-bottom: 5px;
+    font-weight: bold;
+}
+.map-btn:hover { background-color: #357ae8; }
+
 .modal-content .submit-btn,
 .modal-content .check-btn {
     width: 100%; padding: 12px; border: none; border-radius: 8px; cursor: pointer;
@@ -120,7 +126,7 @@ h1 { font-size: 28px; font-weight: 700; color: #333; margin-bottom: 10px; }
 .modal-content .submit-btn { background-color: #25D366; margin-top: 15px; }
 .modal-content button:hover { opacity: 0.9; }
 
-/* 3. تنسيق الخيارات الإضافية (داخل Fieldset فقط) - لتبقى بجانب بعضها */
+/* 3. تنسيق الخيارات الإضافية */
 fieldset input[type="number"] {
     display: inline-block !important; width: 70px !important;
     text-align: center; margin-left: 10px;
