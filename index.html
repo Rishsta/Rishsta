@@ -25,7 +25,7 @@
                     <i class="fab fa-snapchat-ghost"></i><span>Snapchat</span>
                 </a>
                 <a href="https://wa.me/966545998016" target="_blank" class="social-button whatsapp-btn whatsapp1">
-                    <i class="fab fa-whatsapp"></i><span>واتساب ريشستا للحجز</span>
+                    <i class="fab fa-whatsapp"></i><span>WhatsApp</span>
                 </a>
             </div>
 
@@ -262,7 +262,10 @@
                 currentTotal += PRICES.service2Base;
                 details.push(`بوفيه: السعر الأساسي (300 شخص) - ${PRICES.service2Base} ر.س`);
                 const extraGuestsQty = parseInt(document.getElementById('extraGuests2')?.value || 0);
-                if(extraGuestsQty > 0) { currentTotal += extraGuestsQty * PRICES.extraBuffet100; details.push(`+ ${extraGuestsQty * 100} شخص إضافي`); }
+                if(extraGuestsQty > 0) { 
+                    currentTotal += extraGuestsQty * PRICES.extraBuffet100;
+                    details.push(`+ ${extraGuestsQty * 100} شخص إضافي`); 
+                }
                 const waterQty = parseInt(document.getElementById('extraWater2')?.value || 0);
                 if(waterQty > 0) { currentTotal += waterQty * PRICES.extraWater; details.push(`+ ${waterQty} ماء (بوفيه)`); }
                 const fruitQty = parseInt(document.getElementById('extraFruit2')?.value || 0);
@@ -334,10 +337,18 @@
                  return;
             }
 
-            // --- التعديل الجديد: نافذة المراجعة الشاملة قبل الواتساب ---
+            if (isService1Checked) {
+                const baklavaQty = parseInt(document.getElementById('extraBaklava1')?.value || 0);
+                const datesQty = parseInt(document.getElementById('extraDatesSweet1')?.value || 0);
+                if (baklavaQty === 0 && datesQty === 0) {
+                    const confirmUpsell = confirm("✨ متأكد ما تبي تتجمل مع معازيمك أكثر وتجيب لهم حلى؟\nاضغط 'إلغاء' لإضافة الحلى.");
+                    if (!confirmUpsell) return; 
+                }
+            }
+            
+            // --- نافذة المراجعة قبل الإرسال ---
             const bookingData = collectDataForWebhook();
-
-            // نص الرسالة الشامل للمراجعة
+            
             const reviewMessage = `📋 مراجعة تفاصيل طلبك:\n\n` +
                                   `👤 الاسم: ${bookingData.clientName}\n` +
                                   `📞 الجوال: ${bookingData.clientPhone}\n` +
@@ -345,28 +356,26 @@
                                   `📍 المكان: ${bookingData.eventLocation}\n` +
                                   `--------------------------\n` +
                                   `📝 الخدمات المختارة:\n` +
-                                  `   ${bookingData.detailedBreakdown.replace(/\n/g, '\n   ')}\n` +
+                                  `   - ${bookingData.detailedBreakdown.replace(/\n- /g, '\n   - ')}\n` +
                                   `--------------------------\n` +
                                   `💰 الإجمالي التقديري: ${bookingData.finalPriceText}\n\n` +
                                   `هل المعلومات صحيحة وتريد اعتماد الطلب؟`;
 
             if (!confirm(reviewMessage)) {
-                return; // إذا ضغط إلغاء، يتوقف ولا يرسل
+                return; 
             }
 
-            // إذا وافق العميل، نكمل العملية (نوشن + واتساب)
-            
-            // إرسال صامت للنوشن
+            // --- الإرسال الفعلي ---
             sendToNotion(bookingData); 
             
-            // رسالة الواتس المختصرة والاحترافية
-            let whatsappMessage = `*🌟 حجز جديد - ريشستا 🌟*\n\n`;
-            whatsappMessage += `👤 *العميل:* ${bookingData.clientName}\n`;
-            whatsappMessage += `📅 *التاريخ:* ${bookingData.eventDate}\n`;
-            whatsappMessage += `📍 *الموقع:* ${bookingData.eventLocation}\n`;
-            if (bookingData.mapLink) whatsappMessage += `🔗 *الخريطة:* ${bookingData.mapLink}\n`;
-            whatsappMessage += `\n💰 *الإجمالي:* ${bookingData.finalPriceText}\n\n`;
-            whatsappMessage += `✅ *تم تسجيل التفاصيل في النظام.*`;
+            let whatsappMessage = `*🌟 طلب حجز جديد - ريشستا 🌟*\n\n`;
+            whatsappMessage += `👤 *العميل:* ${bookingData.clientName}\n📞 *الجوال:* ${bookingData.clientPhone}\n📅 *التاريخ:* ${bookingData.eventDate}\n📍 *الموقع:* ${bookingData.eventLocation}\n`;
+            if (bookingData.mapLink) whatsappMessage += `🔗 *الخريطة:* ${bookingData.mapLink}\n\n`;
+            
+            // *** هنا التعديل المهم: إضافة التفاصيل للواتساب ***
+            whatsappMessage += `*📝 الخدمات المختارة:*\n- ${bookingData.detailedBreakdown}\n\n`;
+            
+            whatsappMessage += `*💰 الإجمالي التقديري:* ${bookingData.finalPriceText}`;
 
             const whatsappNumber = '966544512811';
             const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
