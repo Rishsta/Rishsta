@@ -403,7 +403,22 @@
 
             sendToNotion(data);
             
-            let waMsg = `*حجز جديد - ريشستا*\n👤 ${data.clientName}\n📞 ${data.clientPhone}\n📅 ${data.eventDate}\n📍 ${data.eventLocation}\n\n*التفاصيل:*\n- ${data.detailedBreakdown}\n\n*الإجمالي: ${data.finalPriceText}*`;
+// ... (بعد كود sendToNotion مباشرة) ...
+
+            // رسالة الواتساب المرتبة والشاملة
+            let waMsg = `أهلاً وسهلاً ريشستا، أرغب بتأكيد الحجز التالي: 👋\n\n`;
+            
+            waMsg += `👤 *الاسم:* ${data.clientName}\n`;
+            waMsg += `📞 *رقم الجوال:* ${data.clientPhone}\n`;
+            waMsg += `📅 *تاريخ المناسبة:* ${data.eventDate}\n`;
+            waMsg += `📍 *الموقع:* ${data.eventLocation}\n`;
+            
+            waMsg += `\n──────────────\n`;
+            waMsg += `📋 *تفاصيل الخدمات المختارة:* \n`;
+            waMsg += `${data.detailedBreakdown}\n`; // تفاصيل شاملة لكل شيء
+            waMsg += `──────────────\n`;
+            
+            waMsg += `\n💰 *المبلغ الإجمالي:* ${data.finalPriceText}\n`;
             
             window.open(`https://wa.me/966544512811?text=${encodeURIComponent(waMsg)}`, '_blank');
             closeBookingModal();
@@ -416,3 +431,4 @@
     </script>
 </body>
 </html>
+
