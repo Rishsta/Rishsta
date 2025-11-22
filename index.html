@@ -85,11 +85,11 @@
                     <div class="services-selection">
                         <div class="service-option">
                             <input type="checkbox" id="service1" name="service" value="ضيافة ريشستا">
-                            <label for="service1">✨ ضيافة ريشستا الأنيقة</label>
+                            <label for="service1">✨ ضيافة ريشستا </label>
                         </div>
                         <div class="service-option">
                             <input type="checkbox" id="service2" name="service" value="بوفيه منوع">
-                            <label for="service2">🍽️ بوفيه ريشستا المتكامل</label>
+                            <label for="service2">🍽️ بوفيه ريشستا </label>
                         </div>
                         <div class="service-option">
                             <input type="checkbox" id="service3" name="service" value="ترتيب صواني العشاء">
@@ -115,7 +115,7 @@
                     
                     <div class="nav-buttons">
                         <button type="button" class="prev-btn" onclick="prevStep(2)">➡ السابق</button>
-                        <button type="button" class="submit-btn" onclick="confirmBooking()">إرسال الطلب واتساب ✅</button>
+                        <button type="button" class="submit-btn" onclick="confirmBooking()">إرسال الطلب واعتماده ✅</button>
                     </div>
                 </div>
 
@@ -219,7 +219,7 @@
                             <li>☕ قهوة عربية</li>
                             <li>🍵 شاي</li>
                             <li>🌿 نعناع</li>
-                            <li>🌴 تمر + طحينية</li>
+                            <li>🌴 تمر عادي </li>
                             <li>👥 3 كوادر</li>
                             <li>🔥 الفحم علينا والعود عليك</li>
                         </ul>
@@ -232,9 +232,9 @@
                             <li>☕ قهوة عربية</li>
                             <li>🍵 شاي فاخر</li>
                             <li>🍋 ليمون أسود</li>
-                            <li>🌺 كركديه (حار/بارد)</li>
+                            <li>🌺 كركديه </li>
                             <li>🌿 نعناع</li>
-                            <li>🌴 تمر عادي + تمر بالسمسم + طحينية</li>
+                            <li>🌴 تمر عادي + طحينية</li>
                             <li>👥 4 كوادر</li>
                             <li>🔥 الفحم والعود علينا</li>
                         </ul>
@@ -393,7 +393,7 @@
                  const b = document.getElementById('extraBaklava1');
                  const d = document.getElementById('extraDatesSweet1');
                  if (b && d && b.value == 0 && d.value == 0) {
-                     if (!confirm("✨ هل تود إضافة حلى لضيوفك لزيادة الفخامة؟\nاضغط 'إلغاء' للإضافة، أو 'موافق' للمتابعة.")) return;
+                     if (!confirm("✨ متأكد ماتبي تتجمّل مع معازيمك وتاخذ حلى؟\nاضغط 'إلغاء' للإضافة، أو 'موافق' للمتابعة.")) return;
                  }
             }
 
@@ -416,3 +416,4 @@
     </script>
 </body>
 </html>
+
