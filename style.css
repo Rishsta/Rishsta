@@ -6,7 +6,12 @@ body {
     background-image: url('background-image.jpg'); 
     background-size: cover; background-position: center; background-attachment: fixed;
     background-color: #f0f0f0; 
+    scrollbar-color: #ff9900 #f0f0f0; scrollbar-width: thin;
 }
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: #f0f0f0; border-radius: 10px; }
+::-webkit-scrollbar-thumb { background: #ff9900; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #e68a00; }
 
 .phone-frame {
     width: 375px; min-height: 600px;
@@ -68,11 +73,12 @@ input[type="text"], input[type="tel"], input[type="date"], input[type="url"] {
     width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 16px;
 }
 
-/* الأزرار */
+/* أزرار التنقل */
 .nav-buttons { margin-top: 20px; display: flex; justify-content: space-between; }
 .next-btn, .submit-btn { background: #ff9900; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; }
 .prev-btn { background: #ccc; color: #333; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; }
 .submit-btn { background: #25D366; width: 100%; }
+.check-btn { width: 100%; padding: 10px; background: #ff9900; color: white; border: none; border-radius: 6px; cursor: pointer; }
 
 /* خيارات الخدمات */
 .service-option { 
@@ -82,25 +88,19 @@ input[type="text"], input[type="tel"], input[type="date"], input[type="url"] {
 .service-option input { margin-left: 10px; width: 20px; height: 20px; }
 .service-option label { margin: 0; cursor: pointer; flex-grow: 1; }
 
-/* تفاصيل الباقات (التصميم الجديد للقائمة العمودية) */
+/* تفاصيل الباقات */
 .service-fieldset { border: 1px solid #ff9900; padding: 15px; margin-bottom: 15px; border-radius: 8px; }
 .service-fieldset legend { color: #ff9900; font-weight: bold; padding: 0 5px; }
 
-.package-box {
-    margin-bottom: 15px; border-bottom: 1px dashed #eee; padding-bottom: 10px;
-}
-.pkg-title {
-    display: inline-block !important; font-weight: bold; color: #333;
-}
-/* القائمة العمودية للعناصر */
-.vertical-list {
-    margin-top: 5px; padding-right: 25px; list-style-type: disc; color: #555; font-size: 0.9em;
-}
+.package-box { margin-bottom: 15px; border-bottom: 1px dashed #eee; padding-bottom: 10px; }
+.pkg-title { display: inline-block !important; font-weight: bold; color: #333; }
+.vertical-list { margin-top: 5px; padding-right: 25px; list-style-type: disc; color: #555; font-size: 0.9em; }
 .vertical-list li { margin-bottom: 3px; }
 
 /* الإضافات */
 .extras-box { background: #f9f9f9; padding: 10px; border-radius: 6px; margin-top: 10px; }
 .extra-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
 .extra-item input { width: 60px; text-align: center; }
+.extra-item input[type="checkbox"] { width: 20px; height: 20px; }
 
 @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
