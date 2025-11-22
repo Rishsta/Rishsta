@@ -59,16 +59,8 @@
                 <label for="eventType">نوع المناسبة:</label>
                 <input type="text" id="eventType" required>
 
-                <label>موقع إقامة المناسبة:</label>
-                <div class="location-box">
-                    <button type="button" class="map-btn" onclick="openGoogleMapApp()">
-                        📍 اضغط لفتح الخريطة ونسخ الرابط
-                    </button>
-                    <p style="font-size: 0.8em; color: #666; margin: 5px 0;">(انسخ الرابط من الخريطة والصقه بالأسفل)</p>
-                    
-                    <input type="text" id="eventLocationName" class="full-width-input" placeholder="اسم القاعة / الاستراحة" required style="margin-top: 5px;">
-                    <input type="url" id="eventLocationLink" class="full-width-input" placeholder="لصق رابط الموقع هنا (Google Map Link)" dir="ltr" required>
-                </div>
+                <label for="eventLocation">موقع إقامة المناسبة (اسم القاعة/الاستراحة):</label>
+                <input type="text" id="eventLocation" required>
 
                 <label for="eventDate">التاريخ المطلوب:</label>
                 <input type="date" id="eventDate" required>
@@ -103,7 +95,7 @@
                 <p>الإجمالي التقديري: <span id="totalPrice" style="color: #ff9900; font-size: 1.5em; font-weight: bold;">0</span> ر.س</p>
                 
                 <button type="button" class="submit-btn" onclick="confirmBooking()">
-                    مراجعة الطلب واعتماده
+                    إرسال الطلب والتفاصيل عبر الواتساب
                 </button>
                 
                 <div style="margin-top: 20px; padding: 10px; border: 1px dashed #ccc;">
@@ -141,18 +133,9 @@
         window.onclick = function(event) {
             if (event.target == bookingModal) closeBookingModal();
         }
-        
-        function openGoogleMapApp() {
-            window.open("https://www.google.com/maps", "_blank");
-        }
-
-        function getMapLink() {
-            return document.getElementById('eventLocationLink').value;
-        }
 
         function updateBookingOptions() {
             let optionsHtml = '';
-            
             if (document.getElementById('service1').checked) {
                 optionsHtml += `
                     <fieldset style="border: 1px solid #ff9900; padding: 10px; margin-top: 15px;">
@@ -161,11 +144,9 @@
                             <input type="radio" id="p1" name="pkg1" value="الباقة العادية" data-price="800" data-staff="3" onchange="calculateTotal()" required>
                             <label for="p1" style="font-weight: bold;">الباقة العادية (800 ر.س)</label>
                             <ul style="margin-top: 5px; font-size: 0.9em; color: #555; margin-bottom: 10px;"><li>☕ قهوة عربية، شاي، نعناع | 🌴 تمر + طحينية</li><li>👥 3 كوادر | 🔥 الفحم علينا والعود عليك</li></ul>
-                            
                             <input type="radio" id="p2" name="pkg1" value="الباقة المتوسطة" data-price="1000" data-staff="4" onchange="calculateTotal()" required>
                             <label for="p2" style="font-weight: bold;">الباقة المتوسطة (1000 ر.س)</label>
                             <ul style="margin-top: 5px; font-size: 0.9em; color: #555; margin-bottom: 10px;"><li>☕ شاي فاخر، قهوة، ليمون أسود، كركديه </li><li>🌴 تمر عادي، تمر بالسمسم، طحينية | 👥 4 كوادر | 🔥 الفحم والعود علينا</li></ul>
-                            
                             <input type="radio" id="p3" name="pkg1" value="الباقة الفخمة" data-price="1200" data-staff="5" onchange="calculateTotal()" required>
                             <label for="p3" style="font-weight: bold;">الباقة الفخمة (1200 ر.س)</label>
                             <ul style="margin-top: 5px; font-size: 0.9em; color: #555; margin-bottom: 10px;"><li>☕ جميع ما سبق + هوت شوكليت وكاستر</li><li>🌴 تمر محشو، تمر بالسمسم والحلوة، طحينية | 👥 5 كوادر | 🔥 الفحم والعود علينا</li></ul>
@@ -184,7 +165,6 @@
                         </div>
                     </fieldset>`;
             }
-
             if (document.getElementById('service2').checked) {
                 optionsHtml += `
                     <fieldset style="border: 1px solid #25D366; padding: 10px; margin-top: 15px;">
@@ -205,7 +185,6 @@
                         </div>
                     </fieldset>`;
             }
-
             if (document.getElementById('service3').checked) {
                 optionsHtml += `
                     <fieldset style="border: 1px solid #555; padding: 10px; margin-top: 15px;">
@@ -299,10 +278,10 @@
                 adminEmail: HIDDEN_ADMIN_EMAIL, 
                 eventDate: document.getElementById('eventDate').value,
                 eventType: document.getElementById('eventType').value,
-                eventLocation: document.getElementById('eventLocationName').value,
+                eventLocation: document.getElementById('eventLocation').value,
                 totalPrice: calculatedData.total,
                 finalPriceText: totalElement.textContent + ' ر.س',
-                mapLink: getMapLink(),
+                // تم حذف mapLink من هنا لأنه لم يعد موجوداً
                 selectedServices: selectedServices.join(', '),
                 detailedBreakdown: calculatedData.details.join('\n- ')
             };
@@ -323,17 +302,16 @@
             const clientPhone = document.getElementById('clientPhone').value;
             const eventDate = document.getElementById('eventDate').value;
             const eventType = document.getElementById('eventType').value;
-            const eventLocationName = document.getElementById('eventLocationName').value;
-            const eventLocationLink = document.getElementById('eventLocationLink').value;
+            const eventLocation = document.getElementById('eventLocation').value;
 
-            if (!clientName || !clientPhone || !eventDate || !eventType || !eventLocationName || !eventLocationLink) {
-                alert('الرجاء تعبئة جميع البيانات الأساسية ورابط الموقع.');
+            if (!clientName || !clientPhone || !eventDate || !eventType || !eventLocation) {
+                alert('الرجاء تعبئة جميع البيانات الأساسية.');
                 return;
             }
             
             const isService1Checked = document.getElementById('service1').checked;
             if (isService1Checked && !document.querySelector('input[name="pkg1"]:checked')) {
-                 alert('الرجاء اختيار باقة الضيافة (العادية، المتوسطة، أو الفخمة) لاستكمال الحجز.');
+                 alert('الرجاء اختيار باقة الضيافة لاستكمال الحجز.');
                  return;
             }
 
@@ -346,7 +324,6 @@
                 }
             }
             
-            // --- نافذة المراجعة قبل الإرسال ---
             const bookingData = collectDataForWebhook();
             
             const reviewMessage = `📋 مراجعة تفاصيل طلبك:\n\n` +
@@ -365,22 +342,21 @@
                 return; 
             }
 
-            // --- الإرسال الفعلي ---
             sendToNotion(bookingData); 
             
             let whatsappMessage = `*🌟 طلب حجز جديد - ريشستا 🌟*\n\n`;
-            whatsappMessage += `👤 *العميل:* ${bookingData.clientName}\n📞 *الجوال:* ${bookingData.clientPhone}\n📅 *التاريخ:* ${bookingData.eventDate}\n📍 *الموقع:* ${bookingData.eventLocation}\n`;
-            if (bookingData.mapLink) whatsappMessage += `🔗 *الخريطة:* ${bookingData.mapLink}\n\n`;
-            
-            // *** هنا التعديل المهم: إضافة التفاصيل للواتساب ***
+            whatsappMessage += `*العميل:* ${bookingData.clientName}\n`;
+            whatsappMessage += `*الجوال:* ${bookingData.clientPhone}\n`;
+            whatsappMessage += `*التاريخ:* ${bookingData.eventDate}\n`;
+            whatsappMessage += `*المناسبة:* ${bookingData.eventType}\n`;
+            whatsappMessage += `*الموقع:* ${bookingData.eventLocation}\n`;
             whatsappMessage += `*📝 الخدمات المختارة:*\n- ${bookingData.detailedBreakdown}\n\n`;
-            
             whatsappMessage += `*💰 الإجمالي التقديري:* ${bookingData.finalPriceText}`;
 
             const whatsappNumber = '966544512811';
             const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
             
-            alert(`تم استلام طلبك بنجاح! ✅\nسيتم تحويلك للواتساب لتأكيد الحجز.`);
+            alert(`شكراً لك يا ${clientName}!\n\nتم استلام طلبك بنجاح.\nسيتم تحويلك إلى الواتساب الآن لإرسال التفاصيل واعتماد الحجز.`);
             window.open(whatsappURL, '_blank');
             closeBookingModal();
         }
