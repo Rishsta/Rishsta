@@ -41,7 +41,7 @@ h1 { font-size: 28px; color: #333; margin-bottom: 10px; }
     font-weight: bold; text-decoration: none;
 }
 
-/* --- تنسيقات الـ Wizard (الخطوات) --- */
+/* Wizard & Modal */
 .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); overflow: auto; }
 .modal-content {
     background: #fff; margin: 5% auto; padding: 20px; width: 90%; max-width: 500px;
@@ -58,23 +58,23 @@ h1 { font-size: 28px; color: #333; margin-bottom: 10px; }
 .step-dot.active { background: #ff9900; color: white; }
 .step-line { width: 40px; height: 2px; background: #ddd; margin: 0 5px; }
 
-/* إخفاء الخطوات غير النشطة */
+/* الخطوات */
 .form-step { display: none; animation: fadeIn 0.5s; }
 .form-step.active { display: block; }
 
-/* تنسيق الحقول */
+/* الحقول */
 label { display: block; margin: 10px 0 5px; font-weight: 600; }
 input[type="text"], input[type="tel"], input[type="date"], input[type="url"] {
-    width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box;
+    width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 16px;
 }
 
-/* أزرار التنقل */
+/* الأزرار */
 .nav-buttons { margin-top: 20px; display: flex; justify-content: space-between; }
 .next-btn, .submit-btn { background: #ff9900; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; }
 .prev-btn { background: #ccc; color: #333; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; }
 .submit-btn { background: #25D366; width: 100%; }
 
-/* خيارات الخدمات (شيك بوكس كبير) */
+/* خيارات الخدمات */
 .service-option { 
     border: 1px solid #eee; padding: 10px; margin-bottom: 10px; border-radius: 8px;
     display: flex; align-items: center;
@@ -82,9 +82,23 @@ input[type="text"], input[type="tel"], input[type="date"], input[type="url"] {
 .service-option input { margin-left: 10px; width: 20px; height: 20px; }
 .service-option label { margin: 0; cursor: pointer; flex-grow: 1; }
 
-/* تنسيق تفاصيل الباقات (الخطوة 3) */
+/* تفاصيل الباقات (التصميم الجديد للقائمة العمودية) */
 .service-fieldset { border: 1px solid #ff9900; padding: 15px; margin-bottom: 15px; border-radius: 8px; }
 .service-fieldset legend { color: #ff9900; font-weight: bold; padding: 0 5px; }
+
+.package-box {
+    margin-bottom: 15px; border-bottom: 1px dashed #eee; padding-bottom: 10px;
+}
+.pkg-title {
+    display: inline-block !important; font-weight: bold; color: #333;
+}
+/* القائمة العمودية للعناصر */
+.vertical-list {
+    margin-top: 5px; padding-right: 25px; list-style-type: disc; color: #555; font-size: 0.9em;
+}
+.vertical-list li { margin-bottom: 3px; }
+
+/* الإضافات */
 .extras-box { background: #f9f9f9; padding: 10px; border-radius: 6px; margin-top: 10px; }
 .extra-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
 .extra-item input { width: 60px; text-align: center; }
