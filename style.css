@@ -1,158 +1,92 @@
 body {
     font-family: 'Tajawal', sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    direction: rtl; 
-    text-align: center;
+    margin: 0; padding: 0;
+    display: flex; justify-content: center; align-items: center;
+    min-height: 100vh; direction: rtl; text-align: center;
     background-image: url('background-image.jpg'); 
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
+    background-size: cover; background-position: center; background-attachment: fixed;
     background-color: #f0f0f0; 
-    scrollbar-color: #ff9900 #f0f0f0; 
-    scrollbar-width: thin;
 }
-::-webkit-scrollbar { width: 8px; height: 8px; }
-::-webkit-scrollbar-track { background: #f0f0f0; border-radius: 10px; }
-::-webkit-scrollbar-thumb { background: #ff9900; border-radius: 10px; }
-::-webkit-scrollbar-thumb:hover { background: #e68a00; }
 
 .phone-frame {
     width: 375px; min-height: 600px;
     background-color: rgba(255, 255, 255, 0.95);
-    border-radius: 30px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2); 
-    padding: 20px; position: relative; overflow: hidden; 
+    border-radius: 30px; padding: 20px; position: relative; overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
 }
+
 .profile-container { padding: 20px 0; }
 .profile-picture {
-    width: 100px; height: 100px; border-radius: 50%;
-    margin: 0 auto 15px; display: flex; justify-content: center; align-items: center;
-    overflow: hidden; border: 2px solid #ddd; 
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+    width: 100px; height: 100px; border-radius: 50%; margin: 0 auto 15px;
+    display: flex; justify-content: center; align-items: center; overflow: hidden;
+    border: 2px solid #ddd; box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
-.profile-picture img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block; }
-h1 { font-size: 28px; font-weight: 700; color: #333; margin-bottom: 10px; }
-.description-text { font-size: 14px; color: #555; line-height: 1.6; margin-bottom: 20px; padding: 0 15px; }
-.description-text p { margin: 5px 0; }
+.profile-picture img { width: 100%; height: 100%; object-fit: cover; }
+h1 { font-size: 28px; color: #333; margin-bottom: 10px; }
+.description-text { font-size: 14px; color: #555; margin-bottom: 20px; }
 
-/* Social Buttons */
-.social-buttons-group {
-    display: flex; flex-direction: column; align-items: center;
-    gap: 15px; margin-top: 30px; margin-bottom: 30px;
-}
+/* أزرار السوشيال */
+.social-buttons-group { display: flex; flex-direction: column; align-items: center; gap: 15px; margin: 30px 0; }
 .social-button {
-    display: flex; align-items: center; justify-content: center;
-    position: relative; width: 90%; max-width: 300px; padding: 12px 20px;
-    border-radius: 12px; text-decoration: none;
-    font-size: 16px; font-weight: 600; color: #fff; 
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); transition: all 0.3s ease; overflow: hidden;
+    display: flex; align-items: center; justify-content: center; position: relative;
+    width: 90%; padding: 12px 20px; border-radius: 12px; text-decoration: none;
+    font-weight: 600; color: #fff; overflow: hidden;
 }
-.social-button i {
-    font-size: 22px; margin-right: 0; margin-left: 0; 
-    position: absolute; left: 15px; z-index: 2;
-}
-.social-button span { position: relative; z-index: 2; }
-.social-button::before {
-    content: ''; position: absolute; top: 50%; left: 50%; width: 0; height: 0;
-    background: rgba(255, 255, 255, 0.2); border-radius: 50%;
-    transform: translate(-50%, -50%); transition: width 0.4s ease, height 0.4s ease; z-index: 1;
-}
-.social-button:hover::before { width: 200%; height: 200%; }
-.social-button:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2); }
-.tiktok-btn { background: linear-gradient(to right, #000000, #222222); color: #fff; }
-.tiktok-btn:hover { background: linear-gradient(to right, #000000, #444444); }
-.snapchat-btn { background-color: #FFFC00; color: #333; box-shadow: 0 4px 15px rgba(255, 252, 0, 0.3); }
-.snapchat-btn:hover { background-color: #FFE500; color: #000; }
-.snapchat-btn i { color: #333; }
-.whatsapp-btn { background: linear-gradient(to right, #25D366, #128C7E); color: #fff; }
-.whatsapp-btn:hover { background: linear-gradient(to right, #1DA852, #0E786B); }
+.social-button i { position: absolute; left: 15px; font-size: 22px; }
+.tiktok-btn { background: #000; } .snapchat-btn { background: #FFFC00; color: #000; } .whatsapp-btn { background: #25D366; }
+
 .main-booking-button {
-    display: block; text-align: center; padding: 18px 20px;
-    margin: 15px auto 10px auto; width: 90%; max-width: 350px;
-    border-radius: 10px; font-size: 1.1em; font-weight: bold; color: white; 
-    background-color: #ff5722; text-decoration: none;
-    box-shadow: 0 4px 10px rgba(255, 87, 34, 0.4); transition: background-color 0.3s;
+    display: block; width: 90%; margin: 15px auto; padding: 18px;
+    background: #ff5722; color: white; border-radius: 10px;
+    font-weight: bold; text-decoration: none;
 }
-.main-booking-button:hover { background-color: #e64a19; }
 
-/* Modal */
-.modal {
-    display: none; position: fixed; z-index: 1000;
-    left: 0; top: 0; width: 100%; height: 100%; 
-    overflow: auto; background-color: rgba(0,0,0,0.6);
-}
+/* --- تنسيقات الـ Wizard (الخطوات) --- */
+.modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); overflow: auto; }
 .modal-content {
-    background-color: #fefefe; margin: 5% auto; padding: 30px;
-    border-radius: 15px; width: 90%; max-width: 500px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3); animation: fadeIn 0.5s; direction: rtl; text-align: right;
+    background: #fff; margin: 5% auto; padding: 20px; width: 90%; max-width: 500px;
+    border-radius: 15px; text-align: right; position: relative;
 }
-.close { color: #aaa; float: left; font-size: 28px; font-weight: bold; cursor: pointer; }
+.close { float: left; font-size: 28px; cursor: pointer; }
 
-/* ========================================== */
-/* تنسيق الحقول (تم الفصل للتنظيم) */
-/* ========================================== */
-.modal-content form > label {
-    display: block; width: 100%; margin-top: 15px; margin-bottom: 8px;
-    font-weight: 600; color: #333;
+/* شريط التقدم */
+.step-indicator { display: flex; justify-content: center; align-items: center; margin-bottom: 20px; }
+.step-dot {
+    width: 30px; height: 30px; background: #ddd; border-radius: 50%;
+    display: flex; justify-content: center; align-items: center; font-weight: bold; color: #666;
 }
-.modal-content form > input[type="text"],
-.modal-content form > input[type="tel"],
-.modal-content form > input[type="date"],
-.modal-content form > input[type="url"] {
-    display: block; width: 100%; padding: 12px; margin-bottom: 10px;
-    border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box;
-    font-size: 16px; background-color: #f9f9f9;
-}
+.step-dot.active { background: #ff9900; color: white; }
+.step-line { width: 40px; height: 2px; background: #ddd; margin: 0 5px; }
 
-/* زر الخريطة الجديد */
-.map-btn {
-    width: 100%; padding: 10px; background-color: #4285F4; color: white;
-    border: none; border-radius: 6px; cursor: pointer; margin-bottom: 5px;
-    font-weight: bold;
-}
-.map-btn:hover { background-color: #357ae8; }
+/* إخفاء الخطوات غير النشطة */
+.form-step { display: none; animation: fadeIn 0.5s; }
+.form-step.active { display: block; }
 
-.modal-content .submit-btn,
-.modal-content .check-btn {
-    width: 100%; padding: 12px; border: none; border-radius: 8px; cursor: pointer;
-    font-weight: 600; transition: background-color 0.3s;
-    background-color: #ff9900; color: white;
-}
-.modal-content .submit-btn { background-color: #25D366; margin-top: 15px; }
-.modal-content button:hover { opacity: 0.9; }
-
-/* 3. تنسيق الخيارات الإضافية */
-fieldset input[type="number"] {
-    display: inline-block !important; width: 70px !important;
-    text-align: center; margin-left: 10px;
-    padding: 5px; border: 1px solid #ccc; border-radius: 4px;
-}
-fieldset label {
-    display: inline-block !important; width: auto !important;
-    font-weight: normal !important; margin: 0 !important;
+/* تنسيق الحقول */
+label { display: block; margin: 10px 0 5px; font-weight: 600; }
+input[type="text"], input[type="tel"], input[type="date"], input[type="url"] {
+    width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box;
 }
 
-/* 4. تنسيق مربعات الخدمات الرئيسية */
-.main-services { margin-bottom: 10px; }
-.main-services input[type="checkbox"] {
-    display: inline-block; vertical-align: middle; margin-left: 10px;
-}
-.main-services label {
-    display: inline-block; vertical-align: middle; font-weight: bold; font-size: 1.1em;
-}
+/* أزرار التنقل */
+.nav-buttons { margin-top: 20px; display: flex; justify-content: space-between; }
+.next-btn, .submit-btn { background: #ff9900; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; }
+.prev-btn { background: #ccc; color: #333; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; }
+.submit-btn { background: #25D366; width: 100%; }
 
-/* تنسيق قوائم المميزات */
-.modal-content fieldset ul { margin-top: 5px; padding: 0; list-style: none; text-align: right; }
-.modal-content fieldset ul li {
-    display: inline-block; margin-left: 10px; padding: 2px 0;
-    font-size: 0.9em; color: #555; border-right: 1px solid #ddd; padding-right: 10px;
+/* خيارات الخدمات (شيك بوكس كبير) */
+.service-option { 
+    border: 1px solid #eee; padding: 10px; margin-bottom: 10px; border-radius: 8px;
+    display: flex; align-items: center;
 }
-.modal-content fieldset ul li:last-child { border-right: none; }
+.service-option input { margin-left: 10px; width: 20px; height: 20px; }
+.service-option label { margin: 0; cursor: pointer; flex-grow: 1; }
 
-hr { border: 0; height: 1px; background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0)); margin: 20px 0; }
+/* تنسيق تفاصيل الباقات (الخطوة 3) */
+.service-fieldset { border: 1px solid #ff9900; padding: 15px; margin-bottom: 15px; border-radius: 8px; }
+.service-fieldset legend { color: #ff9900; font-weight: bold; padding: 0 5px; }
+.extras-box { background: #f9f9f9; padding: 10px; border-radius: 6px; margin-top: 10px; }
+.extra-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+.extra-item input { width: 60px; text-align: center; }
+
 @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
