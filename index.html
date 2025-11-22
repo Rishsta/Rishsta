@@ -25,7 +25,7 @@
                     <i class="fab fa-snapchat-ghost"></i><span>Snapchat</span>
                 </a>
                 <a href="https://wa.me/966545998016" target="_blank" class="social-button whatsapp-btn whatsapp1">
-                    <i class="fab fa-whatsapp"></i><span>WhatsApp</span>
+                    <i class="fab fa-whatsapp"></i><span>واتساب ريشستا للحجز</span>
                 </a>
             </div>
 
@@ -66,8 +66,8 @@
                     <label>نوع المناسبة:</label>
                     <input type="text" id="eventType" placeholder="مثال: زواج، تخرج..." required>
 
-                    <label>موقع المناسبة (اسم القاعة):</label>
-                    <input type="text" id="eventLocationName" required>
+                    <label>موقع المناسبة (اسم القاعة/الاستراحة):</label>
+                    <input type="text" id="eventLocation" placeholder="اكتب اسم المكان والحي هنا" required>
                     
                     <label>التاريخ:</label>
                     <input type="date" id="eventDate" required>
@@ -85,11 +85,11 @@
                     <div class="services-selection">
                         <div class="service-option">
                             <input type="checkbox" id="service1" name="service" value="ضيافة ريشستا">
-                            <label for="service1">✨ ضيافة ريشستا </label>
+                            <label for="service1">✨ ضيافة ريشستا الأنيقة</label>
                         </div>
                         <div class="service-option">
                             <input type="checkbox" id="service2" name="service" value="بوفيه منوع">
-                            <label for="service2">🍽️ بوفيه ريشستا </label>
+                            <label for="service2">🍽️ بوفيه ريشستا المتكامل</label>
                         </div>
                         <div class="service-option">
                             <input type="checkbox" id="service3" name="service" value="ترتيب صواني العشاء">
@@ -115,7 +115,7 @@
                     
                     <div class="nav-buttons">
                         <button type="button" class="prev-btn" onclick="prevStep(2)">➡ السابق</button>
-                        <button type="button" class="submit-btn" onclick="confirmBooking()">إرسال الطلب واعتماده ✅</button>
+                        <button type="button" class="submit-btn" onclick="confirmBooking()">مراجعة الطلب واعتماده ✅</button>
                     </div>
                 </div>
 
@@ -127,6 +127,8 @@
         const bookingModal = document.getElementById('bookingModal');
         const totalElement = document.getElementById('totalPrice');
         const dynamicOptionsContainer = document.getElementById('dynamicOptionsContainer');
+        
+        // رابط الويب هوك الخاص بك
         const WEBHOOK_URL = 'https://hook.us2.make.com/2sbytwqqg9mqm0dy1jjdltumrer3t5ki';
         const HIDDEN_ADMIN_EMAIL = 's202341370@kfupm.edu.sa';
 
@@ -161,7 +163,9 @@
                 const name = document.getElementById('clientName').value;
                 const phone = document.getElementById('clientPhone').value;
                 const date = document.getElementById('eventDate').value;
-                const loc = document.getElementById('eventLocationName').value;
+                // هنا التعديل: التحقق من اسم الموقع فقط
+                const loc = document.getElementById('eventLocation').value;
+                
                 if (!name || !phone || !date || !loc) {
                     alert("الرجاء تعبئة جميع الحقول المطلوبة.");
                     return;
@@ -204,56 +208,29 @@
             calculateTotal(); 
         }
 
-        // --- تعديل القائمة لتكون عمودية (تحت بعض) ---
+        // --- دوال توليد HTML للخدمات (مع القائمة العمودية) ---
         function generateService1HTML() {
             return `
             <fieldset class="service-fieldset">
                 <legend>✨ ضيافة ريشستا</legend>
                 <div style="margin-bottom: 15px;">
                     <label style="margin-bottom: 10px; display:block;">اختر الباقة المناسبة:</label>
-                    
                     <div class="package-box">
                         <input type="radio" id="p1" name="pkg1" value="الباقة العادية" data-price="800" data-staff="3" required>
                         <label for="p1" class="pkg-title">الباقة العادية (800 ر.س)</label>
-                        <ul class="vertical-list">
-                            <li>☕ قهوة عربية</li>
-                            <li>🍵 شاي</li>
-                            <li>🌿 نعناع</li>
-                            <li>🌴 تمر عادي </li>
-                            <li>👥 3 كوادر</li>
-                            <li>🔥 الفحم علينا والعود عليك</li>
-                        </ul>
+                        <ul class="vertical-list"><li>☕ قهوة عربية، شاي، نعناع</li><li>🌴 تمر + طحينية</li><li>👥 3 كوادر</li><li>🔥 الفحم علينا والعود عليك</li></ul>
                     </div>
-
                     <div class="package-box">
                         <input type="radio" id="p2" name="pkg1" value="الباقة المتوسطة" data-price="1000" data-staff="4" required>
                         <label for="p2" class="pkg-title">الباقة المتوسطة (1000 ر.س)</label>
-                        <ul class="vertical-list">
-                            <li>☕ قهوة عربية</li>
-                            <li>🍵 شاي فاخر</li>
-                            <li>🍋 ليمون أسود</li>
-                            <li>🌺 كركديه </li>
-                            <li>🌿 نعناع</li>
-                            <li>🌴 تمر عادي + طحينية</li>
-                            <li>👥 4 كوادر</li>
-                            <li>🔥 الفحم والعود علينا</li>
-                        </ul>
+                        <ul class="vertical-list"><li>☕ قهوة، شاي فاخر، ليمون، كركديه</li><li>🌴 تمر عادي + سمسم + طحينية</li><li>👥 4 كوادر</li><li>🔥 الفحم والعود علينا</li></ul>
                     </div>
-
                     <div class="package-box">
                         <input type="radio" id="p3" name="pkg1" value="الباقة الفخمة" data-price="1200" data-staff="5" required>
                         <label for="p3" class="pkg-title">الباقة الفخمة (1200 ر.س)</label>
-                        <ul class="vertical-list">
-                            <li>☕ جميع مشروبات الباقة المتوسطة</li>
-                            <li>🍫 هوت شوكليت</li>
-                            <li>🍮 كاستر</li>
-                            <li>🌴 تمر محشو + تمر بالسمسم والحلوة + طحينية</li>
-                            <li>👥 5 كوادر</li>
-                            <li>🔥 الفحم والعود علينا</li>
-                        </ul>
+                        <ul class="vertical-list"><li>☕ جميع المشروبات + هوت شوكليت + كاستر</li><li>🌴 تمر محشو + سمسم + حلوة</li><li>👥 5 كوادر</li><li>🔥 الفحم والعود علينا</li></ul>
                     </div>
                 </div>
-                
                 <div class="extras-box">
                     <label>إضافات:</label><br>
                     <div class="extra-item"><input type="number" id="extraWater1" min="0" value="0" dir="ltr"> <span>ماء (+${PRICES.extraWater})</span></div>
@@ -268,14 +245,7 @@
             return `
             <fieldset class="service-fieldset">
                 <legend>🍽️ بوفيه ريشستا (3700 ر.س)</legend>
-                <ul class="vertical-list" style="margin-bottom:15px;">
-                    <li>🍗 3 أصناف رئيسية متنوعة</li>
-                    <li>🥟 معجنات مشكلة + كُبّة + سمبوسة</li>
-                    <li>🍰 كيك + كنافة + بقلاوة</li>
-                    <li>🥜 مكسرات + ورق عنب + ذرة + بليلة</li>
-                    <li>🍹 موهيتو + عصير مانجو</li>
-                    <li>👥 3 كوادر</li>
-                </ul>
+                <ul class="vertical-list" style="margin-bottom:15px;"><li>🍗 3 أصناف رئيسية متنوعة</li><li>🥟 معجنات، كُبّة، سمبوسة</li><li>🍰 كيك، كنافة، بقلاوة</li><li>🥜 مكسرات، ورق عنب، ذرة، بليلة</li><li>🍹 موهيتو + عصير</li><li>👥 3 كوادر</li></ul>
                 <div class="extras-box">
                     <div class="extra-item"><input type="number" id="extraGuests2" min="0" value="0" dir="ltr"> <span>لكل 100 شخص زيادة (+${PRICES.extraBuffet100})</span></div>
                     <div class="extra-item"><input type="number" id="extraWater2" min="0" value="0" dir="ltr"> <span>ماء (+${PRICES.extraWater})</span></div>
@@ -289,10 +259,7 @@
             return `
             <fieldset class="service-fieldset">
                 <legend>🍴 ترتيب صواني العشاء (1200 ر.س)</legend>
-                 <ul class="vertical-list" style="margin-bottom:15px;">
-                    <li>👥 7 كوادر متخصصين</li>
-                    <li>🍽️ ترتيب وتقديم احترافي</li>
-                </ul>
+                 <ul class="vertical-list" style="margin-bottom:15px;"><li>👥 7 كوادر متخصصين</li><li>🍽️ ترتيب وتقديم احترافي</li></ul>
                 <div style="margin-bottom: 10px;">
                     <input type="number" id="numTrays3" placeholder="عدد الدفعات" dir="ltr" style="width:45%; display:inline-block;">
                     <input type="number" id="numPlates3" placeholder="عدد الصواني" dir="ltr" style="width:45%; display:inline-block;">
@@ -306,6 +273,7 @@
             </fieldset>`;
         }
 
+        // --- الحسابات ---
         function calculateTotal() {
             let currentTotal = 0;
             let details = [];
@@ -336,6 +304,9 @@
                 currentTotal += PRICES.service3Base;
                 details.push(`صواني: أساسي (${PRICES.service3Base} ر.س)`);
                 currentTotal += safeCalc('extraStaff3', PRICES.extraStaff, details, 'كادر صواني');
+                const t = document.getElementById('numTrays3').value || 0;
+                const p = document.getElementById('numPlates3').value || 0;
+                if(t>0 || p>0) details.push(`(دفعات: ${t}, صواني: ${p})`);
             }
 
             totalElement.textContent = currentTotal.toLocaleString();
@@ -365,9 +336,10 @@
                 adminEmail: HIDDEN_ADMIN_EMAIL,
                 eventDate: document.getElementById('eventDate').value,
                 eventType: document.getElementById('eventType').value,
-                eventLocation: document.getElementById('eventLocationName').value,
+                eventLocation: document.getElementById('eventLocation').value, // تم تعديل الاسم هنا
                 totalPrice: calc.total,
                 finalPriceText: calc.total + ' ر.س',
+                mapLink: '', // تم حذف الرابط
                 selectedServices: services.join(', '),
                 detailedBreakdown: calc.details.join('\n- ')
             };
@@ -393,17 +365,37 @@
                  const b = document.getElementById('extraBaklava1');
                  const d = document.getElementById('extraDatesSweet1');
                  if (b && d && b.value == 0 && d.value == 0) {
-                     if (!confirm("✨ متأكد ماتبي تتجمّل مع معازيمك وتاخذ حلى؟\nاضغط 'إلغاء' للإضافة، أو 'موافق' للمتابعة.")) return;
+                     if (!confirm("✨ هل تود إضافة حلى لضيوفك لزيادة الفخامة؟\nاضغط 'إلغاء' للإضافة، أو 'موافق' للمتابعة.")) return;
                  }
             }
 
             const data = collectData();
-            const msg = `ملخص الطلب:\nالاسم: ${data.clientName}\nالتاريخ: ${data.eventDate}\n\nالخدمات:\n- ${data.detailedBreakdown}\n\nالإجمالي: ${data.finalPriceText}\n\nهل تريد اعتماد الطلب؟`;
-            if(!confirm(msg)) return;
+            
+            // رسالة المراجعة الشاملة
+            const reviewMsg = `📋 مراجعة تفاصيل طلبك:\n\n` +
+                                  `👤 الاسم: ${data.clientName}\n` +
+                                  `📞 الجوال: ${data.clientPhone}\n` +
+                                  `📅 التاريخ: ${data.eventDate}\n` +
+                                  `📍 المكان: ${data.eventLocation}\n` +
+                                  `--------------------------\n` +
+                                  `📝 الخدمات:\n` +
+                                  `   - ${data.detailedBreakdown.replace(/\n- /g, '\n   - ')}\n` +
+                                  `--------------------------\n` +
+                                  `💰 الإجمالي: ${data.finalPriceText}\n\n` +
+                                  `هل المعلومات صحيحة وتريد اعتماد الطلب؟`;
+
+            if(!confirm(reviewMsg)) return;
 
             sendToNotion(data);
             
-            let waMsg = `*حجز جديد - ريشستا*\n👤 ${data.clientName}\n📞 ${data.clientPhone}\n📅 ${data.eventDate}\n📍 ${data.eventLocation}\n\n*التفاصيل:*\n- ${data.detailedBreakdown}\n\n*الإجمالي: ${data.finalPriceText}*`;
+            // رسالة الواتساب (بدون رابط خريطة)
+            let waMsg = `👋 مرحباً ريشستا، أرغب بتأكيد الحجز:\n\n`;
+            waMsg += `👤 *الاسم:* ${data.clientName}\n`;
+            waMsg += `📞 *الجوال:* ${data.clientPhone}\n`;
+            waMsg += `📅 *التاريخ:* ${data.eventDate}\n`;
+            waMsg += `📍 *الموقع:* ${data.eventLocation}\n`;
+            waMsg += `\n💳 *الإجمالي:* ${data.finalPriceText}\n\n`;
+            waMsg += `✅ *تم الاطلاع على التفاصيل والموافقة عليها.*`;
             
             window.open(`https://wa.me/966544512811?text=${encodeURIComponent(waMsg)}`, '_blank');
             closeBookingModal();
@@ -416,4 +408,3 @@
     </script>
 </body>
 </html>
-
