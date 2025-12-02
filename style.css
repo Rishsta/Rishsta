@@ -30,77 +30,27 @@ body {
 h1 { font-size: 28px; color: #333; margin-bottom: 10px; }
 .description-text { font-size: 14px; color: #555; margin-bottom: 20px; }
 
-/* أزرار السوشيال */
+/* ------------------------------------- */
+/* تنسيق الأزرار الرئيسية (Social Buttons) */
+/* ------------------------------------- */
 .social-buttons-group { display: flex; flex-direction: column; align-items: center; gap: 15px; margin: 30px 0; }
+
 .social-button {
     display: flex; align-items: center; justify-content: center; position: relative;
-    width: 90%; padding: 12px 20px; border-radius: 12px; text-decoration: none;
-    font-weight: 600; color: #fff; overflow: hidden;
+    width: 90%; max-width: 300px; padding: 12px 20px; border-radius: 12px;
+    text-decoration: none; font-weight: 600; color: #fff; overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); transition: all 0.3s ease; 
 }
+.social-button:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2); }
+
+/* أيقونات الأزرار */
 .social-button i { position: absolute; left: 15px; font-size: 22px; }
-.tiktok-btn { background: #000; } .snapchat-btn { background: #FFFC00; color: #000; } .whatsapp-btn { background: #25D366; }
 
-.main-booking-button {
-    display: block; width: 90%; margin: 15px auto; padding: 18px;
-    background: #ff5722; color: white; border-radius: 10px;
-    font-weight: bold; text-decoration: none;
-}
+/* ألوان التطبيقات */
+.tiktok-btn { background: #000; }
+.snapchat-btn { background: #FFFC00; color: #333; }
+.whatsapp-btn { background: #25D366; }
+/* لون مختلف للواتساب الثاني لتمييزه */
+.whatsapp2-alt { background: linear-gradient(to right, #128C7E, #1DA852); } 
 
-/* Wizard & Modal */
-.modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); overflow: auto; }
-.modal-content {
-    background: #fff; margin: 5% auto; padding: 20px; width: 90%; max-width: 500px;
-    border-radius: 15px; text-align: right; position: relative;
-}
-.close { float: left; font-size: 28px; cursor: pointer; }
-
-/* شريط التقدم */
-.step-indicator { display: flex; justify-content: center; align-items: center; margin-bottom: 20px; }
-.step-dot {
-    width: 30px; height: 30px; background: #ddd; border-radius: 50%;
-    display: flex; justify-content: center; align-items: center; font-weight: bold; color: #666;
-}
-.step-dot.active { background: #ff9900; color: white; }
-.step-line { width: 40px; height: 2px; background: #ddd; margin: 0 5px; }
-
-/* الخطوات */
-.form-step { display: none; animation: fadeIn 0.5s; }
-.form-step.active { display: block; }
-
-/* الحقول */
-label { display: block; margin: 10px 0 5px; font-weight: 600; }
-input[type="text"], input[type="tel"], input[type="date"], input[type="url"] {
-    width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 16px;
-}
-
-/* أزرار التنقل */
-.nav-buttons { margin-top: 20px; display: flex; justify-content: space-between; }
-.next-btn, .submit-btn { background: #ff9900; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; }
-.prev-btn { background: #ccc; color: #333; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; }
-.submit-btn { background: #25D366; width: 100%; }
-.check-btn { width: 100%; padding: 10px; background: #ff9900; color: white; border: none; border-radius: 6px; cursor: pointer; }
-
-/* خيارات الخدمات */
-.service-option { 
-    border: 1px solid #eee; padding: 10px; margin-bottom: 10px; border-radius: 8px;
-    display: flex; align-items: center;
-}
-.service-option input { margin-left: 10px; width: 20px; height: 20px; }
-.service-option label { margin: 0; cursor: pointer; flex-grow: 1; }
-
-/* تفاصيل الباقات */
-.service-fieldset { border: 1px solid #ff9900; padding: 15px; margin-bottom: 15px; border-radius: 8px; }
-.service-fieldset legend { color: #ff9900; font-weight: bold; padding: 0 5px; }
-
-.package-box { margin-bottom: 15px; border-bottom: 1px dashed #eee; padding-bottom: 10px; }
-.pkg-title { display: inline-block !important; font-weight: bold; color: #333; }
-.vertical-list { margin-top: 5px; padding-right: 25px; list-style-type: disc; color: #555; font-size: 0.9em; }
-.vertical-list li { margin-bottom: 3px; }
-
-/* الإضافات */
-.extras-box { background: #f9f9f9; padding: 10px; border-radius: 6px; margin-top: 10px; }
-.extra-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
-.extra-item input { width: 60px; text-align: center; }
-.extra-item input[type="checkbox"] { width: 20px; height: 20px; }
-
-@keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
+/* تم حذف كل أكواد Wizard Form و Modal CSS */
